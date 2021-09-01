@@ -46,12 +46,9 @@ BEGIN Task One
                                                 was " + lionelMessiTotalGoals 
 
                 case: menuOption EQUALS 2
-                    moSalahAvgGoals <- sumOfArrayElements(moSalahGoals) / 
-                                                LENGTH OF moSalahGoals ARRAY
-                    harryKaneAvgGoals <- sumOfArrayElements(harryKaneGoals) / 
-                                                LENGTH OF harryKaneGoals ARRAY
-                    lionelMessiAvgGoals <- sumOfArrayElements(lionelMessiGoals) /
-                                                LENGTH OF lionelMessiGoals ARRAY
+                    moSalahAvgGoals <- sumOfArrayElements(moSalahGoals) / 5 
+                    harryKaneAvgGoals <- sumOfArrayElements(harryKaneGoals) / 5
+                    lionelMessiAvgGoals <- sumOfArrayElements(lionelMessiGoals) / 5
 
                     PROMPT "The average amount of goals Mohamed Salah scored
                         over the 5 matches was: " + moSalahAvgGoals + " goals"
@@ -61,23 +58,32 @@ BEGIN Task One
                         over the 5 matches was: " + lionelMessiAvgGoals + " goals"
 
                 case: menuOption EQUALS 3
-                    
-            
+                    IF moSalahTotalGoals > harryKaneTotalGoals AND 
+                            moSalahTotalGoals > lionelMessiTotalGoals THEN
+                        OUTPUT "Mohamed Salah scored the most goals over the
+                                                                     5 matches"
+                    ELSE IF harryKaneTotalGoals > moSalahTotalGoals AND 
+                            harryKaneTotalGoals > lionelMessiTotalGoals THEN
+                        OUTPUT "Harry Kane scored the most goals over the 
+                                                                    5 matches"
+                    ELSE
+                        OUTPUT "Lionel Messi scored the most goals over the 
+                                                                    5 matches"
+                    ENDIF 
             END CASE
         WHILE option < 0 OR option > 3
         ASSERTION: 0 <= option <= 3
     END MAIN
     
-
     METHOD: sumOfArrayElements
     IMPORT: array (Array)
-    EXPORT: sum (Integer)
+    EXPORT: sumOfArray (Integer)
     ALGORITHM:
-        INITIALISE sum AS INTEGER
+        INITIALISE sumOfArray AS INTEGER
         FOR count = 0 TO LENGTH OF array CHANGEBY INCREMENTS OF 1
-            sum += ELEMENT AT INDEX count OF array
+            sumOfArray += ELEMENT AT INDEX count OF array
         ENDFOR
-        RETURN sum
+        RETURN sumOfArray
     END sumOfArrayElements
 
 END
