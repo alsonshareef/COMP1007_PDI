@@ -4,13 +4,16 @@ public class IntegerOutput
 {
     public static void main(String[] args)
     {
-        int integer;
+        int userInteger;
         Scanner input = new Scanner(System.in);
-
+        
+        // Ask user for an integer
         System.out.print("Enter an integer number: ");
-        integer = input.nextInt();
+        userInteger = input.nextInt();
 
-        for(int count = 1; count <= integer; count++) 
+        // Loop from 1 upto and including user integer, outputing the current
+        // integer for every iteration.
+        for(int count = 1; count <= userInteger; count++) 
         {
             System.out.print(count + " ");
         }       
