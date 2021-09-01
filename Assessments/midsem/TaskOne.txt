@@ -1,1 +1,83 @@
-This will be the pseudocode for Task 1
+BEGIN Task One
+    MAIN
+        INITIALISE moSalahGoals AS EMPTY ARRAY OF LENGTH 5
+        PROMPT "Please enter the goals scored by Mohamed Salah:"
+        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 1:"
+        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 2:"
+        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 3:"
+        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 4:"
+        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 5:"
+
+        INITIALISE harryKaneGoals AS EMPTY ARRAY OF LENGTH 5
+        PROMPT "Please enter the goals scored by Harry Kane:"
+        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 1:"
+        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 2:"
+        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 3:"
+        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 4:"
+        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 5:"
+
+        INITIALISE lionelMessiGoals AS EMPTY ARRAY OF LENGTH 5
+        "Please enter the goals scored by Lionel Messi:"
+        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 1:"
+        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 2:"
+        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 3:"
+        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 4:"
+        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 5:"
+        
+        INITIALISE menuOption AS INTEGER
+        DO
+            menuOption <- ASK USER WITH PROMPT "Thank you for providing those 
+                        records. Now select one of the four following options."
+
+            CASE menuOption
+                case: menuOption EQUALS 0
+                    OUTPUT "Okay, goodbye!"
+
+                case: menuOption EQUALS 1
+                    moSalahTotalGoals <- sumOfArrayElements(moSalahGoals)
+                    harryKaneTotalGoals <- sumOfArrayElements(harryKaneGoals)
+                    lionelMessiTotalGoals <- sumOfArrayElements(lionelMessiGoals)
+
+                    PROMPT "Total goals scored by Mohamed Salah for the 5 weeks
+                                                    was " + moSalahTotalGoals               
+                    PROMPT "Total goals scored by Harry Kane for the 5 weeks
+                                                  was " + harryKaneTotalGoals 
+                    PROMPT "Total goals scored by Lionel Messi for the 5 weeks
+                                                was " + lionelMessiTotalGoals 
+
+                case: menuOption EQUALS 2
+                    moSalahAvgGoals <- sumOfArrayElements(moSalahGoals) / 
+                                                LENGTH OF moSalahGoals ARRAY
+                    harryKaneAvgGoals <- sumOfArrayElements(harryKaneGoals) / 
+                                                LENGTH OF harryKaneGoals ARRAY
+                    lionelMessiAvgGoals <- sumOfArrayElements(lionelMessiGoals) /
+                                                LENGTH OF lionelMessiGoals ARRAY
+
+                    PROMPT "The average amount of goals Mohamed Salah scored
+                        over the 5 matches was: " + moSalahAvgGoals + " goals"
+                    PROMPT "The average amount of goals Harry Kane scored
+                        over the 5 matches was: " + harryKaneAvgGoals + " goals"
+                    PROMPT "The average amount of goals Lionel Messi scored
+                        over the 5 matches was: " + lionelMessiAvgGoals + " goals"
+
+                case: menuOption EQUALS 3
+                    
+            
+            END CASE
+        WHILE option < 0 OR option > 3
+        ASSERTION: 0 <= option <= 3
+    END MAIN
+    
+
+    METHOD: sumOfArrayElements
+    IMPORT: array (Array)
+    EXPORT: sum (Integer)
+    ALGORITHM:
+        INITIALISE sum AS INTEGER
+        FOR count = 0 TO LENGTH OF array CHANGEBY INCREMENTS OF 1
+            sum += ELEMENT AT INDEX count OF array
+        ENDFOR
+        RETURN sum
+    END sumOfArrayElements
+
+END
