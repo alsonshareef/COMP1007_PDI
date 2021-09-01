@@ -1,0 +1,8 @@
+BEGIN TemperatureConverter
+    MAIN:
+        C <- ASK USER WITH PROMPT "Input degrees Celsius"
+        F <- (9/5) * C + 32
+
+        PRINT C + " degrees Celsius is " + F + " degrees Fahrenheit."
+    END_MAIN
+END

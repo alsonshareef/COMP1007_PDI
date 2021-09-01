@@ -1,0 +1,40 @@
+BEGIN Menu
+    MAIN:
+        option <- ASK USER WITH PROMPT "Select between options ranging from
+                                            0 to 3"
+        DO
+            CASE option
+                case: option EQUALS 0
+                    OUTPUT "Goodbye!"
+                
+                case: option EQUALS 1
+                    intOne <- ASK USER WITH PROMPT "Enter first integer"
+                    intTwo <- ASK USER WITH PROMPT "Enter second integer"
+                    sum <- intOne + intTwo
+                    OUTPUT  "The sum of " + intOne + " and " + intTwo + 
+                            "is equal to: " + sum
+
+                case: option EQUALS 2
+                    intOne <- ASK USER WITH PROMPT "Enter first integer"
+                    intTwo <- ASK USER WITH PROMPT "Enter second integer"
+                    product <- intOne * intTwo
+                    OUTPUT  "The product of " + intOne + " and " + intTwo + 
+                            "is equal to: " + product
+
+                case: option EQUALS 3
+                    intOne <- ASK USER WITH PROMPT "Enter first integer"
+                    intTwo <- ASK USER WITH PROMPT "Enter second integer"
+                    IF intOne DIVIDED BY intTWO HAS REMAINDER 0 THEN
+                        OUTPUT intOne + " is divisible by " + intTwo
+                    ELSE 
+                        OUTPUT intOne + " is not divisible by " + intTwo
+                    END_IF 
+
+                default: option < 0 OR option > 3
+                    OUTPUT "Option was invalid. Please select a valid option."
+            END_CASE
+        WHILE option < 0 OR option > 3 
+        ASSERTION: 0 <= option <= 3
+
+    END_MAIN
+END

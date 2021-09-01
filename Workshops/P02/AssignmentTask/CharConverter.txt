@@ -1,0 +1,10 @@
+BEGIN ASCII Converter
+    MAIN:
+        uppercasechar <- ASK USER WITH PROMPT "Please enter an uppercase character: "
+        ascii <- Find corresponding ascii value and assign to int 'ascii'
+        lowercasechar <- Find corresponding lowercase character to uppercase character and assigning to char 'lowercasechar'
+
+        PRINT "The ASCII value of " + uppercasechar + " is: " ascii
+        PRINT "The lowercase value of " uppercasechar + " is: " lowercasechar
+    END_MAIN
+END

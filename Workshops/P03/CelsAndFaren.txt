@@ -1,0 +1,22 @@
+BEGIN CelsAndFaren
+    MAIN:
+        initialtempscale <- ASK USER WITH PROMPT "Input 'C' or 'c' to convert
+            from Celsius, or Input 'F' or 'f' to convert from Fahrenheit"
+
+        IF initialtempscale EQUALS 'F' OR initialtempscale EQUALS 'f':
+            initialtemp <- ASK USER WITH PROMPT "Type fahrenheit value you 
+                                                        would like to convert"
+            c <- (initialtemp - 32) * (5/9)
+            OUTPUT f + "degrees fahrenheit is equal to " + c + " degrees 
+                                                                    celsius"
+        ENDIF
+
+        IF initialtempscale EQUALS 'C' OR initialtempscale EQUALS 'c':
+            initialtemp <- ASK USER WITH PROMPT "Type celsius value you 
+                                                        would like to convert"
+            f <- ((9/5) * initialtemp) + 32
+            OUTPUT c + "degrees celsius is equal to " + f + " degrees 
+                                                                fahrenheit"
+        END IF
+    END_MAIN
+END
