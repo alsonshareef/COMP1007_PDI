@@ -1,0 +1,6 @@
+BEGIN IntegerOutput
+    MAIN:
+        userInteger <- ASK USER WITH PROMPT "Please enter an integer."
+    
+    END_MAIN:
+END
