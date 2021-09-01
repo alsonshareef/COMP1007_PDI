@@ -38,11 +38,11 @@ BEGIN Task One
                     harryKaneTotalGoals <- sumOfArrayElements(harryKaneGoals)
                     lionelMessiTotalGoals <- sumOfArrayElements(lionelMessiGoals)
 
-                    PROMPT "Total goals scored by Mohamed Salah for the 5 weeks
+                    PROMPT "Total goals scored by Mohamed Salah over the 5 weeks
                                                     was " + moSalahTotalGoals               
-                    PROMPT "Total goals scored by Harry Kane for the 5 weeks
+                    PROMPT "Total goals scored by Harry Kane over the 5 weeks
                                                   was " + harryKaneTotalGoals 
-                    PROMPT "Total goals scored by Lionel Messi for the 5 weeks
+                    PROMPT "Total goals scored by Lionel Messi over the 5 weeks
                                                 was " + lionelMessiTotalGoals 
 
                 case: menuOption EQUALS 2
@@ -70,6 +70,10 @@ BEGIN Task One
                         OUTPUT "Lionel Messi scored the most goals over the 
                                                                     5 matches"
                     ENDIF 
+
+                default:
+                    OUTPUT "You have not entered a valid option. Please select
+                                                 one of the options provided."
             END CASE
         WHILE option < 0 OR option > 3
         ASSERTION: 0 <= option <= 3
@@ -78,6 +82,7 @@ BEGIN Task One
     METHOD: sumOfArrayElements
     IMPORT: array (Array)
     EXPORT: sumOfArray (Integer)
+    ASSERTION: sumOfArray will be equal to sum of all elements of array
     ALGORITHM:
         INITIALISE sumOfArray AS INTEGER
         FOR count = 0 TO LENGTH OF array CHANGEBY INCREMENTS OF 1
