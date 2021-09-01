@@ -1,6 +1,9 @@
 BEGIN IntegerOutput
     MAIN:
         userInteger <- ASK USER WITH PROMPT "Please enter an integer."
-    
+        
+        FOR i EQUALS 1 UPTO INCLUDING userInteger CHANGEBY increment of 1
+            OUTPUT i + " "
+        ENDFOR 
     END_MAIN:
 END

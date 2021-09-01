@@ -26,13 +26,17 @@ public class Menu
             // 2. Run corresponding code to the valid option user provided.
             switch(option)
             {
-                // 2.a) Exit program if option equals 0
+                /*
+                2.a) Exit program if option equals 0
+                */
                 case 0:
                     System.out.println("Goodbye!");
                 break;
 
-                // 2.b) Take 2 integers from user and output the sum if option
-                //      equals 1
+                /*
+                2.b) Take 2 integers from user and output the sum if option
+                     equals 1
+                */ 
                 case 1:
                     int sumIntOne, sumIntTwo, sum;
                     System.out.println("Enter first integer");
@@ -44,8 +48,11 @@ public class Menu
                                         sumIntTwo + " is equal to: " + sum);
                 break;
 
-                // 2.c) Take 2 integers from user and output the product if 
-                //      option equals 2
+
+                /* 
+                2.c) Take 2 integers from user and output the product if 
+                     option equals 2
+                */
                 case 2:
                     int prodIntOne, prodIntTwo, product;
                     System.out.println("Enter first integer");
@@ -57,8 +64,10 @@ public class Menu
                                         prodIntTwo + " is equal to: " + product);
                 break;
 
-                // 2.d) Take two integers and output whether they are divisible
-                //      if option equals 3
+                /* 
+                2.d) Take two integers and output whether they are divisible
+                     if option equals 3
+                */
                 case 3:
                     int divIntOne, divIntTwo;
                     System.out.println("Enter first integer");
@@ -77,8 +86,10 @@ public class Menu
                     }
                 break;
 
-                // 2.e) Request user to input valid option
-                //      if option < 0 or option > 3
+                /* 
+                2.e) Request user to input valid option if 
+                     option < 0 or option > 3
+                */
                 default:
                     System.out.println("Option was invalid. Please select a "
                                                         + "valid option.");

@@ -11,7 +11,7 @@ public class IntegerOutput
         System.out.print("Enter an integer number: ");
         userInteger = input.nextInt();
 
-        // Loop from 1 upto and including user integer, outputing the current
+        // Loop from 1 upto and including userInteger, outputing the current
         // integer for every iteration.
         for(int count = 1; count <= userInteger; count++) 
         {
