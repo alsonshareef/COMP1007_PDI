@@ -99,9 +99,35 @@ public class TaskTwo
         int menuOption;
         do
         {
-        
+            System.out.println("> 1. Display total number of goals scored by"
+                                                             + " each player"); 
+            System.out.println("> 2. Display the average number of goals scored "
+                                                            + "by each player");
+            System.out.println("> 3. Display the highest goal scorer's name "
+                                                         + "number of goals.");
+            System.out.println("> 0. Exit Golden Boot Tracker Program.");
+            menuOption = input.nextInt();
+
+            switch(menuOption)
+            {
+                case 0:
+                    System.out.println("Okay, goodbye!");
+                break;
+                case 1:
+                    System.out.println("Total number of goals");
+                break;
+                case 2:
+                    System.out.println("Average number of goals");
+                break;
+                case 3:
+                    System.out.println("Highest goal scorer");
+                break;
+                default:
+                    System.out.println("Invalid option. Please select a "
+                                                         + "valid option.");
+            }
         }
-        while ((menuOption < 0) || (menuOption > 3));
+        while (menuOption != 0);
         
         // Close Scanner
         input.close();
