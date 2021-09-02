@@ -1,6 +1,9 @@
 BEGIN Task One
     MAIN
         INITIALISE moSalahGoals AS EMPTY ARRAY OF LENGTH 5
+        INITIALISE harryKaneGoals AS EMPTY ARRAY OF LENGTH 5
+        INITIALISE lionelMessiGoals AS EMPTY ARRAY OF LENGTH 5
+
         PROMPT "Please enter the goals scored by Mohamed Salah:"
         moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 1:"
         moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 2:"
@@ -8,7 +11,6 @@ BEGIN Task One
         moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 4:"
         moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 5:"
 
-        INITIALISE harryKaneGoals AS EMPTY ARRAY OF LENGTH 5
         PROMPT "Please enter the goals scored by Harry Kane:"
         harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 1:"
         harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 2:"
@@ -16,18 +18,25 @@ BEGIN Task One
         harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 4:"
         harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 5:"
 
-        INITIALISE lionelMessiGoals AS EMPTY ARRAY OF LENGTH 5
-        "Please enter the goals scored by Lionel Messi:"
+        PROMPT "Please enter the goals scored by Lionel Messi:"
         lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 1:"
         lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 2:"
         lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 3:"
         lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 4:"
         lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 5:"
         
+        PROMPT "Data Entry Complete!"
+
         INITIALISE menuOption AS INTEGER
         DO
+            PROMPT "
+                    > 1. Display total number of goals scored by each player
+                    > 2. Display the average number of goals scored by each player
+                    > 3. Display the highest goal scorer's name and number of goals
+                    > 0. Exit Golden Boot Tracker Program
+                    "
             menuOption <- ASK USER WITH PROMPT "Thank you for providing those 
-                        records. Now select one of the four following options."
+                        records. Now select one of the previous four menu options."
 
             CASE menuOption
                 case: menuOption EQUALS 0
