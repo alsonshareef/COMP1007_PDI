@@ -1,30 +1,37 @@
 BEGIN Task One
     MAIN
-        INITIALISE moSalahGoals AS EMPTY ARRAY OF LENGTH 5
-        INITIALISE harryKaneGoals AS EMPTY ARRAY OF LENGTH 5
-        INITIALISE lionelMessiGoals AS EMPTY ARRAY OF LENGTH 5
-
-        PROMPT "Please enter the goals scored by Mohamed Salah:"
-        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 1:"
-        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 2:"
-        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 3:"
-        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 4:"
-        moSalahGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 5:"
-
-        PROMPT "Please enter the goals scored by Harry Kane:"
-        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 1:"
-        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 2:"
-        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 3:"
-        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 4:"
-        harryKaneGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 5:"
-
-        PROMPT "Please enter the goals scored by Lionel Messi:"
-        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 1:"
-        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 2:"
-        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 3:"
-        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 4:"
-        lionelMessiGoals <- ASK USER WITH PROMPT "Enter goals scored in Week 5:"
+        moSalahGoals AS EMPTY ARRAY OF LENGTH 5
+        harryKaneGoals AS EMPTY ARRAY OF LENGTH 5
+        lionelMessiGoals AS EMPTY ARRAY OF LENGTH 5
         
+        FOR count = 0 TO 4 CHANGEBY INCREMENTS OF 1
+            currentWeekNum <- count + 1
+            
+            moSalahGoalsForWeek <- ASK USER WITH PROMPT "Please enter the goals
+                     scored by Mohamed Salah in Week " + currentWeekNum + ": "
+            IF (moSalahGoalsForWeek < 0)
+                moSalahGoals AT INDEX count <- 0
+            ELSE
+                moSalahGoals AT INDEX count <- moSalahGoalsForWeek
+            ENDIF
+
+            harryKaneGoalsForWeek <- ASK USER WITH PROMPT "Please enter the goals
+                     scored by Harry Kane in Week " + currentWeekNum + ": "
+            IF (harryKaneGoalsForWeek < 0)
+                harryKaneGoals AT INDEX count <- 0
+            ELSE
+                harryKaneGoals AT INDEX count <- harryKaneGoalsForWeek
+            ENDIF
+
+            lionelMessiGoalsForWeek <- ASK USER WITH PROMPT "Please enter the goals
+                     scored by Lionel Messi in Week " + currentWeekNum + ": "
+            IF (lionelMessiGoalsForWeek < 0)
+                lionelMessiGoals AT INDEX count <- 0
+            ELSE
+                lionelMessiGoals AT INDEX count <- lionelMessiGoalsForWeek
+            ENDIF
+        ENDFOR
+               
         PROMPT "Data Entry Complete!"
 
         INITIALISE menuOption AS INTEGER
@@ -38,7 +45,7 @@ BEGIN Task One
             menuOption <- ASK USER WITH PROMPT "Thank you for providing those 
                         records. Now select one of the previous four menu options."
 
-            CASE menuOption
+            SWITCH CASE menuOption
                 case: menuOption EQUALS 0
                     OUTPUT "Okay, goodbye!"
 
@@ -67,37 +74,35 @@ BEGIN Task One
                         over the 5 matches was: " + lionelMessiAvgGoals + " goals"
 
                 case: menuOption EQUALS 3
-                    IF moSalahTotalGoals > harryKaneTotalGoals AND 
-                            moSalahTotalGoals > lionelMessiTotalGoals THEN
-                        OUTPUT "Mohamed Salah scored the most goals over the
-                                                                     5 matches"
-                    ELSE IF harryKaneTotalGoals > moSalahTotalGoals AND 
-                            harryKaneTotalGoals > lionelMessiTotalGoals THEN
-                        OUTPUT "Harry Kane scored the most goals over the 
-                                                                    5 matches"
-                    ELSE
-                        OUTPUT "Lionel Messi scored the most goals over the 
-                                                                    5 matches"
+                    IF moSalahGoalSum > harryKaneGoalSum AND 
+                            moSalahGoalSum > lionelMessiGoalSum THEN
+                        OUTPUT "Mohamed Salah was the highest scorer over the 5 games."
+                    ELSE IF harryKaneGoalSum > moSalahGoalSum AND 
+                            harryKaneGoalSum > lionelMessiGoalSum THEN
+                        OUTPUT "Harry Kane scored the most goals over the 5 games."
+                    ELSE IF lionelMessiGoalSum > moSalahGoalSum AND
+                            lionelMessiGoalSum > harryKaneGoalSum THEN
+                        OUTPUT "Lionel Messi scored the most goals over the 5 games."
                     ENDIF 
 
                 default:
                     OUTPUT "You have not entered a valid option. Please select
                                                  one of the options provided."
-            END CASE
-        WHILE option < 0 OR option > 3
-        ASSERTION: 0 <= option <= 3
+            END SWITCH CASE
+        WHILE menuOption DOES NOT EQUAL 0
+        ASSERTION: Menu should continue displaying unless user selects 0 to 
+                   close program.
     END MAIN
     
     METHOD: sumOfArrayElements
-    IMPORT: array (Array)
+    IMPORT: array (Array of Integers)
     EXPORT: sumOfArray (Integer)
     ASSERTION: sumOfArray will be equal to sum of all elements of array
     ALGORITHM:
-        INITIALISE sumOfArray AS INTEGER
-        FOR count = 0 TO LENGTH OF array CHANGEBY INCREMENTS OF 1
+        sumOfArray <- 0
+        FOR count = 0 TO 4 CHANGEBY INCREMENTS OF 1
             sumOfArray += ELEMENT AT INDEX count OF array
         ENDFOR
         RETURN sumOfArray
-    END sumOfArrayElements
-
+    END METHOD sumOfArrayElements
 END
