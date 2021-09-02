@@ -29,11 +29,12 @@ public class TaskTwo
         for (int i = 0; i < 5; i++)
         {
             // Integer for tracking the current week to record for.
-            int weekNum = i + 1;
+            int currentWeekNum = i + 1;
+
             // 2.a) Weekly goals recording for Mohamed Salah
             int moSalahGoalsForWeek;
             System.out.println("Please enter the goals scored by Mohamed Salah"
-                                                + " in Week " + weekNum + ": ");
+                                                + " in Week " + currentWeekNum + ": ");
             moSalahGoalsForWeek = input.nextInt();
             if (moSalahGoalsForWeek < 0)
             {
@@ -43,10 +44,11 @@ public class TaskTwo
             {
                 moSalahGoals[i] = moSalahGoalsForWeek;
             }
+
             // 2.b) Weekly goals recording for Harry Kane
             int harryKaneGoalsForWeek;
             System.out.println("Please enter the goals scored by Harry Kane"
-                                                + " in Week " + weekNum + ": ");
+                                                + " in Week " + currentWeekNum + ": ");
             harryKaneGoalsForWeek = input.nextInt();
             if (harryKaneGoalsForWeek < 0)
             {
@@ -56,10 +58,11 @@ public class TaskTwo
             {
                 harryKaneGoals[i] = harryKaneGoalsForWeek;
             }
+
             // 2.c) Weekly goals recording for Lionel Messi.
             int lionelMessiGoalsForWeek;
             System.out.println("Please enter the goals scored by Lionel Messi"
-                                                + " in Week " + weekNum + ": ");
+                                                + " in Week " + currentWeekNum + ": ");
             lionelMessiGoalsForWeek = input.nextInt();
             if (lionelMessiGoalsForWeek < 0)
             {
@@ -72,37 +75,7 @@ public class TaskTwo
             System.out.println();
         }
 
-        // 3. Display summary of user's completed data entry.
-        System.out.println("=====================");
-        System.out.println("-------SUMMARY-------");
-        System.out.println("=====================");
-
-        for (int i = 0; i < 5; i++)
-        {
-            int weekNum = i + 1;
-            System.out.println("In week " + weekNum + ", Mohamed Salah scored "
-                                                + moSalahGoals[i] + " goals.");
-        }        
-        System.out.println("-_-_-_-_-_-_-_-_-_-");
-
-        for (int i = 0; i < 5; i++)
-        {
-            int weekNum = i + 1;
-            System.out.println("In week " + weekNum + ", Harry Kane scored "
-                                              + harryKaneGoals[i] + " goals.");
-        } 
-        System.out.println("-_-_-_-_-_-_-_-_-_-");
-
-        for (int i = 0; i < 5; i++)
-        {
-            int weekNum = i + 1;
-            System.out.println("In week " + weekNum + ", Lionel Messi scored "
-                                            + lionelMessiGoals[i] + " goals.");
-        } 
-        System.out.println("-_-_-_-_-_-_-_-_-_-");
-
-        // 4. Prompt the user that data entry phase is complete.
-        System.out.println();
+        // 3. Prompt the user that data entry phase is complete.
         System.out.println("=====================");
         System.out.println("DATA ENTRY COMPLETED");
         System.out.println("=====================");        
@@ -112,11 +85,10 @@ public class TaskTwo
             which allows user to see either total goals scored by each player,
             average goals scored by each player for the 5 weeks, the highest 
             goal scorer or to exit the program. */
-
         int menuOption;
         do
         {
-            // 5. Display menu options and prompt user to select an option.
+            // 4. Display menu options and prompt user to select an option.
             System.out.println("> 1. Display total number of goals scored by"
                                                              + " each player"); 
             System.out.println("> 2. Display the average number of goals scored "
@@ -124,18 +96,19 @@ public class TaskTwo
             System.out.println("> 3. Display the highest goal scorer's name "
                                                          + "number of goals.");
             System.out.println("> 0. Exit Golden Boot Tracker Program.");
+
             menuOption = input.nextInt();
             
             System.out.println();
 
             switch(menuOption)
             {
-                // 5.a) If user selects 0, close program.
+                // 4.a) If user selects 0, close program.
                 case 0:
                     System.out.println("Okay, goodbye!");
                 break;
 
-                /* 5.b) If user selects 1, display the total goals scored by 
+                /* 4.b) If user selects 1, display the total goals scored by 
                         each player over the 5 games. */
                 case 1:
                     int moSalahTotalGoals;
@@ -157,7 +130,7 @@ public class TaskTwo
                     System.out.println();
                 break;
 
-                /* 5.c) If user selects 2, display the average amount of goals
+                /* 4.c) If user selects 2, display the average amount of goals
                         that the players scored across the 5 games. */
                 case 2:
                     int moSalahAvgGoals;
@@ -178,7 +151,7 @@ public class TaskTwo
                     System.out.println();
                 break;
 
-                /* 5.d) If user selects 3, display who the highest scorer was 
+                /* 4.d) If user selects 3, display who the highest scorer was 
                         over the 5 games */
                 case 3:
                     int moSalahGoalSum = sumOfArrayElements(moSalahGoals);
@@ -201,7 +174,7 @@ public class TaskTwo
                                          lionelMessiGoalSum > harryKaneGoalSum)
                     {
                         System.out.println("Lionel Messi was the highest scorer"
-                                                         + "over the 5 games.");
+                                                         + " over the 5 games.");
                     }
 
                     System.out.println();
