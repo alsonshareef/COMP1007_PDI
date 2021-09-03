@@ -133,19 +133,19 @@ public class TaskTwo
                 /* 4.c) If user selects 2, display the average amount of goals
                         that the players scored across the 5 games. */
                 case 2:
-                    int moSalahAvgGoals;
-                    int harryKaneAvgGoals;
-                    int lionelMessiAvgGoals;
+                    double moSalahAvgGoals;
+                    double harryKaneAvgGoals;
+                    double lionelMessiAvgGoals;
 
-                    moSalahAvgGoals = sumOfArrayElements(moSalahGoals) / 5;
+                    moSalahAvgGoals = (double)(sumOfArrayElements(moSalahGoals)) / 5.0;
                     System.out.println("Mohamed Salah scored an average of: " 
                                                 + moSalahAvgGoals + " goals.");
 
-                    harryKaneAvgGoals = sumOfArrayElements(harryKaneGoals) / 5;
+                    harryKaneAvgGoals = (double)(sumOfArrayElements(harryKaneGoals)) / 5.0;
                     System.out.println("Harry Kane scored an average of: " 
                                               + harryKaneAvgGoals + " goals.");
 
-                    lionelMessiAvgGoals = sumOfArrayElements(lionelMessiGoals) / 5;
+                    lionelMessiAvgGoals = (double)(sumOfArrayElements(lionelMessiGoals)) / 5.0;
                     System.out.println("Lionel Messi scored an average of: " 
                                             + lionelMessiAvgGoals + " goals.");
                     System.out.println();
