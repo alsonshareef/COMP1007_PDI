@@ -228,8 +228,8 @@ public class TaskTwo
                     // All players scored the same amount of goals.
                     else
                     {
-                        System.out.println("All players scored the same amount"
-                                             + " of goals over the 5 games.");
+                        System.out.println("Two or more players scored the" +
+                             " same highest amount of goals over the 5 games.");
                     }
 
                     System.out.println();
