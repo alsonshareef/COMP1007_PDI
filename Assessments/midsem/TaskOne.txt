@@ -1,12 +1,8 @@
 BEGIN Task One
     MAIN
-        moSalahGoals AS EMPTY ARRAY OF LENGTH 5
-        harryKaneGoals AS EMPTY ARRAY OF LENGTH 5
-        lionelMessiGoals AS EMPTY ARRAY OF LENGTH 5
-        
+        moSalahGoals <- EMPTY INTEGER ARRAY OF LENGTH 5
         FOR count = 0 TO 4 CHANGEBY INCREMENTS OF 1
             currentWeekNum <- count + 1
-            
             moSalahGoalsForWeek <- ASK USER WITH PROMPT "Please enter the goals
                      scored by Mohamed Salah in Week " + currentWeekNum + ": "
             IF (moSalahGoalsForWeek < 0)
@@ -14,7 +10,11 @@ BEGIN Task One
             ELSE
                 moSalahGoals AT INDEX count <- moSalahGoalsForWeek
             ENDIF
+        ENDFOR
 
+        harryKaneGoals <- EMPTY INTEGER ARRAY OF LENGTH 5
+        FOR
+            currentWeekNum <- count + 1
             harryKaneGoalsForWeek <- ASK USER WITH PROMPT "Please enter the goals
                      scored by Harry Kane in Week " + currentWeekNum + ": "
             IF (harryKaneGoalsForWeek < 0)
@@ -22,7 +22,11 @@ BEGIN Task One
             ELSE
                 harryKaneGoals AT INDEX count <- harryKaneGoalsForWeek
             ENDIF
+        ENDFOR
 
+        lionelMessiGoals <- EMPTY INTEGER ARRAY OF LENGTH 5
+        FOR
+            currentWeekNum <- count + 1
             lionelMessiGoalsForWeek <- ASK USER WITH PROMPT "Please enter the goals
                      scored by Lionel Messi in Week " + currentWeekNum + ": "
             IF (lionelMessiGoalsForWeek < 0)
@@ -34,7 +38,6 @@ BEGIN Task One
                
         PROMPT "Data Entry Complete!"
 
-        INITIALISE menuOption AS INTEGER
         DO
             PROMPT "
                     > 1. Display total number of goals scored by each player
@@ -83,11 +86,13 @@ BEGIN Task One
                     ELSE IF lionelMessiGoalSum > moSalahGoalSum AND
                             lionelMessiGoalSum > harryKaneGoalSum THEN
                         OUTPUT "Lionel Messi scored the most goals over the 5 games."
+                    ELSE
+                        OUTPUT "All players scored the same amount of goals 
+                                                            over the 5 games."
                     ENDIF 
 
                 default:
-                    OUTPUT "You have not entered a valid option. Please select
-                                                 one of the options provided."
+                    OUTPUT "Invalid Option. Please select one of the options provided."
             END SWITCH CASE
         WHILE menuOption DOES NOT EQUAL 0
         ASSERTION: Menu should continue displaying unless user selects 0 to 
