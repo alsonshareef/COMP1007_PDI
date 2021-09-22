@@ -1,1 +1,38 @@
-Student class pseudocode
+CLASS Student
+    CLASS FIELDS:
+        name (String)
+        studentID (Integer)
+        mark (double)
+    END CLASS FIELDS 
+
+    ACCESSOR: getName
+    IMPORT: None
+    EXPORT: name (String)
+    ASSERTION: Return the name of the student
+    ALGORITHM:
+    END ACCESSOR getName
+
+    ACCESSOR: getStudentId
+    IMPORT: None
+    EXPORT: studentId (Integer)
+    ASSERTION: Return the ID of the student
+    ALGORITHM:
+    END ACCESSOR getStudentId
+
+    ACCESSOR: getGrade
+    IMPORT: None
+    EXPORT: 
+    ASSERTION: Returns the grade equivalent of the class field 'mark'
+    ALGORITHM: 
+    END ACCESSOR getGrade
+
+    ACCESSOR: toFileString
+    IMPORT:
+    EXPORT:
+    ASSERTION:
+    ALGORITHM:
+    END ACCESSOR toFileString
+
+END CLASS Student
+
+    
