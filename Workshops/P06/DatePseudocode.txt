@@ -1,0 +1,12 @@
+CLASS Date
+    CLASS FIELDS:
+        day (Integer)
+        month (Integer)
+        year (Integer)
+    END CLASS FIELDS
+
+    METHODS:
+        
+    
+    END METHODS
+END CLASS Date
