@@ -1,4 +1,0 @@
-BEGIN Assignment Pseudocode
-    MAIN
-    END MAIN
-END 
