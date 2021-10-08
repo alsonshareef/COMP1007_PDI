@@ -6,6 +6,72 @@ CLASS Date
     END CLASS FIELDS
 
     METHODS:
+        CONSTRUCTOR WITH PARAMETERS
+        IMPORT: pDay (Integer), pMonth (Integer), pYear (Integer)
+        EXPORT: None
+        ASSERTION: Create Date object with values received from user
+        ALGORITHM:
+            minDay <- 1
+            maxDay <- 0
+            leapYear <- isLeapYear()
+            currentMonth <- getDayOfMonth()
+
+            IF currentMonth EQUALS 1 OR 3 OR 5 OR 7 OR 8 OR 10 OR 12
+                maxDay <- 31
+            ELSEIF currentMonth EQUALS 4 OR 6 OR 9 OR 11
+                maxDay <- 30
+            ELSEIF currentMonth EQUALS 2
+                IF leapYear
+                    maxDay <- 29
+                ELSE
+                    maxDay <- 28
+                ENDIF
+            ENDIF
+
+            IF pDay IS GREATER OR EQUAL TO minDay AND pDay LESS OR EQUAL TO maxDay
+                dayOfMonth <- pDay
+                PROMPT "Day of month has been successfully updated."
+            ELSE
+                PROMPT "The value you have inputed is not a valid day for the 
+                                    current month. Please enter a valid day."
+            ENDIF
+
+            IF pMonth IS GREATER OR EQUAL TO 1 AND LESS THAN OR EQUAL TO 12
+                monthOfYear <- pMonth
+                PROMPT "Month of year has been successfully updated."
+            ELSE
+                PROMPT "The value you have inputed is not a valid month for the 
+                                    current year. Please enter a valid month."
+            ENDIF
+            
+            IF pYear DOES NOT EQUAL null && pYear IS GREATER THAN 0
+                year <- pYear
+            ELSE
+                PROMPT "The value you have inputed is not a valid year. Please
+                                                         enter a valid year."
+            ENDIF
+        END CONSTRUCTOR WITH PARAMETERS
+
+        COPY CONSTRUCTOR
+        IMPORT: pDate (Date)
+        EXPORT: None
+        ASSERTION: Create a copy of imported Date object
+        ALGORITHM:
+            dayOfMonth = pDate.getDayOfMonth()
+            monthOfYear = pDate.getMonthOfYear()
+            getYear = pDate.getYear()
+        END COPY CONSTRUCTOR
+
+        DEFAULT CONSTRUCTOR
+        IMPORT: None
+        EXPORT: None
+        ASSERTION: Creates a Date object with default values
+        ALGORITHM:
+            dayOfMonth = 1
+            monthOfYear = 1
+            year = 1111
+        END COPY CONSTRUCTOR
+
         ACCESSOR: getDayOfMonth
         IMPORT: None
         EXPORT: day (Integer)
@@ -29,6 +95,32 @@ CLASS Date
         ALGORITHM:
             RETURN year
         END ACCESSOR getYear
+
+        ACCESSOR: toString
+        IMPORT: None
+        EXPORT: dateString (String)
+        ASSERTION: Returns a string representation of the state of date object
+        ALGORITHM:
+            dateString <- "The date is " + dayOfMonth + "/" + monthOfYear + 
+                                                                    "/" + year
+            RETURN dateString
+        END ACCESSOR toString
+
+        ACCESSOR: equals
+        IMPORT: inObject (Object)
+        EXPORT: isEqual (Boolean)
+        ASSERTION: Returns true if the two objects are equivalent
+        ALGORITHM:
+            isEqual <- false
+            IF inObject IS A Date OBJECT
+                inDate <- inObject TRANSFORMED INTO Date OBJECT
+                IF dayOfMonth EQUALS inDate.getDayOfMonth() THEN
+                    IF monthOfYear EQUALS inDate.getMonthOfYear() THEN
+                        If year EQUALS inDate.getYear() THEN
+                            isEqual <- true
+            ENDIF
+            RETURN isEqual
+        END ACCESSOR equals
 
         MUTATOR: setDayOfMonth
         IMPORT: pDay (Integer)
@@ -80,7 +172,7 @@ CLASS Date
         EXPORT: None
         ASSERTION: Value of year attribute will be updated to value of pYear
         ALGORITHM:
-            IF pYear DOES NOT EQUAL null
+            IF pYear DOES NOT EQUAL null && pYear IS GREATER THAN 0
                 year <- pYear
             ELSE
                 PROMPT "The value you have inputed is not a valid year. Please
