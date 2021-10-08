@@ -1,12 +1,101 @@
 CLASS Date
     CLASS FIELDS:
-        day (Integer)
-        month (Integer)
+        dayOfMonth (Integer)
+        monthOfYear (Integer)
         year (Integer)
     END CLASS FIELDS
 
     METHODS:
+        ACCESSOR: getDayOfMonth
+        IMPORT: None
+        EXPORT: day (Integer)
+        ASSERTION: Returned the integer value representing the day
+        ALGORITHM:
+            RETURN dayofMonth
+        END ACCESSOR getDayOfMonth
         
+        ACCESSOR: getMonthOfYear
+        IMPORT: None
+        EXPORT: month (Integer)
+        ASSERTION: Returned the integer value representing the month
+        ALGORITHM:
+            RETURN monthOfYear
+        END ACCESSOR getMonthOfYear
+
+        ACCESSOR: getYear
+        IMPORT: None
+        EXPORT: year (Integer)
+        ASSERTION: Returned the integer value representing the year
+        ALGORITHM:
+            RETURN year
+        END ACCESSOR getYear
+
+        MUTATOR: setDayOfMonth
+        IMPORT: pDay (Integer)
+        EXPORT: None
+        ASSERTION: Value of day attribute will be updated to pDay
+        ALGORITHM:
+            minDay <- 1
+            maxDay <- 0
+            leapYear <- isLeapYear()
+            currentMonth <- getDayOfMonth()
+
+            IF currentMonth EQUALS 1 OR 3 OR 5 OR 7 OR 8 OR 10 OR 12
+                maxDay <- 31
+            ELSEIF currentMonth EQUALS 4 OR 6 OR 9 OR 11
+                maxDay <- 30
+            ELSEIF currentMonth EQUALS 2
+                IF leapYear
+                    maxDay <- 29
+                ELSE
+                    maxDay <- 28
+                ENDIF
+            ENDIF
+
+            IF isValidInt(pDay) EQUALS true AND pDay IS GREATER OR EQUAL TO minDay AND
+                                                 pDay LESS OR EQUAL TO maxDay
+                dayOfMonth <- pDay
+                PROMPT "Day of month has been successfully updated."
+            ELSE
+                PROMPT "The day you have inputed is not a valid day for the 
+                                    current month. Please enter a valid day."
+            ENDIF
+        END MUTATOR setDayOfMonth
     
+        MUTATOR: setMonthOfYear
+        IMPORT: pMonth (Integer)
+        EXPORT: None
+        ASSERTION: Value of month attribute will be updated to pMonth
+        ALGORITHM:
+            IF pMonth IS GREATER OR EQUAL TO 1 AND LESS THAN OR EQUAL TO 12
+                monthOfYear <- pMonth
+                PROMPT "Month of year has been successfully updated."
+            ELSE
+                PROMPT "The month you have inputed is not a valid month for the 
+                                    current year. Please enter a valid month."
+            ENDIF
+        END MUTATOR setMonthOfYear
+        
+        MUTATOR: setYear
+        IMPORT: pYear (Integer)
+        EXPORT: None
+        ASSERTION: Value of year attribute will be updated to value of pYear
+        ALGORITHM:
+
+        END MUTATOR setYear
+
+        METHOD: isLeapYear
+        IMPORT: None
+        EXPORT: leapYearVal (Boolean)
+        ASSERTION: Return a boolean value representing whether current year 
+                                                                is a leap year
+        ALGORITHM:
+            leapYearVal <- false
+            currentYear <- getYear()
+            IF currentYear DIVIDED BY 4 EQUALS WHOLE NUMBER
+                leapYearVal <- true
+            ENDIF
+            RETURN leapYearVal
+        END METHOD isLeapYear
     END METHODS
 END CLASS Date
