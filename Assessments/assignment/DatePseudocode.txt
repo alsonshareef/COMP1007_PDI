@@ -70,7 +70,7 @@ CLASS Date
             dayOfMonth = 1
             monthOfYear = 1
             year = 1111
-        END COPY CONSTRUCTOR
+        END DEFAULT CONSTRUCTOR
 
         ACCESSOR: getDayOfMonth
         IMPORT: None
