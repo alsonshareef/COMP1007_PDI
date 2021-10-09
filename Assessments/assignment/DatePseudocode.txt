@@ -11,45 +11,9 @@ CLASS Date
         EXPORT: None
         ASSERTION: Create Date object with values received from user
         ALGORITHM:
-            minDay <- 1
-            maxDay <- 0
-            leapYear <- isLeapYear()
-            currentMonth <- getDayOfMonth()
-
-            IF currentMonth EQUALS 1 OR 3 OR 5 OR 7 OR 8 OR 10 OR 12
-                maxDay <- 31
-            ELSEIF currentMonth EQUALS 4 OR 6 OR 9 OR 11
-                maxDay <- 30
-            ELSEIF currentMonth EQUALS 2
-                IF leapYear
-                    maxDay <- 29
-                ELSE
-                    maxDay <- 28
-                ENDIF
-            ENDIF
-
-            IF pDay IS GREATER OR EQUAL TO minDay AND pDay LESS OR EQUAL TO maxDay
-                dayOfMonth <- pDay
-                PROMPT "Day of month has been successfully updated."
-            ELSE
-                PROMPT "The value you have inputed is not a valid day for the 
-                                    current month. Please enter a valid day."
-            ENDIF
-
-            IF pMonth IS GREATER OR EQUAL TO 1 AND LESS THAN OR EQUAL TO 12
-                monthOfYear <- pMonth
-                PROMPT "Month of year has been successfully updated."
-            ELSE
-                PROMPT "The value you have inputed is not a valid month for the 
-                                    current year. Please enter a valid month."
-            ENDIF
-            
-            IF pYear DOES NOT EQUAL null && pYear IS GREATER THAN 0
-                year <- pYear
-            ELSE
-                PROMPT "The value you have inputed is not a valid year. Please
-                                                         enter a valid year."
-            ENDIF
+            setDayOfMonth(pDay)
+            setMonthOfYear(pMonth)
+            setYear(pYear)  
         END CONSTRUCTOR WITH PARAMETERS
 
         COPY CONSTRUCTOR
@@ -96,15 +60,6 @@ CLASS Date
             RETURN year
         END ACCESSOR getYear
 
-        ACCESSOR: toString
-        IMPORT: None
-        EXPORT: dateString (String)
-        ASSERTION: Returns a string representation of the state of date object
-        ALGORITHM:
-            dateString <- "The date is " + dayOfMonth + "/" + monthOfYear + 
-                                                                    "/" + year
-            RETURN dateString
-        END ACCESSOR toString
 
         ACCESSOR: equals
         IMPORT: inObject (Object)
@@ -125,12 +80,12 @@ CLASS Date
         MUTATOR: setDayOfMonth
         IMPORT: pDay (Integer)
         EXPORT: None
-        ASSERTION: Value of day attribute will be updated to pDay
+        ASSERTION: Value of dayOfMonth attribute will be updated to pDay
         ALGORITHM:
             minDay <- 1
             maxDay <- 0
             leapYear <- isLeapYear()
-            currentMonth <- getDayOfMonth()
+            currentMonth <- getMonthOfYear()
 
             IF currentMonth EQUALS 1 OR 3 OR 5 OR 7 OR 8 OR 10 OR 12
                 maxDay <- 31
@@ -156,7 +111,7 @@ CLASS Date
         MUTATOR: setMonthOfYear
         IMPORT: pMonth (Integer)
         EXPORT: None
-        ASSERTION: Value of month attribute will be updated to pMonth
+        ASSERTION: Value of monthOfYear attribute will be updated to pMonth
         ALGORITHM:
             IF pMonth IS GREATER OR EQUAL TO 1 AND LESS THAN OR EQUAL TO 12
                 monthOfYear <- pMonth
@@ -172,7 +127,7 @@ CLASS Date
         EXPORT: None
         ASSERTION: Value of year attribute will be updated to value of pYear
         ALGORITHM:
-            IF pYear DOES NOT EQUAL null && pYear IS GREATER THAN 0
+            IF pYear DOES NOT EQUAL null AND pYear IS GREATER THAN 0
                 year <- pYear
             ELSE
                 PROMPT "The value you have inputed is not a valid year. Please
@@ -180,18 +135,27 @@ CLASS Date
             ENDIF
         END MUTATOR setYear
 
+        METHOD: toString
+        IMPORT: None
+        EXPORT: dateString (String)
+        ASSERTION: Returns a string representation of the state of date object
+        ALGORITHM:
+            dateString <- "The date is " + dayOfMonth + "/" + monthOfYear + 
+                                                                    "/" + year
+            RETURN dateString
+        END METHOD toString
+
         METHOD: isLeapYear
         IMPORT: None
-        EXPORT: leapYearVal (Boolean)
+        EXPORT: leapYear (Boolean)
         ASSERTION: Return a boolean value representing whether current year 
                                                                 is a leap year
         ALGORITHM:
-            leapYearVal <- false
-            currentYear <- getYear()
-            IF currentYear DIVIDED BY 4 EQUALS WHOLE NUMBER
-                leapYearVal <- true
+            leapYear <- false
+            IF year DIVIDED BY 4 EQUALS WHOLE NUMBER
+                leapYear <- true
             ENDIF
-            RETURN leapYearVal
+            RETURN leapYear
         END METHOD isLeapYear
 
     END METHODS
