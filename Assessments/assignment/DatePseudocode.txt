@@ -11,9 +11,9 @@ CLASS Date
         EXPORT: None
         ASSERTION: Create Date object with values received from user
         ALGORITHM:
-            setDayOfMonth(pDay)
+            setYear(pYear)
             setMonthOfYear(pMonth)
-            setYear(pYear)  
+            setDayOfMonth(pDay)
         END CONSTRUCTOR WITH PARAMETERS
 
         COPY CONSTRUCTOR
@@ -60,51 +60,29 @@ CLASS Date
             RETURN year
         END ACCESSOR getYear
 
-
-        ACCESSOR: equals
-        IMPORT: inObject (Object)
-        EXPORT: isEqual (Boolean)
-        ASSERTION: Returns true if the two objects are equivalent
-        ALGORITHM:
-            isEqual <- false
-            IF inObject IS A Date OBJECT
-                inDate <- inObject TRANSFORMED INTO Date OBJECT
-                IF dayOfMonth EQUALS inDate.getDayOfMonth() THEN
-                    IF monthOfYear EQUALS inDate.getMonthOfYear() THEN
-                        If year EQUALS inDate.getYear() THEN
-                            isEqual <- true
-            ENDIF
-            RETURN isEqual
-        END ACCESSOR equals
-
         MUTATOR: setDayOfMonth
         IMPORT: pDay (Integer)
         EXPORT: None
         ASSERTION: Value of dayOfMonth attribute will be updated to pDay
         ALGORITHM:
-            minDay <- 1
-            maxDay <- 0
+            minDays <- 1
+            maxDays <- 0
             leapYear <- isLeapYear()
-            currentMonth <- getMonthOfYear()
 
-            IF currentMonth EQUALS 1 OR 3 OR 5 OR 7 OR 8 OR 10 OR 12
-                maxDay <- 31
-            ELSEIF currentMonth EQUALS 4 OR 6 OR 9 OR 11
-                maxDay <- 30
-            ELSEIF currentMonth EQUALS 2
+            IF monthOfYear EQUALS 1 OR 3 OR 5 OR 7 OR 8 OR 10 OR 12
+                maxDays <- 31
+            ELSEIF monthOfYear EQUALS 4 OR 6 OR 9 OR 11
+                maxDays <- 30
+            ELSEIF monthOfYear EQUALS 2
                 IF leapYear
-                    maxDay <- 29
+                    maxDays <- 29
                 ELSE
-                    maxDay <- 28
+                    maxDays <- 28
                 ENDIF
             ENDIF
 
-            IF pDay IS GREATER OR EQUAL TO minDay AND pDay LESS OR EQUAL TO maxDay
-                dayOfMonth <- pDay
-                PROMPT "Day of month has been successfully updated."
-            ELSE
-                PROMPT "The value you have inputed is not a valid day for the 
-                                    current month. Please enter a valid day."
+            IF pDay IS GREATER OR EQUAL TO minDays AND pDay LESS OR EQUAL TO maxDays
+                dayOfMonth <- pDay    
             ENDIF
         END MUTATOR setDayOfMonth
     
@@ -115,10 +93,6 @@ CLASS Date
         ALGORITHM:
             IF pMonth IS GREATER OR EQUAL TO 1 AND LESS THAN OR EQUAL TO 12
                 monthOfYear <- pMonth
-                PROMPT "Month of year has been successfully updated."
-            ELSE
-                PROMPT "The value you have inputed is not a valid month for the 
-                                    current year. Please enter a valid month."
             ENDIF
         END MUTATOR setMonthOfYear
         
@@ -127,11 +101,8 @@ CLASS Date
         EXPORT: None
         ASSERTION: Value of year attribute will be updated to value of pYear
         ALGORITHM:
-            IF pYear DOES NOT EQUAL null AND pYear IS GREATER THAN 0
+            IF pYear IS GREATER THAN 0
                 year <- pYear
-            ELSE
-                PROMPT "The value you have inputed is not a valid year. Please
-                                                         enter a valid year."
             ENDIF
         END MUTATOR setYear
 
