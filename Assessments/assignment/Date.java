@@ -126,7 +126,7 @@ public class Date
         int maxDays = 0;
         int m = monthOfYear;
         boolean leapYear = isLeapYear();
-        
+       
         /* 1. Determine maximum days within the current month to know amount of valid days */
         if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
         {
@@ -142,16 +142,17 @@ public class Date
         {
             if (leapYear)
             {
-            // 1.c) If month is February and it is a leap year, max days is 29.
+                // 1.c) If month is February and it is a leap year, max days is 29.
                 maxDays = 29;
             }
             else
             {
-            // 1.d) If month is February and it is NOT a leap year, max days is 28.
+                // 1.d) If month is February and it is NOT a leap year, max days is 28.
                 maxDays = 28;
             }
-        }
+        } 
         
+
         /* 2. Ensure user inputs a number between min and max days within current month*/
         if (pDay >= minDays && pDay <= maxDays)
         {
@@ -161,7 +162,7 @@ public class Date
         else
         {
             System.out.println("You did not input a day that exists within this" 
-                + " month. Please enter a day that exists within this month.");
+               + " month. Please enter a day that exists within this month.");
         }
     }
 
