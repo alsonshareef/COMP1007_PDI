@@ -224,6 +224,27 @@ public class Date
     }
 
     /*********************************************************************
+    * METHOD: equals
+    * IMPORTS: inObject (Object)
+    * EXPORTS: isEqual (Boolean)
+    * ASSERTION: Returns boolean representing if the two object are equal
+    **********************************************************************/
+    public boolean equals(Object inObject)
+    {
+        boolean isEqual = false;
+        Date inDate = null;
+        if(inObject instanceof Date)
+        {
+            inDate = (Date)inObject;
+            if (dayOfMonth == inDate.getDayOfMonth())
+                if(monthOfYear == inDate.getMonthOfYear())
+                    if(year == inDate.getYear())
+                        isEqual = true;
+        }
+        return isEqual;
+    }
+
+    /*********************************************************************
     * METHOD: isLeapYear
     * IMPORTS: None
     * EXPORTS: leapYearVal (Boolean)

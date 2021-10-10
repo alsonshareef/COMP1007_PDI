@@ -127,6 +127,25 @@ CLASS Date
             RETURN dateString
         END METHOD toString
 
+        METHOD: equals
+        IMPORT: inObject (Object)
+        EXPORT: isEqual (Boolean)
+        ASSERTION: Returns true if the two objects are equivalent
+        ALGORITHM:
+            isEqual <- false
+            IF inObject IS Date
+                TRANSFORM inObject TO Date NAMED inDate
+                IF dayOfMonth EQUALS inDate.getDayOfMonth()
+                    IF monthOfYear EQUALS inDate.getMonthOfYear()
+                        IF year EQUALS inDate.getYear()
+                            isEqual <- true
+                        ENDIF
+                    ENDIF
+                ENDIF
+            ENDIF
+            RETURN isEqual
+        END METHOD equals
+
         METHOD: isLeapYear
         IMPORT: None
         EXPORT: leapYear (Boolean)
