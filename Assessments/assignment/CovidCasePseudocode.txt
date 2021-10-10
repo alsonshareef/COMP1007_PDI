@@ -1,0 +1,209 @@
+CLASS CovidCase
+    CLASS FIELDS:
+        country (String)
+        province (String)
+        region (String)
+        ageGroup (String)
+        sex (String)
+        cases (Integer)
+        date (Object)
+    END CLASS FIELDS
+
+    METHODS:
+        CONSTRUCTOR WITH PARAMETERS
+        IMPORT: pCountry (String), pProvince (String), pRegion (String), 
+                pAgeGroup (String), pSex (String), pCases (Integer),
+                pDay (Integer), pMonth (Integer), pYear (Integer)
+        EXPORT: None
+        ASSERTION: Create CovidCase object with values received from user
+        ALGORITHM:
+            setCountry(pCountry)
+            setProvince(pProvince)
+            setRegion(pRegion)
+            setAgeGroup(pAgeGroup)
+            setSex(pSex)
+            setCases(pCases)
+            setDate(pDay, pMonth, pYear)
+        END CONSTRUCTOR WITH PARAMETERS
+
+        COPY CONSTRUCTOR
+        IMPORT: pCovidCase (CovidCase)
+        EXPORT: None
+        ASSERTION: Create a copy of imported CovidCase object
+        ALGORITHM:
+            country <- pCovidCase.getCountry()
+            province <- pCovidCase.getProvince()
+            region <- pCovidCase.getRegion()
+            ageGroup <- pCovidCase.getAgeGroup()
+            sex <- pCovidCase.getSex()
+            cases <- pCovidCase.getCases()
+            date <- pCovidCase.getDate()
+        END COPY CONSTRUCTOR
+
+        DEFAULT CONSTRUCTOR
+        IMPORT: None
+        EXPORT: None
+        ASSERTION: Creates a CovidCase object with default values
+        ALGORITHM:
+            country <- "Belgium"
+            province <- "Brussels"
+            region <- "Flanders"
+            ageGroup <- "20-29"
+            sex <- "M"
+            cases <- 10
+            date <- NEW Date(3,9,2020)
+        END DEFAULT CONSTRUCTOR
+
+        ACCESSOR: getCountry
+        IMPORT: None
+        EXPORT: country (String)
+        ASSERTION: Returns the string value representing country
+        ALGORITHM:
+            RETURN country
+        END ACCESSOR getCountry
+        
+        ACCESSOR: getProvince
+        IMPORT: None
+        EXPORT: province (String)
+        ASSERTION: Returns the string value representing the province
+        ALGORITHM:
+            RETURN province
+        END ACCESSOR getProvince
+
+        ACCESSOR: getRegion
+        IMPORT: None
+        EXPORT: region (String)
+        ASSERTION: Returns the string value representing the region
+        ALGORITHM:
+            RETURN region
+        END ACCESSOR getRegion
+
+        ACCESSOR: getAgeGroup
+        IMPORT: None
+        EXPORT: ageGroup (String)
+        ASSERTION: Returns the string value representing the age group
+        ALGORITHM:
+            RETURN ageGroup
+        END ACCESSOR getAgeGroup
+        
+        ACCESSOR: getSex
+        IMPORT: None
+        EXPORT: sex (String)
+        ASSERTION: Returns the string value representing the sex of covid cases
+        ALGORITHM:
+            RETURN sex
+        END ACCESSOR getSex
+
+        ACCESSOR: getCases
+        IMPORT: None
+        EXPORT: cases (Integer)
+        ASSERTION: Returns the integer value representing the number of covid cases
+        ALGORITHM:
+            RETURN cases
+        END ACCESSOR getCases
+
+        ACCESSOR: getDate
+        IMPORT: None
+        EXPORT: date (Date)
+        ASSERTION: Returns the object representing the date the covid case was found
+        ALGORITHM:
+            RETURN date
+        END ACCESSOR getDate
+
+        MUTATOR: setCountry
+        IMPORT: pCountry (String)
+        EXPORT: None
+        ASSERTION: Value of country attribute will be updated to pCountry
+        ALGORITHM:
+            country <- pCountry            
+        END MUTATOR setCountry
+    
+        MUTATOR: setProvince
+        IMPORT: pProvince (String)
+        EXPORT: None
+        ASSERTION: Value of province attribute will be updated to pProvince
+        ALGORITHM:
+            province <- pProvince
+        END MUTATOR setProvince
+        
+        MUTATOR: setRegion
+        IMPORT: pRegion (String)
+        EXPORT: None
+        ASSERTION: Value of region attribute will be updated to pRegion
+        ALGORITHM:
+            region <- pRegion
+        END MUTATOR setRegion
+
+        MUTATOR: setAgeGroup
+        IMPORT: pAgeGroup (String)
+        EXPORT: None
+        ASSERTION: Value of ageGroup attribute will be updated to pAgeGroup
+        ALGORITHM:
+            ageGroup <- pAgeGroup
+        END MUTATOR setAgeGroup   
+
+        MUTATOR: setSex
+        IMPORT: pSex (String)
+        EXPORT: None
+        ASSERTION: Value of sex attribute will be updated to pSex
+        ALGORITHM:
+            sex <- pSex
+        END MUTATOR setSex
+
+        MUTATOR: setCases
+        IMPORT: pCases (Integer)
+        EXPORT: None
+        ASSERTION: Value of cases attribute will be updated to pCases
+        ALGORITHM:
+            cases <- pCases
+        END MUTATOR setCases
+
+        MUTATOR: setDate
+        IMPORT: pDay (Integer), pMonth (Integer), pYear (Integer)
+        EXPORT: None
+        ASSERTION: Value of date attribute will be updated to Date object with
+                   the attribute values being equal to pDay, pMonth and pYear
+        ALGORITHM:
+            date <- NEW Date(pDay, pMonth, pYear)
+        END MUTATOR setDate
+
+        METHOD: toString
+        IMPORT: None
+        EXPORT: covidCaseString (String)
+        ASSERTION: Returns a string representation of the state of CovidCase object
+        ALGORITHM:
+            covidCaseString <- "Covid Case Details - " + "Country: " + country +
+             ", Province: " + province + ", Region: " + region + ", Age Group: " + 
+              ageGroup + ", Sex: " + sex + ", Cases: " + cases + ", Date: " + date.toString()
+            RETURN covidCaseString
+        END METHOD toString
+
+        METHOD: equals
+        IMPORT: inObject (Object)
+        EXPORT: isEqual (Boolean)
+        ASSERTION: Returns true if the two objects are equivalent
+        ALGORITHM:
+            isEqual <- false
+            IF inObject IS CovidCase
+                TRANSFORM inObject TO CovidCase NAMED inCovidCase
+                IF country EQUALS inCovidCase.getCountry()
+                    IF province EQUALS inCovidCase.getProvince()
+                        IF region EQUALS inCovidCase.getRegion()
+                            IF ageGroup EQUALS inCovidCase.getAgeGroup()
+                                IF sex EQUALS inCovidCase.getSex()
+                                    IF cases EQUALS inCovidCase.getCases()
+                                        IF date EQUALS inCovidCase.getDate()
+                                            isEqual <- true
+                                        ENDIF
+                                    ENDIF
+                                ENDIF
+                            ENDIF
+                        ENDIF
+                    ENDIF
+                ENDIF
+            ENDIF
+            RETURN isEqual
+        END METHOD equals
+
+    END METHODS
+END CLASS CovidCase
