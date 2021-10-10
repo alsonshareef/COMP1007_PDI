@@ -22,7 +22,7 @@ public class DateTest
         System.out.println();
 
         // Date constructed with params
-        Date paramDate = new Date(29,2,2004);
+        Date paramDate = new Date(31,7,2000);
         System.out.println("PARAM CONSTRUCTED Date String: " + paramDate.toString());
     }
 }

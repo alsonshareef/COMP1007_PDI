@@ -127,32 +127,32 @@ public class Date
         int m = monthOfYear;
         boolean leapYear = isLeapYear();
         
-        /* Determine maximum days within the current month to know amount of valid days */
+        /* 1. Determine maximum days within the current month to know amount of valid days */
         if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
         {
-            // Max possible days is 31 for any of these selected months.
+            // 1.a) Max possible days is 31 for any of these selected months.
             maxDays = 31;
         }
         else if (m == 4 || m == 6 || m == 9 || m == 11)
         {
-            // Max possible days is 30 for any of these selected months.
+            // 1.b) Max possible days is 30 for any of these selected months.
             maxDays = 30;
         }
         else if (m == 2)
         {
             if (leapYear)
             {
-            // If month is February and it is a leap year, max days is 29.
+            // 1.c) If month is February and it is a leap year, max days is 29.
                 maxDays = 29;
             }
             else
             {
-            // If month is February and it is NOT a leap year, max days is 28.
+            // 1.d) If month is February and it is NOT a leap year, max days is 28.
                 maxDays = 28;
             }
         }
         
-        /* Ensure user inputs a number between min and max days within current month*/
+        /* 2. Ensure user inputs a number between min and max days within current month*/
         if (pDay >= minDays && pDay <= maxDays)
         {
             dayOfMonth = pDay;
@@ -201,8 +201,8 @@ public class Date
         }
         else
         {
-            System.out.println("You did not input a valid year number." + 
-                                                "Please enter a valid year.");
+            System.out.println("You did not input a valid year .Please enter a" +
+                                                             " valid year.");
         }
     }
 

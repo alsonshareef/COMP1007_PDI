@@ -39,7 +39,7 @@ CLASS Date
         ACCESSOR: getDayOfMonth
         IMPORT: None
         EXPORT: day (Integer)
-        ASSERTION: Returned the integer value representing the day
+        ASSERTION: Returns the integer value representing the day
         ALGORITHM:
             RETURN dayofMonth
         END ACCESSOR getDayOfMonth
@@ -47,7 +47,7 @@ CLASS Date
         ACCESSOR: getMonthOfYear
         IMPORT: None
         EXPORT: month (Integer)
-        ASSERTION: Returned the integer value representing the month
+        ASSERTION: Returns the integer value representing the month
         ALGORITHM:
             RETURN monthOfYear
         END ACCESSOR getMonthOfYear
@@ -55,7 +55,7 @@ CLASS Date
         ACCESSOR: getYear
         IMPORT: None
         EXPORT: year (Integer)
-        ASSERTION: Returned the integer value representing the year
+        ASSERTION: Returns the integer value representing the year
         ALGORITHM:
             RETURN year
         END ACCESSOR getYear
@@ -82,7 +82,11 @@ CLASS Date
             ENDIF
 
             IF pDay IS GREATER OR EQUAL TO minDays AND pDay LESS OR EQUAL TO maxDays
-                dayOfMonth <- pDay    
+                dayOfMonth <- pDay
+                PROMPT "Day of month has been successfully updated."
+            ELSE
+                PROMPT "You did not input a day that exists within this month. 
+                            Please enter a day that exists within this month."
             ENDIF
         END MUTATOR setDayOfMonth
     
@@ -93,16 +97,23 @@ CLASS Date
         ALGORITHM:
             IF pMonth IS GREATER OR EQUAL TO 1 AND LESS THAN OR EQUAL TO 12
                 monthOfYear <- pMonth
+                PROMPT "Month of year has been successfully updated."
+            ELSE
+                PROMPT "You did not input a valid month. 
+                                                Please enter a valid month."
             ENDIF
         END MUTATOR setMonthOfYear
         
         MUTATOR: setYear
         IMPORT: pYear (Integer)
         EXPORT: None
-        ASSERTION: Value of year attribute will be updated to value of pYear
+        ASSERTION: Value of year attribute will be updated to pYear
         ALGORITHM:
             IF pYear IS GREATER THAN 0
                 year <- pYear
+                PROMPT "Year has been successfully updated."
+            ELSE
+                PROMPT "You did not input a valid year. Please enter a valid year"
             ENDIF
         END MUTATOR setYear
 
@@ -119,8 +130,7 @@ CLASS Date
         METHOD: isLeapYear
         IMPORT: None
         EXPORT: leapYear (Boolean)
-        ASSERTION: Return a boolean value representing whether current year 
-                                                                is a leap year
+        ASSERTION: Return a boolean value representing whether year is a leap year
         ALGORITHM:
             leapYear <- false
             IF year DIVIDED BY 4 EQUALS WHOLE NUMBER
