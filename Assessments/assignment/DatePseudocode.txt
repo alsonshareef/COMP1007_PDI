@@ -21,9 +21,9 @@ CLASS Date
         EXPORT: None
         ASSERTION: Create a copy of imported Date object
         ALGORITHM:
-            dayOfMonth = pDate.getDayOfMonth()
-            monthOfYear = pDate.getMonthOfYear()
-            getYear = pDate.getYear()
+            dayOfMonth <- pDate.getDayOfMonth()
+            monthOfYear <- pDate.getMonthOfYear()
+            getYear <- pDate.getYear()
         END COPY CONSTRUCTOR
 
         DEFAULT CONSTRUCTOR
@@ -31,9 +31,9 @@ CLASS Date
         EXPORT: None
         ASSERTION: Creates a Date object with default values
         ALGORITHM:
-            dayOfMonth = 1
-            monthOfYear = 1
-            year = 1111
+            dayOfMonth <- 1
+            monthOfYear <- 1
+            year <- 1111
         END DEFAULT CONSTRUCTOR
 
         ACCESSOR: getDayOfMonth
