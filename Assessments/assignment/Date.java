@@ -110,6 +110,40 @@ public class Date
         return year;
     }
 
+    /*********************************************************************
+    * ACCESSOR: toString
+    * IMPORTS: None
+    * EXPORTS: dateString (String)
+    * ASSERTION: Returns string representation of the state of date object
+    **********************************************************************/
+    public String toString()
+    {
+        String dateString = "Full date: " + dayOfMonth + "/" + monthOfYear + 
+                                                                "/" + year;
+        return dateString;
+    }
+
+    /*********************************************************************
+    * ACCESSOR: equals
+    * IMPORTS: inObject (Object)
+    * EXPORTS: isEqual (Boolean)
+    * ASSERTION: Returns boolean representing if the two object are equal
+    **********************************************************************/
+    public boolean equals(Object inObject)
+    {
+        boolean isEqual = false;
+        Date inDate = null;
+        if(inObject instanceof Date)
+        {
+            inDate = (Date)inObject;
+            if (dayOfMonth == inDate.getDayOfMonth())
+                if(monthOfYear == inDate.getMonthOfYear())
+                    if(year == inDate.getYear())
+                        isEqual = true;
+        }
+        return isEqual;
+    }
+
     // *******************************************************************
     // MUTATOR METHODS (SETTERS)
     // *******************************************************************
@@ -195,6 +229,7 @@ public class Date
     public void setYear (int pYear)
     {
         /* Ensures that the user inputs a positive value to set as year */
+        
         if (pYear > 0)
         {
             year = pYear;
@@ -205,45 +240,12 @@ public class Date
             System.out.println("You did not input a valid year .Please enter a" +
                                                              " valid year.");
         }
+        
     }
 
     // *******************************************************************
     // DOING METHODS (PUBLIC)
     // *******************************************************************
-    
-    /*********************************************************************
-    * METHOD: toString
-    * IMPORTS: None
-    * EXPORTS: dateString (String)
-    * ASSERTION: Returns string representation of the state of date object
-    **********************************************************************/
-    public String toString()
-    {
-        String dateString = "The date is " + dayOfMonth + "/" + monthOfYear + 
-                                                                "/" + year;
-        return dateString;
-    }
-
-    /*********************************************************************
-    * METHOD: equals
-    * IMPORTS: inObject (Object)
-    * EXPORTS: isEqual (Boolean)
-    * ASSERTION: Returns boolean representing if the two object are equal
-    **********************************************************************/
-    public boolean equals(Object inObject)
-    {
-        boolean isEqual = false;
-        Date inDate = null;
-        if(inObject instanceof Date)
-        {
-            inDate = (Date)inObject;
-            if (dayOfMonth == inDate.getDayOfMonth())
-                if(monthOfYear == inDate.getMonthOfYear())
-                    if(year == inDate.getYear())
-                        isEqual = true;
-        }
-        return isEqual;
-    }
 
     /*********************************************************************
     * METHOD: isLeapYear
@@ -267,4 +269,19 @@ public class Date
     // INTERNAL METHODS (PRIVATE)
     // *******************************************************************
 
+    /*********************************************************************
+    * METHOD: checkYear
+    * IMPORTS: pYear (Integer)
+    * EXPORTS: validYear (Boolean)
+    * ASSERTION: Returns a boolean value representating whether pYear is valid
+    **********************************************************************/
+    public boolean checkYear (int pYear)
+    {
+        boolean validYear = false;
+        if (pYear > 0)
+        {
+            validYear = true;
+        }
+        return validYear;
+    }
 }

@@ -1,4 +1,4 @@
-CLASS Date
+BEGIN CLASS Date
     CLASS FIELDS:
         dayOfMonth (Integer)
         monthOfYear (Integer)
@@ -60,6 +60,35 @@ CLASS Date
             RETURN year
         END ACCESSOR getYear
 
+        ACCESSOR: toString
+        IMPORT: None
+        EXPORT: dateString (String)
+        ASSERTION: Returns a string representation of the state of date object
+        ALGORITHM:
+            dateString <- "Full date: " + dayOfMonth + "/" + monthOfYear + 
+                                                                    "/" + year
+            RETURN dateString
+        END ACCESSOR toString
+
+        ACCESSOR: equals
+        IMPORT: inObject (Object)
+        EXPORT: isEqual (Boolean)
+        ASSERTION: Returns true if the two objects are equivalent
+        ALGORITHM:
+            isEqual <- false
+            IF inObject IS Date
+                TRANSFORM inObject TO Date NAMED inDate
+                IF dayOfMonth EQUALS inDate.getDayOfMonth()
+                    IF monthOfYear EQUALS inDate.getMonthOfYear()
+                        IF year EQUALS inDate.getYear()
+                            isEqual <- true
+                        ENDIF
+                    ENDIF
+                ENDIF
+            ENDIF
+            RETURN isEqual
+        END ACCESSOR equals
+
         MUTATOR: setDayOfMonth
         IMPORT: pDay (Integer)
         EXPORT: None
@@ -67,13 +96,14 @@ CLASS Date
         ALGORITHM:
             minDays <- 1
             maxDays <- 0
+            m <- monthOfYear
             leapYear <- isLeapYear()
 
-            IF monthOfYear EQUALS 1 OR 3 OR 5 OR 7 OR 8 OR 10 OR 12
+            IF m EQUALS 1 OR 3 OR 5 OR 7 OR 8 OR 10 OR 12
                 maxDays <- 31
-            ELSEIF monthOfYear EQUALS 4 OR 6 OR 9 OR 11
+            ELSEIF m EQUALS 4 OR 6 OR 9 OR 11
                 maxDays <- 30
-            ELSEIF monthOfYear EQUALS 2
+            ELSEIF m EQUALS 2
                 IF leapYear
                     maxDays <- 29
                 ELSE
@@ -116,35 +146,6 @@ CLASS Date
                 PROMPT "You did not input a valid year. Please enter a valid year"
             ENDIF
         END MUTATOR setYear
-
-        METHOD: toString
-        IMPORT: None
-        EXPORT: dateString (String)
-        ASSERTION: Returns a string representation of the state of date object
-        ALGORITHM:
-            dateString <- "The date is " + dayOfMonth + "/" + monthOfYear + 
-                                                                    "/" + year
-            RETURN dateString
-        END METHOD toString
-
-        METHOD: equals
-        IMPORT: inObject (Object)
-        EXPORT: isEqual (Boolean)
-        ASSERTION: Returns true if the two objects are equivalent
-        ALGORITHM:
-            isEqual <- false
-            IF inObject IS Date
-                TRANSFORM inObject TO Date NAMED inDate
-                IF dayOfMonth EQUALS inDate.getDayOfMonth()
-                    IF monthOfYear EQUALS inDate.getMonthOfYear()
-                        IF year EQUALS inDate.getYear()
-                            isEqual <- true
-                        ENDIF
-                    ENDIF
-                ENDIF
-            ENDIF
-            RETURN isEqual
-        END METHOD equals
 
         METHOD: isLeapYear
         IMPORT: None
