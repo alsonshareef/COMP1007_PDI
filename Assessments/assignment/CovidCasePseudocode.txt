@@ -1,4 +1,4 @@
-CLASS CovidCase
+BEGIN CLASS CovidCase
     CLASS FIELDS:
         country (String)
         province (String)
@@ -107,8 +107,51 @@ CLASS CovidCase
         EXPORT: date (Date)
         ASSERTION: Returns the object representing the date the covid case was found
         ALGORITHM:
-            RETURN date
+            RETURN COPY OF date
         END ACCESSOR getDate
+
+        ACCESSOR: toString
+        IMPORT: None
+        EXPORT: covidCaseString (String)
+        ASSERTION: Returns a string representation of the state of CovidCase object
+        ALGORITHM:
+            covidCaseString <- "COVID CASE DETAILS" +
+                                "Country: " + country +
+                                "Province: " + province +
+                                "Region: " + region +
+                                "Age Group: " + ageGroup +
+                                "Sex: " + sex +
+                                "Cases: " + cases +
+                                "Covid Case " + date.toString()
+            RETURN covidCasteString
+        END ACCESSOR toString
+
+        ACCESSOR: equals
+        IMPORT: inObject (Object)
+        EXPORT: isEqual (Boolean)
+        ASSERTION: Returns true if the two objects are equivalent
+        ALGORITHM:
+            isEqual <- false
+            IF inObject IS CovidCase
+                TRANSFORM inObject TO CovidCase NAMED inCovidCase
+                IF country EQUALS inCovidCase.getCountry()
+                    IF province EQUALS inCovidCase.getProvince()
+                        IF region EQUALS inCovidCase.getRegion()
+                            IF ageGroup EQUALS inCovidCase.getAgeGroup()
+                                IF sex EQUALS inCovidCase.getSex()
+                                    IF cases EQUALS inCovidCase.getCases()
+                                        IF date EQUALS inCovidCase.getDate()
+                                            isEqual <- true
+                                        ENDIF
+                                    ENDIF
+                                ENDIF
+                            ENDIF
+                        ENDIF
+                    ENDIF
+                ENDIF
+            ENDIF
+            RETURN isEqual
+        END ACCESSOR equals
 
         MUTATOR: setCountry
         IMPORT: pCountry (String)
@@ -167,43 +210,7 @@ CLASS CovidCase
             date <- NEW Date(pDay, pMonth, pYear)
         END MUTATOR setDate
 
-        METHOD: toString
-        IMPORT: None
-        EXPORT: covidCaseString (String)
-        ASSERTION: Returns a string representation of the state of CovidCase object
-        ALGORITHM:
-            covidCaseString <- "Covid Case Details - " + "Country: " + country +
-             ", Province: " + province + ", Region: " + region + ", Age Group: " + 
-              ageGroup + ", Sex: " + sex + ", Cases: " + cases + ", Date: " + date.toString()
-            RETURN covidCaseString
-        END METHOD toString
 
-        METHOD: equals
-        IMPORT: inObject (Object)
-        EXPORT: isEqual (Boolean)
-        ASSERTION: Returns true if the two objects are equivalent
-        ALGORITHM:
-            isEqual <- false
-            IF inObject IS CovidCase
-                TRANSFORM inObject TO CovidCase NAMED inCovidCase
-                IF country EQUALS inCovidCase.getCountry()
-                    IF province EQUALS inCovidCase.getProvince()
-                        IF region EQUALS inCovidCase.getRegion()
-                            IF ageGroup EQUALS inCovidCase.getAgeGroup()
-                                IF sex EQUALS inCovidCase.getSex()
-                                    IF cases EQUALS inCovidCase.getCases()
-                                        IF date EQUALS inCovidCase.getDate()
-                                            isEqual <- true
-                                        ENDIF
-                                    ENDIF
-                                ENDIF
-                            ENDIF
-                        ENDIF
-                    ENDIF
-                ENDIF
-            ENDIF
-            RETURN isEqual
-        END METHOD equals
 
     END METHODS
 END CLASS CovidCase

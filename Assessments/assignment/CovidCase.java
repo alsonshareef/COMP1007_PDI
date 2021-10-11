@@ -172,7 +172,53 @@ public class CovidCase
     **********************************************************************/
     public Date getDate()
     {
-        return date;
+        /* Return copy of 'date' object to avoid unwanted mutation of 
+                                                    original 'date' object */
+        return new Date(date);
+    }
+
+    /*********************************************************************
+    * ACCESSOR: toString
+    * IMPORTS: None
+    * EXPORTS: covidCaseString (String)
+    * ASSERTION: Returns string representation of the state of covid case object
+    **********************************************************************/
+    public String toString()
+    {
+        String covidCaseString = "COVID CASE DETAILS" + "\n"
+                                + "Country: " + country + "\n"
+                                + "Province: " + province + "\n" 
+                                + "Region: " + region + "\n"
+                                + "Age Group: " + ageGroup + "\n"
+                                + "Sex: " + sex + "\n"
+                                + "Cases: " + cases + "\n"
+                                + "Covid Case " + date.toString();
+        return covidCaseString;
+    }
+
+    /*********************************************************************
+    * ACCESSOR: equals
+    * IMPORTS: inObject (Object)
+    * EXPORTS: isEqual (Boolean)
+    * ASSERTION: Returns boolean representing if the two object are equal
+    **********************************************************************/
+    public boolean equals(Object inObject)
+    {
+        boolean isEqual = false;
+        CovidCase inCovidCase = null;
+        if(inObject instanceof CovidCase)
+        {
+            inCovidCase = (CovidCase)inObject;
+                if(country == inCovidCase.getCountry())
+                    if(province == inCovidCase.getProvince())
+                        if(region == inCovidCase.getRegion())
+                            if(ageGroup == inCovidCase.getAgeGroup())
+                                if(sex == inCovidCase.getSex())
+                                    if(cases == inCovidCase.getCases())
+                                        if(date.equals(inCovidCase.getDate()))
+                                            isEqual = true;
+        }
+        return isEqual;
     }
 
     // *******************************************************************
@@ -261,40 +307,7 @@ public class CovidCase
     // DOING METHODS (PUBLIC)
     // *******************************************************************
     
-    /*********************************************************************
-    * METHOD: toString
-    * IMPORTS: None
-    * EXPORTS: dateString (String)
-    * ASSERTION: Returns string representation of the state of date object
-    **********************************************************************/
-    public String toString()
-    {
-        return "hey";
-    }
 
-    /*********************************************************************
-    * METHOD: equals
-    * IMPORTS: inObject (Object)
-    * EXPORTS: isEqual (Boolean)
-    * ASSERTION: Returns boolean representing if the two object are equal
-    **********************************************************************/
-    public boolean equals(Object inObject)
-    {
-        return true;
-        /*
-        boolean isEqual = false;
-        Date inDate = null;
-        if(inObject instanceof Date)
-        {
-            inDate = (Date)inObject;
-            if (dayOfMonth == inDate.getDayOfMonth())
-                if(monthOfYear == inDate.getMonthOfYear())
-                    if(year == inDate.getYear())
-                        isEqual = true;
-        }
-        return isEqual;
-        */
-    }
     
     // *******************************************************************
     // INTERNAL METHODS (PRIVATE)

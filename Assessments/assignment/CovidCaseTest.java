@@ -6,45 +6,36 @@ public class CovidCaseTest
     {
         // Default Covid Case
         CovidCase defaultCovidCase = new CovidCase();
-        System.out.println("Default Covid Case COUNTRY: " + defaultCovidCase.getCountry());
-        System.out.println("Default Covid Case PROVINCE: " + defaultCovidCase.getProvince());
-        System.out.println("Default Covid Case REGION: " + defaultCovidCase.getRegion());
-        System.out.println("Default Covid Case AGE GROUP: " + defaultCovidCase.getAgeGroup());
-        System.out.println("Default Covid Case SEX: " + defaultCovidCase.getSex());
-        System.out.println("Default Covid Case CASES: " + defaultCovidCase.getCases());
-        System.out.println("Default Covid Case DATE: " + defaultCovidCase.getDate().toString());
+        System.out.println(defaultCovidCase.toString());
+        System.out.println();
+
+        // Second Default
+        CovidCase secondDefaultCovidCase = new CovidCase();
+        System.out.println(secondDefaultCovidCase.toString());
+        System.out.println();
+
+        defaultCovidCase.setDate(43,3,2019);
+        secondDefaultCovidCase.setDate(13,3,2019);
 
         System.out.println();
 
-        // Mutate Default Covid Case
-        defaultCovidCase.setCountry("Australia");
-        defaultCovidCase.setProvince("Perth");
-        defaultCovidCase.setRegion("WA");
-        defaultCovidCase.setAgeGroup("89-99");
-        defaultCovidCase.setSex("F");
-        defaultCovidCase.setCases(69);
-        defaultCovidCase.setDate(4,10,3000);
-
-        System.out.println("Default Covid Case COUNTRY: " + defaultCovidCase.getCountry());
-        System.out.println("Default Covid Case PROVINCE: " + defaultCovidCase.getProvince());
-        System.out.println("Default Covid Case REGION: " + defaultCovidCase.getRegion());
-        System.out.println("Default Covid Case AGE GROUP: " + defaultCovidCase.getAgeGroup());
-        System.out.println("Default Covid Case SEX: " + defaultCovidCase.getSex());
-        System.out.println("Default Covid Case CASES: " + defaultCovidCase.getCases());
-        System.out.println("Default Covid Case DATE: " + defaultCovidCase.getDate().toString());
+        System.out.println(defaultCovidCase.toString());
 
         System.out.println();
 
-        // Covid Case Param Consuctor
-        CovidCase paramCovidCase = new CovidCase("United States", "New York", "East", "0-9", "F", 420, 5, 7, 1996);
-        System.out.println("Default Covid Case COUNTRY: " + paramCovidCase.getCountry());
-        System.out.println("Default Covid Case PROVINCE: " + paramCovidCase.getProvince());
-        System.out.println("Default Covid Case REGION: " + paramCovidCase.getRegion());
-        System.out.println("Default Covid Case AGE GROUP: " + paramCovidCase.getAgeGroup());
-        System.out.println("Default Covid Case SEX: " + paramCovidCase.getSex());
-        System.out.println("Default Covid Case CASES: " + paramCovidCase.getCases());
-        System.out.println("Default Covid Case DATE: " + paramCovidCase.getDate().toString());
+        System.out.println(secondDefaultCovidCase.toString());
 
+        System.out.println();
+
+        // Equals
+        if (defaultCovidCase.equals(secondDefaultCovidCase))
+        {
+            System.out.println("Both covid cases ARE equal");
+        }
+        else
+        {
+            System.out.println("Both covid cases ARE NOT equal");
+        }
     }
 
 }
