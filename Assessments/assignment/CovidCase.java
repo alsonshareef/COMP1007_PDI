@@ -91,7 +91,15 @@ public class CovidCase
         ageGroup = "20-29";
         sex = "M";
         cases = 10;
-        date = new Date(29,2,2020);
+        try
+        {
+            date = new Date(29,2,2020);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Not able to aggregate Date class into date" +
+                                         " class field for Covid Case class");
+        }
     }
 
     // *******************************************************************
@@ -240,8 +248,8 @@ public class CovidCase
         else
         {
             country = pCountry;
-            System.out.println("Country class field successfully updated.");
         }
+        System.out.println("Country class field successfully updated.");
     }
 
     /*********************************************************************
@@ -259,8 +267,8 @@ public class CovidCase
         else
         {
             province = pProvince;
-            System.out.println("Province class field successfully updated.");
         }
+        System.out.println("Province class field successfully updated.");
     }    
 
     /*********************************************************************
@@ -278,8 +286,8 @@ public class CovidCase
         else
         {
             region = pRegion;
-            System.out.println("Region class field successfully updated.");
         }
+        System.out.println("Region class field successfully updated.");
     }
 
     /*********************************************************************
@@ -324,7 +332,14 @@ public class CovidCase
         {
             if (checkSex(pSex))
             { 
-                sex = pSex;
+                if (pSex == "M" || pSex == "m")
+                { 
+                    sex = "M";
+                }
+                else
+                {
+                    sex = "F";
+                }
                 System.out.println("Sex class field successfully updated.");
             } 
             else
@@ -360,16 +375,18 @@ public class CovidCase
     * ASSERTION: Value of date attribute will be updated to Date object with 
                  attribute values being equal to pDay, pMonth and pYear
     **********************************************************************/
-    public void setDate (int pDay, int pMonth, int pYear)
+    public void setDate (int pDay, int pMonth, int pYear) throws Exception
     {
-        date = new Date(pDay, pMonth, pYear);
+        try
+        {
+            date = new Date(pDay, pMonth, pYear);
+        }
+        catch(Exception e)
+        {
+            throw new Exception("Not able to set new Date class for date class" + 
+                                                " field in Covid Case class.");
+        }
     }
-
-    // *******************************************************************
-    // DOING METHODS (PUBLIC)
-    // *******************************************************************
-    
-
     
     // *******************************************************************
     // INTERNAL METHODS (PRIVATE)

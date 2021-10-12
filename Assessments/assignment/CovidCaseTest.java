@@ -49,20 +49,20 @@ public class CovidCaseTest
         
         try
         {
-            CovidCase testCC = new CovidCase(null, null, null, "90", "M", 69, 3, 9, 1995);
+            CovidCase testCC = new CovidCase(null, null, null, "90+", "M", 5, 3, 9, 1995);
             System.out.println();
             System.out.println(testCC.toString());
         }
         catch (Exception error)
         {
-            System.out.println("NOT ABLE TO CREATE OBJECT BECAUSE: " + error.getMessage());
+            System.out.println("NOT ABLE TO CREATE COVID CASE OBJECT BECAUSE: " + error.getMessage());
         }
-       /*
+
         for (int i = 0; i < 9; i++)
         {
             try
             {
-                covidCases[i] = new CovidCase("pCountry", "pProvince", "pRegion", ageGroupArray[i], sexArray[i], casesArray[i], 1, 1, 1111);
+                covidCases[i] = new CovidCase("pCountry", "pProvince", "pRegion", ageGroupArray[i], sexArray[i], casesArray[i], 29, 2, 2000);
             }
             catch (Exception e)
             {
@@ -95,10 +95,17 @@ public class CovidCaseTest
         System.out.println("*************************************");
         System.out.println("Total length of covid cases array is: " + covidCases.length);
         System.out.println();
-        covidCases[1].setDate(10,12,2012);
-        System.out.println(covidCases[1].getDate());
+
+        try
+        {
+            covidCases[1].setDate(10,12,2012);
+            System.out.println(covidCases[1].getDate());
+        }
+        catch(Exception e)
+        {
+            System.out.println("Cannot get date for Covid Case 1");
+        }
         System.out.println();
         System.out.println(covidCases[3].toString());
-*/
     }
 }
