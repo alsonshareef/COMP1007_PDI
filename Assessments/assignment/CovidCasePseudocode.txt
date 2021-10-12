@@ -51,7 +51,7 @@ BEGIN CLASS CovidCase
             ageGroup <- "20-29"
             sex <- "M"
             cases <- 10
-            date <- NEW Date(3,9,2020)
+            date <- NEW Date(29,2,2020)
         END DEFAULT CONSTRUCTOR
 
         ACCESSOR: getCountry
@@ -209,8 +209,6 @@ BEGIN CLASS CovidCase
         ALGORITHM:
             date <- NEW Date(pDay, pMonth, pYear)
         END MUTATOR setDate
-
-
 
     END METHODS
 END CLASS CovidCase

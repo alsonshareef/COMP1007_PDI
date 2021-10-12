@@ -38,7 +38,7 @@ public class CovidCase
     **********************************************************************/
     public CovidCase (String pCountry, String pProvince, String pRegion,
                       String pAgeGroup, String pSex, int pCases,
-                      int pDay, int pMonth, int pYear)
+                      int pDay, int pMonth, int pYear) throws Exception
     {
         /* Invoke setter methods and Date constructor method to validate 
            and assign class fields with user inputs retrieved from 
@@ -233,7 +233,15 @@ public class CovidCase
     **********************************************************************/
     public void setCountry (String pCountry)
     {
-        country = pCountry;
+        if (isNull(pCountry))
+        {            
+            country = "NA";
+        }
+        else
+        {
+            country = pCountry;
+            System.out.println("Country class field successfully updated.");
+        }
     }
 
     /*********************************************************************
@@ -244,7 +252,15 @@ public class CovidCase
     **********************************************************************/
     public void setProvince (String pProvince)
     {
-        province = pProvince;
+        if (isNull(pProvince))
+        {            
+            province = "NA";
+        }
+        else
+        {
+            province = pProvince;
+            System.out.println("Province class field successfully updated.");
+        }
     }    
 
     /*********************************************************************
@@ -255,7 +271,15 @@ public class CovidCase
     **********************************************************************/
     public void setRegion (String pRegion)
     {
-        region = pRegion;
+        if (isNull(pRegion))
+        {            
+            region = "NA";
+        }
+        else
+        {
+            region = pRegion;
+            System.out.println("Region class field successfully updated.");
+        }
     }
 
     /*********************************************************************
@@ -264,9 +288,24 @@ public class CovidCase
     * EXPORTS: None
     * ASSERTION: Value of ageGroup attribute will be updated to pAgeGroup
     **********************************************************************/
-    public void setAgeGroup (String pAgeGroup)
+    public void setAgeGroup (String pAgeGroup) throws Exception
     {
-        ageGroup = pAgeGroup;
+        if (isNull(pAgeGroup))
+        {            
+            ageGroup = "NA";
+        }
+        else
+        {
+            if (checkAgeGroup(pAgeGroup))
+            { 
+                ageGroup = pAgeGroup;
+                System.out.println("Age Group class field successfully updated.");
+            } 
+            else
+            {
+                throw new Exception("Data in Age Group category was invalid.");
+            }
+        }
     }
 
     /*********************************************************************
@@ -275,9 +314,24 @@ public class CovidCase
     * EXPORTS: None
     * ASSERTION: Value of sex attribute will be updated to pMonth
     **********************************************************************/
-    public void setSex (String pSex)
+    public void setSex (String pSex) throws Exception
     {
-        sex = pSex;
+        if (isNull(pSex))
+        {            
+            sex = "NA";
+        }
+        else
+        {
+            if (checkSex(pSex))
+            { 
+                sex = pSex;
+                System.out.println("Sex class field successfully updated.");
+            } 
+            else
+            {
+                throw new Exception("Data in Sex category was invalid.");
+            }
+        }
     }    
 
     /*********************************************************************
@@ -286,9 +340,17 @@ public class CovidCase
     * EXPORTS: None
     * ASSERTION: Value of cases attribute will be updated to pCases
     **********************************************************************/
-    public void setCases (int pCases)
+    public void setCases (int pCases) throws Exception
     {
-        cases = pCases;
+            if (pCases > -1)
+            { 
+                cases = pCases;
+                System.out.println("Cases class field successfully updated.");
+            } 
+            else
+            {
+                throw new Exception("Data in cases category was invalid.");
+            }
     }
 
     /*********************************************************************
@@ -313,4 +375,54 @@ public class CovidCase
     // INTERNAL METHODS (PRIVATE)
     // *******************************************************************
 
+    /*********************************************************************
+    * METHOD: isNull
+    * IMPORTS: pString (String)
+    * EXPORTS: notNull (Boolean)
+    * ASSERTION: Returns boolean representing if pString is null
+    **********************************************************************/
+    private boolean isNull (String pString)
+    {
+        boolean nullCheck = false;
+        if (pString == null)
+        {
+            nullCheck = true;
+        }
+        return nullCheck;
+    }
+
+    /*********************************************************************
+    * METHOD: checkAgeGroup
+    * IMPORTS: pAgeGroup (String)
+    * EXPORTS: validAgeGroup (Boolean)
+    * ASSERTION: Returns boolean representing if pAgeGroup is valid
+    **********************************************************************/
+    private boolean checkAgeGroup (String pAgeGroup)
+    {
+        boolean validAgeGroup = false;
+        String ag = pAgeGroup;
+        if (ag == "0-9" || ag == "10-19" || ag == "20-29" || ag == "30-39" 
+            || ag == "40-49" || ag == "50-59" || ag == "60-69" || ag == "70-79"
+                                             || ag == "80-89" || ag == "90+")
+        {
+            validAgeGroup = true;
+        }
+        return validAgeGroup;
+    }
+
+    /*********************************************************************
+    * METHOD: checkSex
+    * IMPORTS: pSex (String)
+    * EXPORTS: validSex (Boolean)
+    * ASSERTION: Returns boolean representing if pSex is valid
+    **********************************************************************/
+    private boolean checkSex (String pSex)
+    {
+        boolean validSex = false;
+        if (pSex == "M" || pSex == "m" || pSex == "F" || pSex == "f")
+        {
+            validSex = true;
+        }
+        return validSex;
+    }
 }
