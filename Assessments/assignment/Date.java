@@ -30,13 +30,24 @@ public class Date
     * EXPORTS: None
     * ASSERTION: Create Date object with values received from user
     **********************************************************************/
-    public Date (int pDay, int pMonth, int pYear)
+    public Date (int pDay, int pMonth, int pYear) throws Exception
     {
         /* Invoke setter methods to validate and assign class fields with
                          user inputs retrieved from constructor parameters */
         setYear(pYear);
         setMonthOfYear(pMonth);
-        setDayOfMonth(pDay);
+        if(checkMonth(pMonth))
+        {
+            if(checkDay(pDay, pMonth))
+            {
+                dayOfMonth = pDay;
+            }
+            else
+            {
+                throw new Exception("Day value passed to constructor is not " +
+                             "valid given the month and/or year provided.");
+            }
+        }
     }
 
     // *******************************************************************
@@ -154,12 +165,93 @@ public class Date
     * EXPORTS: None
     * ASSERTION: Value of dayOfMonth attribute will be updated to pDay
     **********************************************************************/
-    public void setDayOfMonth (int pDay)
+    public void setDayOfMonth (int pDay) throws Exception
+    {
+        if(checkDay(pDay, monthOfYear))
+        {
+            dayOfMonth = pDay;
+        }
+        else
+        {
+            throw new Exception("Data in Day category was not valid.");
+        }
+    }
+
+    /*********************************************************************
+    * MUTATOR: setMonthOfYear
+    * IMPORTS: pMonth (Integer)
+    * EXPORTS: None
+    * ASSERTION: Value of monthOfYear attribute will be updated to pMonth
+    **********************************************************************/
+    public void setMonthOfYear (int pMonth) throws Exception
+    {
+        if (checkMonth(pMonth))
+        {
+            monthOfYear = pMonth;
+        }
+        else
+        {
+            throw new Exception("Data in month category was not valid.");
+        }
+    }    
+
+    /*********************************************************************
+    * MUTATOR: setYear
+    * IMPORTS: pYear (Integer)
+    * EXPORTS: None
+    * ASSERTION: Value of year attribute will be updated to pYear
+    **********************************************************************/
+    public void setYear (int pYear) throws Exception
+    {
+        if (checkYear(pYear))
+        {
+            year = pYear;
+        }
+        else
+        {
+            throw new Exception("Data in year category was not valid.");
+        }
+    }
+
+    // *******************************************************************
+    // DOING METHODS (PUBLIC)
+    // *******************************************************************
+
+    /*********************************************************************
+    * METHOD: isLeapYear
+    * IMPORTS: None
+    * EXPORTS: leapYearVal (Boolean)
+    * ASSERTION: Returns a boolean value representating whether year is a leap year
+    **********************************************************************/
+    public boolean isLeapYear()
+    {
+        /* Can check if a year was a leap year if the year can be cleanly 
+                                            divided by 4 with no remainder. */
+        boolean leapYear = false;
+        if (year % 4 == 0)
+        {
+            leapYear = true;
+        }
+        return leapYear;
+    }
+
+    // *******************************************************************
+    // INTERNAL METHODS (PRIVATE)
+    // *******************************************************************
+
+    /*********************************************************************
+    * METHOD: checkDay
+    * IMPORTS: pDay (Integer), pMonth (Integer)
+    * EXPORTS: validDay
+    * ASSERTION: Returns boolean representing if day exists within given month
+    **********************************************************************/
+    private boolean checkDay (int pDay, int pMonth)
     {
         int minDays = 1;
         int maxDays = 0;
-        int m = monthOfYear;
+        int m = pMonth;
         boolean leapYear = isLeapYear();
+        boolean validDay = false;
        
         /* 1. Determine maximum days within the current month to know amount of valid days */
         if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12)
@@ -190,98 +282,42 @@ public class Date
         /* 2. Ensure user inputs a number between min and max days within current month*/
         if (pDay >= minDays && pDay <= maxDays)
         {
-            dayOfMonth = pDay;
-            System.out.println("Day of month has been successfully updated.");
+            validDay = true;
         }
-        else
-        {
-            System.out.println("You did not input a day that exists within this" 
-               + " month. Please enter a day that exists within this month.");
-        }
+        return validDay;
     }
 
     /*********************************************************************
-    * MUTATOR: setMonthOfYear
+    * METHOD: checkMonth
     * IMPORTS: pMonth (Integer)
-    * EXPORTS: None
-    * ASSERTION: Value of monthOfYear attribute will be updated to pMonth
+    * EXPORTS: validMonth
+    * ASSERTION: Returns boolean representing whether month is valid
     **********************************************************************/
-    public void setMonthOfYear (int pMonth)
+    private boolean checkMonth (int pMonth)
     {
         /* Ensures that user inputs a number representing one of the 12 months */
+        boolean validMonth = false;
         if (pMonth >= 1 && pMonth <= 12)
         {
-            monthOfYear = pMonth;
-            System.out.println("Month of year has been successfully updated.");
+            validMonth = true;
         }
-        else
-        {
-            System.out.println("You did not input a valid month. Please enter a valid month.");
-        }
-    }    
-
-    /*********************************************************************
-    * MUTATOR: setYear
-    * IMPORTS: pYear (Integer)
-    * EXPORTS: None
-    * ASSERTION: Value of year attribute will be updated to pYear
-    **********************************************************************/
-    public void setYear (int pYear)
-    {
-        /* Ensures that the user inputs a positive value to set as year */
-        
-        if (pYear > 0)
-        {
-            year = pYear;
-            System.out.println("Year has been successfully updated.");
-        }
-        else
-        {
-            System.out.println("You did not input a valid year .Please enter a" +
-                                                             " valid year.");
-        }
-        
+        return validMonth;
     }
-
-    // *******************************************************************
-    // DOING METHODS (PUBLIC)
-    // *******************************************************************
-
-    /*********************************************************************
-    * METHOD: isLeapYear
-    * IMPORTS: None
-    * EXPORTS: leapYearVal (Boolean)
-    * ASSERTION: Returns a boolean value representating whether year is a leap year
-    **********************************************************************/
-    public boolean isLeapYear()
-    {
-        /* Can check if a year was a leap year if the year can be cleanly 
-                                            divided by 4 with no remainder. */
-        boolean leapYear = false;
-        if (year % 4 == 0)
-        {
-            leapYear = true;
-        }
-        return leapYear;
-    }
-
-    // *******************************************************************
-    // INTERNAL METHODS (PRIVATE)
-    // *******************************************************************
-
+    
     /*********************************************************************
     * METHOD: checkYear
     * IMPORTS: pYear (Integer)
-    * EXPORTS: validYear (Boolean)
-    * ASSERTION: Returns a boolean value representating whether pYear is valid
+    * EXPORTS: validYear
+    * ASSERTION: Value of year attribute will be updated to pYear
     **********************************************************************/
-    public boolean checkYear (int pYear)
+    private boolean checkYear (int pYear)
     {
-        boolean validYear = false;
+        /* Ensures that the user inputs a positive value to set as year */
+        boolean validYear = false; 
         if (pYear > 0)
         {
             validYear = true;
         }
-        return validYear;
+        return validYear; 
     }
 }

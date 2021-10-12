@@ -4,6 +4,7 @@ public class DateTest
 {
     public static void main(String[] args)
     {
+/*
         // Default Date
         Date defaultDate = new Date();
         System.out.println("Default day of month: " + defaultDate.getDayOfMonth());
@@ -13,12 +14,22 @@ public class DateTest
 
         System.out.println();
 
-        defaultDate.setDayOfMonth(433);
-        defaultDate.setMonthOfYear(422);
-        defaultDate.setYear(44443);
+        try
+        {
+            defaultDate.setDayOfMonth(433);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Couldnt set day");
+        }
 
-        System.out.println("Mutated default: " + defaultDate.toString());
-/*
+        defaultDate.setMonthOfYear(422);
+        defaultDate.setYear(-44443);
+
+        System.out.println("Mutated default date should equal original default -> " + defaultDate.toString());
+
+        System.out.println();
+
         // Copy of Default
         Date copyDefaultDate = new Date(defaultDate);
         System.out.println("Copy Default day of month: " + copyDefaultDate.getDayOfMonth());
@@ -39,18 +50,30 @@ public class DateTest
         } 
         
         System.out.println();
-
+*/
         // Date created with Param Constructor
-        Date paramDate = new Date(3,9,1995);
-        System.out.println();
-        System.out.println("Param day of month: " + paramDate.getDayOfMonth());
-        System.out.println("Param month of year: " + paramDate.getMonthOfYear());
-        System.out.println("Param year: " + paramDate.getYear());
-        System.out.println("Param " + paramDate.toString());
-
-        System.out.println();
-
+        try
+        {
+            Date paramDate = new Date(29,2, 2000);
+            Date secondDefaultDate = new Date();
+            System.out.println(paramDate.equals(secondDefaultDate));
+            secondDefaultDate.setDayOfMonth(29);
+            secondDefaultDate.setMonthOfYear(2);
+            secondDefaultDate.setYear(2000);
+            System.out.println(paramDate.equals(secondDefaultDate));
+            System.out.println("Param day of month: " + paramDate.getDayOfMonth());
+            System.out.println("Param month of year: " + paramDate.getMonthOfYear());
+            System.out.println("Param year: " + paramDate.getYear());
+            System.out.println("Param " + paramDate.toString());
+            System.out.println();
+        }
+        catch (Exception error)
+        {
+            System.out.println("NOT ABLE TO CREATE DATE OBJECT BECAUSE: " + error.getMessage());
+        }
+/*
         // Check if paramDate and copyDefault are equal
+        System.out.println("The following check should return NOT EQUAL:");
         if(paramDate.equals(copyDefaultDate))
         {
             System.out.println("paramDate IS equal to copyDefaultDate");
@@ -74,11 +97,28 @@ public class DateTest
         // Check if mutated paramDate and defaultDate are equal
         if(paramDate.equals(defaultDate))
         {
-            System.out.println("MUTATED paramDate IS equal to copyDefaultDate");
+            System.out.println("MUTATED paramDate IS equal to defaultDate");
         }
         else
         {
-            System.out.println("MUTATED paramDate IS NOT equal to copyDefaultDate");
+            System.out.println("MUTATED paramDate IS NOT equal to defaultDate");
+        }
+
+        System.out.println();
+
+        // Array of date objects
+        System.out.println("Create array of date objects and show state:");
+        Date [] dateArray;
+        dateArray = new Date[5];
+        
+        for (int i = 0; i < 5; i++)
+        {
+            dateArray[i] = new Date(i,i,-23);
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            System.out.println(dateArray[i].toString());
         }
 */
     }
