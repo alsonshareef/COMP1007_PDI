@@ -23,7 +23,7 @@ BEGIN CLASS CovidCase
             setAgeGroup(pAgeGroup)
             setSex(pSex)
             setCases(pCases)
-            setDate(pDay, pMonth, pYear)
+            date EQUALS NEW Date(pDay, pMonth, pYear)
         END CONSTRUCTOR WITH PARAMETERS
 
         COPY CONSTRUCTOR
@@ -46,12 +46,16 @@ BEGIN CLASS CovidCase
         ASSERTION: Creates a CovidCase object with default values
         ALGORITHM:
             country <- "Belgium"
-            province <- "Brussels"
+            province <- "Antwerpen"
             region <- "Flanders"
-            ageGroup <- "20-29"
+            ageGroup <- "40-49"
             sex <- "M"
-            cases <- 10
-            date <- NEW Date(29,2,2020)
+            cases <- 5
+            TRY
+                date <- NEW Date(1,3,2020)
+            CATCH EXCEPTION error
+                PROMPT "EXCEPTION IN DEFAULT CONSTRUCTOR" + error
+                PROMPT "Not able to aggregate Date class into class field"
         END DEFAULT CONSTRUCTOR
 
         ACCESSOR: getCountry
@@ -158,7 +162,12 @@ BEGIN CLASS CovidCase
         EXPORT: None
         ASSERTION: Value of country attribute will be updated to pCountry
         ALGORITHM:
-            country <- pCountry            
+            IF (IsNull(pCountry) EQUALS true)
+                country <- "NA"
+            ELSE
+                country <- pCountry
+            ENDIF
+            PROMPT "Country class field successfully updated."
         END MUTATOR setCountry
     
         MUTATOR: setProvince
@@ -166,7 +175,12 @@ BEGIN CLASS CovidCase
         EXPORT: None
         ASSERTION: Value of province attribute will be updated to pProvince
         ALGORITHM:
-            province <- pProvince
+            IF (IsNull(pProvince) EQUALS true)
+                province <- "NA"
+            ELSE
+                province <- pProvince
+            ENDIF
+            PROMPT "Province class field successfully updated."           
         END MUTATOR setProvince
         
         MUTATOR: setRegion
@@ -174,7 +188,12 @@ BEGIN CLASS CovidCase
         EXPORT: None
         ASSERTION: Value of region attribute will be updated to pRegion
         ALGORITHM:
-            region <- pRegion
+            IF (IsNull(pRegion) EQUALS true)
+                region <- "NA"
+            ELSE
+                region <- pRegion
+            ENDIF
+            PROMPT "Region class field successfully updated."                      
         END MUTATOR setRegion
 
         MUTATOR: setAgeGroup
@@ -182,7 +201,16 @@ BEGIN CLASS CovidCase
         EXPORT: None
         ASSERTION: Value of ageGroup attribute will be updated to pAgeGroup
         ALGORITHM:
-            ageGroup <- pAgeGroup
+            IF (isNull(pAgeGroup) EQUALS true)
+                ageGroup <- "NA"
+            ELSE
+                IF (checkAgeGroup(pAgeGroup) EQUALS true)
+                    ageGroup <- pAgeGroup
+                    PROMPT "Age Group class field successfully updated."
+                ELSE
+                    THROW EXCEPTION ("Data in Age Group category was invalid")
+                ENDIF
+            ENDIF
         END MUTATOR setAgeGroup   
 
         MUTATOR: setSex
@@ -190,7 +218,20 @@ BEGIN CLASS CovidCase
         EXPORT: None
         ASSERTION: Value of sex attribute will be updated to pSex
         ALGORITHM:
-            sex <- pSex
+            IF (isNull(pSex) EQUALS true)
+                sex <- "NA"
+            ELSE
+                IF (checkSex(pSex) EQUALS true)
+                    IF (pSex EQUALS "M" OR pSex EQUALS "m")
+                        sex <- "M"
+                    ELSE
+                        sex <- "F"
+                    ENDIF
+                    PROMPT "Sex class field successfully updated."
+                ELSE
+                    THROW EXCEPTION ("Data in Sex category was invalid")
+                ENDIF
+            ENDIF           
         END MUTATOR setSex
 
         MUTATOR: setCases
@@ -198,7 +239,12 @@ BEGIN CLASS CovidCase
         EXPORT: None
         ASSERTION: Value of cases attribute will be updated to pCases
         ALGORITHM:
-            cases <- pCases
+            IF pCases IS GREATER THAN -1
+                cases <- pCases
+                PROMPT "Cases class field successfully updated"
+            ELSE
+                THROW EXCEPTION ("Data in cases category was invalid")
+            ENDIF
         END MUTATOR setCases
 
         MUTATOR: setDate
@@ -207,8 +253,50 @@ BEGIN CLASS CovidCase
         ASSERTION: Value of date attribute will be updated to Date object with
                    the attribute values being equal to pDay, pMonth and pYear
         ALGORITHM:
-            date <- NEW Date(pDay, pMonth, pYear)
+            TRY
+                date <- NEW Date (pDay, pMonth, pYear)
+            CATCH EXCEPTION e
+                THROW EXCEPTION ("Not able to create new Date object and
+                                 set to date class field in Covid Case object")
         END MUTATOR setDate
+        
+        METHOD: isNull
+        IMPORT: pString (String)
+        EXPORTS: notNull (Boolean)
+        ASSERTION: Returns boolean representing if pString is null
+        ALGORITHM:
+            nullCheck <- false
+            IF pString EQUALS null
+                nullCheck <- true
+            ENDIF
+            RETURN nullCheck
+        END METHOD isNull
+
+        METHOD: checkAgeGroup
+        IMPORTS: pAgeGroup (String)
+        EXPORTS: validAgeGroup (Boolean)
+        ASSERTION: Returns boolean representing if pAgeGroup is valid
+        ALGORITHM:
+            validAgeGroup <- false
+            ag <- pAgeGroup
+            IF (ag EQUALS "0-9" OR "10-19" OR "20-29" OR "30-39" OR "40-49" OR 
+                            "50-59" OR "60-69" OR "70-79" OR "80-89" OR "90+")
+                validAgeGroup <- true
+            ENDIF
+            RETURN validAgeGroup
+        END METHOD checkAgeGroup
+
+        METHOD: checkSex
+        IMPORT: pSex (String)
+        EXPORTS: validSex (Boolean)
+        ASSERTION: Returns boolean representing if pSex is valid
+        ALGORITHM:
+            validSex <- false
+            IF (pSex EQUALS "M" OR "m" OR "F" OR "f")
+                validSex <- true
+            ENDIF
+            RETURN validSex
+        END METHOD checkSex
 
     END METHODS
 END CLASS CovidCase

@@ -86,19 +86,22 @@ public class CovidCase
     public CovidCase ()
     {
         country = "Belgium";
-        province = "Brussels";
+        province = "Antwerpen";
         region = "Flanders";
-        ageGroup = "20-29";
+        ageGroup = "40-49";
         sex = "M";
-        cases = 10;
+        cases = 5;
+        /* Implement try catch to handle exception when constructing a date
+            object to store in date class field */
         try
         {
-            date = new Date(29,2,2020);
+            date = new Date(1,3,2020);
         }
-        catch (Exception e)
+        catch (Exception error)
         {
-            System.out.println("Not able to aggregate Date class into date" +
-                                         " class field for Covid Case class");
+            System.out.println("EXCEPTION IN DEFAULT CONSTRUCTOR: " + error);
+            System.out.println("Not able to aggregate Date class into date " +
+                                 "class field for default Covid Case class");
         }
     }
 
@@ -383,8 +386,8 @@ public class CovidCase
         }
         catch(Exception e)
         {
-            throw new Exception("Not able to set new Date class for date class" + 
-                                                " field in Covid Case class.");
+            throw new Exception("Not able to create new Date object and" + 
+                            " set to date class field in Covid Case object.");
         }
     }
     
