@@ -1,0 +1,10 @@
+BEGIN CLASS DataAnalysisProgram
+    MAIN:
+        
+    END MAIN
+
+    METHODS:
+        
+
+    END METHODS
+END CLASS DataAnalysisProgram
