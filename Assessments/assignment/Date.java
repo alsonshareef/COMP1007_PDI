@@ -44,8 +44,8 @@ public class Date
             }
             else
             {
-                throw new Exception("Day value passed to constructor is not " +
-                             "valid given the month and/or year provided.");
+                throw new Exception("Day value passed to param constructor" + 
+                        " is not valid given the month and/or year provided.");
             }
         }
     }
@@ -81,7 +81,7 @@ public class Date
     {
         dayOfMonth = 1;
         monthOfYear = 1;
-        year = 1111;
+        year = 2011;
     }
 
     // *******************************************************************
@@ -173,7 +173,8 @@ public class Date
         }
         else
         {
-            throw new Exception("Data in Day category was not valid.");
+            throw new Exception("Integer received for dayOfMonth class" + 
+        " field does not represent a day that can exist within given month.");
         }
     }
 
@@ -191,7 +192,8 @@ public class Date
         }
         else
         {
-            throw new Exception("Data in month category was not valid.");
+            throw new Exception("Integer received for monthOfYear class " + 
+                            "field does not represent a month that exists.");
         }
     }    
 
@@ -209,7 +211,8 @@ public class Date
         }
         else
         {
-            throw new Exception("Data in year category was not valid.");
+            throw new Exception("Integer received for year class field " +
+                                     "does not represent a year that exists.");
         }
     }
 
@@ -242,8 +245,8 @@ public class Date
     /*********************************************************************
     * METHOD: checkDay
     * IMPORTS: pDay (Integer), pMonth (Integer)
-    * EXPORTS: validDay
-    * ASSERTION: Returns boolean representing if day exists within given month
+    * EXPORTS: validDay (Boolean)
+    * ASSERTION: Returns boolean representing if pDay exists within pMonth
     **********************************************************************/
     private boolean checkDay (int pDay, int pMonth)
     {
@@ -290,8 +293,8 @@ public class Date
     /*********************************************************************
     * METHOD: checkMonth
     * IMPORTS: pMonth (Integer)
-    * EXPORTS: validMonth
-    * ASSERTION: Returns boolean representing whether month is valid
+    * EXPORTS: validMonth (Boolean)
+    * ASSERTION: Returns boolean representing whether pMonth is valid
     **********************************************************************/
     private boolean checkMonth (int pMonth)
     {
@@ -307,8 +310,8 @@ public class Date
     /*********************************************************************
     * METHOD: checkYear
     * IMPORTS: pYear (Integer)
-    * EXPORTS: validYear
-    * ASSERTION: Value of year attribute will be updated to pYear
+    * EXPORTS: validYear (Boolean)
+    * ASSERTION: Returns boolean representing whether pYear is valid
     **********************************************************************/
     private boolean checkYear (int pYear)
     {
