@@ -91,18 +91,7 @@ public class CovidCase
         ageGroup = "40-49";
         sex = "M";
         cases = 5;
-        /* Implement try catch to handle exception when constructing a date
-            object to store in date class field */
-        try
-        {
-            date = new Date(1,3,2020);
-        }
-        catch (Exception error)
-        {
-            System.out.println("EXCEPTION IN DEFAULT CONSTRUCTOR: " + error);
-            System.out.println("Not able to aggregate Date class into date " +
-                                 "class field for default Covid Case class");
-        }
+        date = new Date();
     }
 
     // *******************************************************************

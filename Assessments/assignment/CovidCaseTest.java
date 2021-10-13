@@ -4,108 +4,77 @@ public class CovidCaseTest
 {
     public static void main(String[] args)
     {
-/*
-        // Default Covid Case
+        // [TEST 1]: CREATE COVID CASE USING DEFAULT CONSTRUCTOR
         CovidCase defaultCovidCase = new CovidCase();
-        System.out.println(defaultCovidCase.toString());
+        System.out.println("Default Covid Case: " + defaultCovidCase.toString());
         System.out.println();
 
-        // Second Default
-        CovidCase secondDefaultCovidCase = new CovidCase();
-        System.out.println(secondDefaultCovidCase.toString());
+        // [TEST 2]: CREATE SECOND DEFAULT COVID CASE WITH COPY CONSTRUCTOR
+        CovidCase copyDefaultCovidCase = new CovidCase();
+        System.out.println("Copy of Default Covid Case: " + copyDefaultCovidCase.toString());
         System.out.println();
 
-        defaultCovidCase.setDate(43,3,2019);
-        secondDefaultCovidCase.setDate(13,3,2019);
-
-        System.out.println();
-
-        System.out.println(defaultCovidCase.toString());
-
-        System.out.println();
-
-        System.out.println(secondDefaultCovidCase.toString());
-
-        System.out.println();
-
-        // Equals
-        if (defaultCovidCase.equals(secondDefaultCovidCase))
+        // [TEST 3]: CHECK IF DEFAULT AND COPY DEFAULT ARE EQUAL
+        if (defaultCovidCase.equals(copyDefaultCovidCase))
         {
-            System.out.println("Both covid cases ARE equal");
+            System.out.println("defaultCovidCase IS equal to copyDefaultCovidCase");
         }
         else
         {
-            System.out.println("Both covid cases ARE NOT equal");
+            System.out.println("defaultCovidCase IS NOT equal to copyDefaultCovidCase");
         }
-*/
+        System.out.println();
 
-        // CovidCase created with param constructor
-        System.out.println("*** CREATE COVID CASES ***");
-        String [] ageGroupArray = {"0-9", "10-19", "20-29", "20-29", "30-39", "40-49", "60-69", "60-69", "90+"};
-        String [] sexArray = {"M", "F", null, "F", null, "M", "F", "M", null};
-        int [] casesArray = {1, 2, 3, 4, -3, 5, 6, 7, 8};
-        CovidCase [] covidCases;
-        covidCases = new CovidCase[9];        
-        
+        // [TEST 4]: TRY CREATE COVID CASE WITH PARAM CONSTRUCTOR
+        System.out.println("********* TRY CREATE COVID CASE WITH PARAM CONSTRUCTOR *********");
+        System.out.println();
         try
         {
-            CovidCase testCC = new CovidCase(null, null, null, "90+", "M", 5, 3, 9, 1995);
+            CovidCase paramCC = new CovidCase(null, null, null, "30-39", "F", 6, 29, 2, 2000);
             System.out.println();
-            System.out.println(testCC.toString());
+            System.out.println("Successfully created CovidCase object with param constructor");
+            System.out.println();
+            System.out.println(paramCC.toString());
         }
         catch (Exception error)
         {
-            System.out.println("NOT ABLE TO CREATE COVID CASE OBJECT BECAUSE: " + error.getMessage());
-        }
-
-        for (int i = 0; i < 9; i++)
-        {
-            try
-            {
-                covidCases[i] = new CovidCase("pCountry", "pProvince", "pRegion", ageGroupArray[i], sexArray[i], casesArray[i], 29, 2, 2000);
-            }
-            catch (Exception e)
-            {
-                System.out.println("COULD NOT CREATE OBJECT BECAUSE: " + e.getMessage());
-            }
-            System.out.println();
-        }
-
-        System.out.println("*** FINISHED CREATING COVID CASES ***");
+            System.out.println("NOT ABLE TO CREATE COVID CASE OBJECT BECAUSE: " + error);
+        }    
         System.out.println();
 
-        System.out.println("*** DISPLAY COVID CASE STATES ***");
-        for (int i = 0; i < 9; i++)
-        {
-            try
-            {
-                System.out.println(covidCases[i].toString());
-                System.out.println();
-            }
-            catch (Exception e)
-            {
-                System.out.println("FAILED TO GET STATE DETAILS OF NULL OBJECT");
-                System.out.println(e);
-                System.out.println();
-            }
-        }
-
-        System.out.println("*** FINISH DISPLAYING COVID CASE STATES ***");
-        // Length of array
-        System.out.println("*************************************");
-        System.out.println("Total length of covid cases array is: " + covidCases.length);
-        System.out.println();
-
+        // [TEST 5]: CREATE COVID CASE WITH PARAMS, MUTATE CLASS FIELDS TO DEFAULT AND CHECK IF EQUAL TO DEFAULT OBJECT
         try
         {
-            covidCases[1].setDate(10,12,2012);
-            System.out.println(covidCases[1].getDate());
+            System.out.println("********* MUTATING PARAMCC TO DEFAULT STATE *********");
+            CovidCase paramCC = new CovidCase(null, null, null, "30-39", "F", 16, 29, 2, 2000);
+            System.out.println();
+            System.out.println("Original param Covid Case state: " + paramCC.toString());
+            System.out.println();
+            paramCC.setCountry("Belgium");
+            paramCC.setProvince("Antwerpen");
+            paramCC.setRegion("Flanders");
+            paramCC.setAgeGroup("40-49");
+            paramCC.setSex("M");
+            paramCC.setCases(5);
+            paramCC.setDate(1,1,2011);
+            System.out.println();
+            System.out.println("Mutated param Covid Case state: " + paramCC.toString());
+            
+            System.out.println();
+
+            if(copyDefaultCovidCase.equals(paramCC))
+            {
+                System.out.println("paramCC WAS SUCCESSFULLY mutated to default state");
+            }
+            else
+            {
+                System.out.println("paramCC WAS NOT mutated to default state");
+            }
         }
-        catch(Exception e)
+        catch (Exception error)
         {
-            System.out.println("Cannot get date for Covid Case 1");
-        }
-        System.out.println();
-        System.out.println(covidCases[3].toString());
+            System.out.println("NOT ABLE TO CREATE COVID CASE OBJECT BECAUSE: " + error);
+        }    
+        System.out.println();       
     }
 }
