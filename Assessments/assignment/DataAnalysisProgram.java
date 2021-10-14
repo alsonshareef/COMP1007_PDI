@@ -24,8 +24,7 @@ public class DataAnalysisProgram
         /* [1] - On file open, read CSV file and parse data into array of strings of
                  useable data. Can comment and un comment either lines below 
                  to use test csv of main csv file */
-        csvRowStrings = getCsvRowStrings("COVID19BE_CASES.csv");
-        //csvRowStrings = getCsvRowStrings("COVID19BE_CASES_TESTDATA.csv");
+        csvRowStrings = getCsvRowStrings(csvFileName);
 
         /* [2] - Create array of Covid Cases with row strings*/
         covidCases = processRowsToObjects(csvRowStrings);
@@ -87,7 +86,7 @@ public class DataAnalysisProgram
                                     " first file read: " + ex2.getMessage());
                 }
             }
-            System.out.println("Error in fileProcessing: " + errorDetails.getMessage());
+            System.out.println("Error in fileProcessing for first read: " + errorDetails.getMessage());
         }
         
         csvRowArray = new String[rowNum];
@@ -129,7 +128,7 @@ public class DataAnalysisProgram
                                     " second file read: " + ex2.getMessage());
                 }
             }
-            System.out.println("Error in fileProcessing: " + errorDetails.getMessage());
+            System.out.println("Error in fileProcessing for second read: " + errorDetails.getMessage());
         }
 
         /* After creating array of csv row strings, return array to be used 
@@ -146,7 +145,7 @@ public class DataAnalysisProgram
     private static CovidCase [] processRowsToObjects(String [] csvRows)
     {
         String[] csvRowSplit;
-        CovidCase [] covidCases;
+        CovidCase [] covidCases = {};
 
         String day = "";
         String month = "";
@@ -164,7 +163,16 @@ public class DataAnalysisProgram
         int casesInt = 0;
         int csvRowNum = 0;
 
-        covidCases = new CovidCase[csvRows.length - 1];
+        try
+        {
+            covidCases = new CovidCase[csvRows.length - 1];
+        }
+        catch(NegativeArraySizeException error)
+        {
+            System.out.println("Error in processRowsToObjects method");
+            System.out.println("Could not assign length to array due to" + 
+                    " csvRows array not being found: " + error);
+        }
             
         for(int rowNum = 0; rowNum < csvRows.length; rowNum++)
         {
