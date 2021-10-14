@@ -18,77 +18,23 @@ public class DataAnalysisProgram
         String testCsvFileName = "COVID19BE_CASES_TESTDATA.csv";
         String csvFileName = "COVID19BE_CASES.csv";
 
-        Scanner input = new Scanner(System.in);
-
         String [] csvRowStrings;
         CovidCase [] covidCases;
 
-        int menuOption1;
-        int menuOption2;
-        int menuOption3;
-
-        boolean validInput1;
-        boolean validInput2;
-        boolean validInput3;
-
-        /* [1] - On file open, read CSV file and parse data into array of arrays of
-                 useable data */
+        /* [1] - On file open, read CSV file and parse data into array of strings of
+                 useable data. Can comment and un comment either lines below 
+                 to use test csv of main csv file */
         csvRowStrings = getCsvRowStrings("COVID19BE_CASES.csv");
         //csvRowStrings = getCsvRowStrings("COVID19BE_CASES_TESTDATA.csv");
 
-        /* [2] - After creating string representations of each csv row and
-                 storing them in an array, parse each string for useable data,
-                 and use that data to generate a new array of Covid Case 
-                 objects representing the data of each CSV row */
+        /* [2] - Create array of Covid Cases with row strings*/
         covidCases = processRowsToObjects(csvRowStrings);
-        //System.out.println("Covid Case array length: " + covidCases.length);
 
-        int arrRow = 101112;
-        int csvRow = arrRow + 2;
-
-        //System.out.println("---------------- DATA FOR CSV ROW: " + csvRow + " ----------------");
-        //System.out.println(covidCases[arrRow].toString());
-
-        /* [3] - Now that array of Covid Case objects has been created, 
-                 the following menu system will start for user to select 
-                 options to display different sets of statistics based on the 
-                 covid cases */
-        do
-        {
-            // Greeting
-            System.out.println("Welcome to the COVID-19 Data Analysis Program." + 
-            " Make a selection from the menu below regarding the information" + 
-                                                    " you would like to see.");
-            System.out.println();
-        
-            // Display Menu 1
-            System.out.println(" - SELECT FROM THE FOLLOWING - ");            
-            System.out.println("> [1] Statistics of entire nation.");            
-            System.out.println("> [2] Statistics of entire nation.");            
-            System.out.println("> [3] Statistics of entire nation.");
-            System.out.print("Your choice: ");
-           
-            menuOption1 = 0; 
-            do
-            {
-                validInput1 = false;
-                try
-                {
-                    menuOption1 = input.nextInt();            
-                }
-                catch(Exception e)
-                {
-                    System.out.println("Did not enter an number. Please try again.");
-                }
-            }
-            while(validInput1 != true);
-            
-            System.out.println();
-        }
-        while (menuOption1 != 3);
-        
-        /* [4] - Safely close program */
-        input.close();
+        /* [3] - Feed Covid Cases array to menus for user to generate statistics */
+        greeting(); 
+        mainMenu(covidCases);
+                
+        /* [4] - When done generating stats, safely close program */
         System.exit(0);
     }
 
@@ -96,7 +42,7 @@ public class DataAnalysisProgram
 * METHOD: getCsvRowStrings
 * IMPORTS: pFileName (String)
 * EXPORTS: csvRowArray (Array)
-* ASSERTION: Reads CSV file and returns array of each row as a string
+* ASSERTION: Reads CSV file and returns array of each CSV row as a string
 ******************************************************************************/
     public static String [] getCsvRowStrings(String pFileName) 
     {
@@ -323,4 +269,369 @@ public class DataAnalysisProgram
         }
         return covidCases;
     }
+
+/*****************************************************************************
+* METHOD: generateStats
+* IMPORTS: covidCases (CovidCase [])
+* EXPORTS: statistics (Integer)
+* ASSERTION: Generates statistics on Covid-19 cases based on user input
+******************************************************************************/
+    public static int generateStats(CovidCase [] covidCases)
+    {
+        int statistics = 0;
+        System.out.println(covidCases[0].toString());
+        return statistics;
+    }
+
+/*****************************************************************************
+* METHOD: greeting
+* IMPORTS: None
+* EXPORTS: None
+* ASSERTION: Great the user with purpose of program
+******************************************************************************/
+    public static void greeting()
+    {
+        System.out.println();
+        System.out.println("Welcome to the COVID-19 Data Analysis Program." + 
+            " Make a selection from the menu below regarding the information" + 
+                                                    " you would like to see.");
+    }
+
+
+/*****************************************************************************
+* METHOD: mainMenuScreen
+* IMPORTS: None
+* EXPORTS: None
+* ASSERTION: Prompt user with main menu options
+******************************************************************************/
+    public static void mainMenuScreen ()
+    {
+        System.out.println();
+        System.out.println(" - MAIN MENU: SELECT FROM THE FOLLOWING - ");            
+        System.out.println("> [1] Statistics of entire nation.");            
+        System.out.println("> [2] Statistics of regions.");            
+        System.out.println("> [3] Exit the program.");
+        System.out.print("Your choice: ");
+    }
+
+/*****************************************************************************
+* METHOD: menuOneScreen
+* IMPORTS: None
+* EXPORTS: None
+* ASSERTION: Prompt user with Menu 1 options
+******************************************************************************/
+    public static void menuOneScreen ()
+    {
+        System.out.println();
+        System.out.println(" - STATISTICS FOR ENTIRE NATION: SELECT FROM THE FOLLOWING - ");            
+        System.out.println("> [1] Display total number of COVID-19 cases");            
+        System.out.println("> [2] Display total number of COVID-19 cases: Males");            
+        System.out.println("> [3] Display total number of COVID-19 cases: Females.");            
+        System.out.println("> [4] Display total number of COVID-19 cases: 0-9 group.");            
+        System.out.println("> [5] Display total number of COVID-19 cases: 10-19 group.");            
+        System.out.println("> [6] Display total number of COVID-19 cases: 20-29 group.");            
+        System.out.println("> [7] Display total number of COVID-19 cases: 30-39 group.");            
+        System.out.println("> [8] Display total number of COVID-19 cases: 40-49 group.");            
+        System.out.println("> [9] Display total number of COVID-19 cases: 50-59 group.");            
+        System.out.println("> [10] Display total number of COVID-19 cases: 60-69 group.");            
+        System.out.println("> [11] Display total number of COVID-19 cases: 70-79 group.");            
+        System.out.println("> [12] Display total number of COVID-19 cases: 80-89 group.");            
+        System.out.println("> [13] Display total number of COVID-19 cases: 90+ group.");            
+        System.out.print("Your choice: ");
+    }
+
+/*****************************************************************************
+* METHOD: menuTwoScreen
+* IMPORTS: None
+* EXPORTS: None
+* ASSERTION: Prompt user with Menu 2 options
+******************************************************************************/
+    public static void menuTwoScreen ()
+    {
+        System.out.println();
+        System.out.println(" - STATISTICS BY REGION: SELECT FROM THE FOLLOWING - ");            
+        System.out.println("> [1] Flanders");            
+        System.out.println("> [2] Brussels");            
+        System.out.println("> [3] Wallonia");
+        System.out.println("> [4] Unknown");
+        System.out.print("Your choice: ");
+    }
+
+/*****************************************************************************
+* METHOD: newSelection
+* IMPORTS: None
+* EXPORTS: None
+* ASSERTION: Returns boolean representing if user would like to make 
+             another selection from the menu they are currently using
+******************************************************************************/
+    public static boolean newSelection ()
+    {
+        boolean selection = false;
+        boolean validInput = false;
+        do 
+        {
+            try
+            {
+                System.out.println("Would you like to make another selection (Y OR N) ?");
+                Scanner input = new Scanner(System.in);
+                char userInput = input.next().charAt(0);
+
+                if(userInput == 'Y' || userInput == 'y')
+                {
+                    selection = true;
+                    validInput = true;
+                }
+                else if (userInput == 'N' || userInput == 'n')
+                {
+                    selection = false;
+                    validInput = true;
+                }
+                else
+                {
+                    System.out.println("Did not give a Yes or No. Please try again.");
+                    System.out.println();
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Invalid input for deciding new selection");
+                System.out.println();
+            }
+        }
+        while (validInput != true);
+        return selection;
+    }
+
+/*****************************************************************************
+* METHOD: mainMenu
+* IMPORTS: covidCases (CovidCase [])
+* EXPORTS: None
+* ASSERTION: Main menu method which directs user to Menu 1 and Menu 2 or exits program
+******************************************************************************/
+    public static void mainMenu (CovidCase [] covidCases)
+    {
+        boolean exit = false;
+        do
+        {
+            mainMenuScreen(); 
+            try
+            {
+                Scanner input = new Scanner(System.in);
+                int menuOption = input.nextInt();
+
+                switch(menuOption)
+                {
+                    case 1:
+                        menuOne(covidCases);
+                    break;
+
+                    case 2:
+                        menuTwo(covidCases);
+                    break;
+
+                    case 3:
+                        System.out.println("Bye!");
+                        exit = true;
+                    break;
+                    
+                    default:
+                        System.out.println();
+                        System.out.println("Did not select a correct option in main menu. Please try again");
+                    break;
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println();
+                System.out.println("Invalid user input in main menu.");
+            }
+        }
+        while (exit != true);
+    }
+
+/*****************************************************************************
+* METHOD: menuOne
+* IMPORTS: covidCases (CovidCase [])
+* EXPORTS: None
+* ASSERTION: Generates Menu 1 for user to generate statistics on entire nation
+******************************************************************************/
+    public static void menuOne (CovidCase [] covidCases)
+    {
+        boolean menuOneExit = false;
+        do
+        {
+            menuOneScreen();
+            try
+            {
+                Scanner input = new Scanner(System.in);
+                int menuOption = input.nextInt();
+                boolean validInput = false;
+
+                switch(menuOption)
+                {
+                    case 1:
+                        System.out.println("Total number of COVID-19 Cases: ");
+                        generateStats(covidCases);
+                        validInput = true;
+                    break;
+
+                    case 2:
+                        generateStats(covidCases);
+                        System.out.println("1.2");
+                        validInput = true;
+                    break;
+
+                    case 3:
+                        generateStats(covidCases);
+                        System.out.println("1.3");
+                        validInput = true;
+                    break;
+
+                    case 4:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+   
+                    case 5:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+
+                    case 6:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+
+                    case 7:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+
+                    case 8:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+
+                    case 9:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+
+                    case 10:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+
+                    case 11:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+
+                    case 12:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+
+                    case 13:
+                        generateStats(covidCases);
+                        System.out.println("Exit menu 1");
+                        validInput = true;
+                    break;
+
+                    default:
+                        System.out.println("Did not select a correct menu option in MENU 1. Please try again");
+                        System.out.println();
+                    break;
+                }
+
+                if(validInput)
+                {
+                    if(newSelection() != true)
+                    {
+                        menuOneExit = true;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Invalid user input in MENU 1");
+                System.out.println();
+            }
+        }
+        while (menuOneExit != true);
+    }
+
+/*****************************************************************************
+* METHOD: menuTwo
+* IMPORTS: covidCases (CovidCase [])
+* EXPORTS: None
+* ASSERTION: Generates Menu 2 for user to generate statistics on different regions
+******************************************************************************/
+    public static void menuTwo (CovidCase [] covidCases)
+    {
+        boolean menuTwoExit = false;
+        do
+        {
+            menuTwoScreen();
+            try
+            {
+                Scanner input = new Scanner(System.in);
+                int menuOption = input.nextInt();
+                boolean validInput = false;
+
+                switch(menuOption)
+                {
+                    case 1:
+                        System.out.println("Show all stats for region: Flanders");
+                        validInput = true;
+                    break;
+
+                    case 2:
+                        System.out.println("Show all stats for region: Brussels");
+                        validInput = true;
+                    break;
+
+                    case 3:
+                        System.out.println("Show all stats for region: Wallonia");
+                        validInput = true;
+                    break;
+
+                    case 4:
+                        System.out.println("Show all stats for region: Unknown");
+                        validInput = true;
+                    break;
+   
+                    default:
+                        System.out.println("Did not select a correct menu option in MENU 2. Please try again");
+                        System.out.println();
+                    break;
+                }
+
+                if(validInput)
+                {
+                    if(newSelection() != true)
+                    {
+                        menuTwoExit = true;
+                    }
+                }
+            }
+            catch(Exception e)
+            {
+                System.out.println("Invalid user input in MENU 2");
+                System.out.println();
+            }
+        }
+        while (menuTwoExit != true);
+    }
+
+
 }
