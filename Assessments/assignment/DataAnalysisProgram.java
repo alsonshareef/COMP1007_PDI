@@ -14,31 +14,89 @@ public class DataAnalysisProgram
 {
     public static void main(String [] args)
     {
-        /* - [1] - On file open, read CSV file and parse data into array of arrays of
-         useable data, and convert that data into an array of Covid Case
-         objects representing the data in each row of CSV file for menu system
-         to use to generate statistics based on user input */
+        // Declarations for main program variables
         String testCsvFileName = "COVID19BE_CASES_TESTDATA.csv";
         String csvFileName = "COVID19BE_CASES.csv";
+
+        Scanner input = new Scanner(System.in);
+
         String [] csvRowStrings;
         CovidCase [] covidCases;
 
-        //csvRowStrings = getCsvRowStrings("COVID19BE_CASES.csv");
-        csvRowStrings = getCsvRowStrings("COVID19BE_CASES_TESTDATA.csv");
+        int menuOption1;
+        int menuOption2;
+        int menuOption3;
 
-        processRowsToObjects(csvRowStrings);
+        boolean validInput1;
+        boolean validInput2;
+        boolean validInput3;
 
-        /* - [2] - Now that array of Covid Case objects has been created, the following menu system will start for user to select options to display different sets of statistics based on the covid cases */
+        /* [1] - On file open, read CSV file and parse data into array of arrays of
+                 useable data */
+        csvRowStrings = getCsvRowStrings("COVID19BE_CASES.csv");
+        //csvRowStrings = getCsvRowStrings("COVID19BE_CASES_TESTDATA.csv");
+
+        /* [2] - After creating string representations of each csv row and
+                 storing them in an array, parse each string for useable data,
+                 and use that data to generate a new array of Covid Case 
+                 objects representing the data of each CSV row */
+        covidCases = processRowsToObjects(csvRowStrings);
+        //System.out.println("Covid Case array length: " + covidCases.length);
+
+        int arrRow = 101112;
+        int csvRow = arrRow + 2;
+
+        //System.out.println("---------------- DATA FOR CSV ROW: " + csvRow + " ----------------");
+        //System.out.println(covidCases[arrRow].toString());
+
+        /* [3] - Now that array of Covid Case objects has been created, 
+                 the following menu system will start for user to select 
+                 options to display different sets of statistics based on the 
+                 covid cases */
+        do
+        {
+            // Greeting
+            System.out.println("Welcome to the COVID-19 Data Analysis Program." + 
+            " Make a selection from the menu below regarding the information" + 
+                                                    " you would like to see.");
+            System.out.println();
         
-        /* - [3] - Safely close program */
+            // Display Menu 1
+            System.out.println(" - SELECT FROM THE FOLLOWING - ");            
+            System.out.println("> [1] Statistics of entire nation.");            
+            System.out.println("> [2] Statistics of entire nation.");            
+            System.out.println("> [3] Statistics of entire nation.");
+            System.out.print("Your choice: ");
+           
+            menuOption1 = 0; 
+            do
+            {
+                validInput1 = false;
+                try
+                {
+                    menuOption1 = input.nextInt();            
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Did not enter an number. Please try again.");
+                }
+            }
+            while(validInput1 != true);
+            
+            System.out.println();
+        }
+        while (menuOption1 != 3);
+        
+        /* [4] - Safely close program */
+        input.close();
         System.exit(0);
     }
 
 /*****************************************************************************
-* METHOD: readFile
+* METHOD: getCsvRowStrings
 * IMPORTS: pFileName (String)
-* EXPORTS: None
-* ASSERTION: Reads provided file line by line
+* EXPORTS: csvRowArray (Array)
+* ASSERTION: Reads CSV file and returns array of each row as a string
 ******************************************************************************/
     public static String [] getCsvRowStrings(String pFileName) 
     {
@@ -50,20 +108,23 @@ public class DataAnalysisProgram
         String line;
         String [] csvRowArray;
 
+        /* FIRST READ: Dynamically determine amount of rows to set to the 
+                       length of csvRowArray */
         try 
         {
-            /* FIRST READ: Dynamically determine amount of rows to set csvRowArray length to */
             fs = new FileInputStream(pFileName);
             reader = new InputStreamReader(fs);
             br = new BufferedReader(reader);
             line = br.readLine();
-            
+           
+            // Calculate number of rows in CSV file 
             while (line != null)
             {
                 rowNum++;
-                //System.out.println(line);
                 line = br.readLine();
             }
+            
+            // Close stream after first read
             fs.close();
         }
         catch(IOException errorDetails) 
@@ -75,13 +136,20 @@ public class DataAnalysisProgram
                     fs.close();
                 }
                 catch(IOException ex2) 
-                { }
+                { 
+                    System.out.println("Error with closing input stream for" + 
+                                    " first file read: " + ex2.getMessage());
+                }
             }
             System.out.println("Error in fileProcessing: " + errorDetails.getMessage());
         }
         
         csvRowArray = new String[rowNum];
 
+        /* SECOND READ: After dynamically setting the array length, 
+                        reset the filestream, stream reader and buffered reader
+                        to read the same file again for assigning the string 
+                        representation of each line to the arraw*/
         try
         {
             fs = new FileInputStream(pFileName);
@@ -90,12 +158,15 @@ public class DataAnalysisProgram
             rowNum = 0;
             line = br.readLine();
 
+            // Assign string version of each csv row to array
             while (line != null)
             {
                 csvRowArray[rowNum] = line;
                 rowNum++;
                 line = br.readLine();
             }
+            
+            // Close stream after second read
             fs.close();
         }
         catch(IOException errorDetails) 
@@ -107,46 +178,57 @@ public class DataAnalysisProgram
                     fs.close();
                 }
                 catch(IOException ex2) 
-                { }
+                { 
+                    System.out.println("Error with closing input stream for" + 
+                                    " second file read: " + ex2.getMessage());
+                }
             }
             System.out.println("Error in fileProcessing: " + errorDetails.getMessage());
         }
-        
-        //System.out.println(rowNum);
+
+        /* After creating array of csv row strings, return array to be used 
+                                                to create Covid Case objects */
         return csvRowArray;
     }
 
 /*****************************************************************************
-* METHOD: processCSVLine
+* METHOD: processRowsToObjects
 * IMPORTS: csvRow (String)
-* EXPORTS: None
-* ASSERTION: Parses string version of CSV line into useable data
+* EXPORTS: covidCases (Array)
+* ASSERTION: Returns array of Covid Case objects based on data from CSV rows strings
 ******************************************************************************/
-    private static void processRowsToObjects(String [] csvRows)
+    private static CovidCase [] processRowsToObjects(String [] csvRows)
     {
         String[] csvRowSplit;
         CovidCase [] covidCases;
-        String day;
-        String month;
-        String year;
-        String country;
-        String province;
-        String region;
-        String ageGroup;
-        String sex;
-        String cases;
+
+        String day = "";
+        String month = "";
+        String year = "";
+        String country = "";
+        String province = "";
+        String region = "";
+        String ageGroup = "";
+        String sex = "";
+        String cases = "";
 
         int dayInt = 0;
         int monthInt = 0;
         int yearInt = 0;
         int casesInt = 0;
+        int csvRowNum = 0;
 
-        covidCases = new CovidCase[csvRows.length];
-        System.out.println("CC length: " + covidCases.length);
+        covidCases = new CovidCase[csvRows.length - 1];
             
-        for(int i = 1; i < csvRows.length; i++)
+        for(int rowNum = 0; rowNum < csvRows.length; rowNum++)
         {
-            csvRowSplit = csvRows[i].split(",");
+            if (rowNum == 0)
+            {
+                continue;
+            }
+
+            csvRowSplit = csvRows[rowNum].split(",");
+
             for(int j = 0; j < csvRowSplit.length; j++)
             {
                 day = csvRowSplit[0];
@@ -158,11 +240,9 @@ public class DataAnalysisProgram
                 ageGroup = csvRowSplit[6];
                 sex = csvRowSplit[7];
                 cases = csvRowSplit[8];
-               
-                System.out.println(ageGroup); 
-                System.out.println(ageGroup.equals("40-49"));
 
-                // Day string to int
+                                
+                // TURN DAY STRING INTO INT
                 try
                 {
                     dayInt = Integer.parseInt(day);
@@ -178,10 +258,11 @@ public class DataAnalysisProgram
                     System.out.println("Exception: " + e);
                 }
 
-                // Day string to int
+                // TURN MONTH STRING INTO INT
                 try
                 {
                     monthInt = Integer.parseInt(month);
+                    
                 }
                 catch(NumberFormatException numEx)
                 {
@@ -193,10 +274,11 @@ public class DataAnalysisProgram
                     System.out.println("Exception: " + e);
                 }
 
-                // Day string to int
+                // TURN YEAR STRING INTO INT
                 try
                 {
                     yearInt = Integer.parseInt(year);
+                    
                 }
                 catch(NumberFormatException numEx)
                 {
@@ -208,10 +290,11 @@ public class DataAnalysisProgram
                     System.out.println("Exception: " + e);
                 }
 
-                // Day string to int
+                // TURN CASES STRING INTO INT
                 try
                 {
                     casesInt = Integer.parseInt(cases);
+                    
                 }
                 catch(NumberFormatException numEx)
                 {
@@ -222,20 +305,22 @@ public class DataAnalysisProgram
                 {
                     System.out.println("Exception: " + e);
                 }
-//-----------------------------------
-                try
-                {   
-                    covidCases[i-1] = new CovidCase(country, province, region, "40-49", "M", casesInt, dayInt, monthInt, yearInt);              
-                    System.out.println(covidCases[0].toString());
-                }
-                catch(Exception e)
-                {
-                    System.out.println(e);
-                    System.out.println();
-                }
-
+                
+            }
+            // NOW CREATE OBJECTS
+            try
+            {
+                covidCases[rowNum-1] = new CovidCase(country, province, region, ageGroup, sex, casesInt, dayInt, monthInt, yearInt);
+            }
+            catch(Exception e)
+            {
+                csvRowNum = rowNum + 1;
+                System.out.println("processStringToObjects Method: Unable to" + 
+        " turn data from CSV file row " + csvRowNum + " to Covid Case object");
+                System.out.println(e);
+                System.out.println();
             }
         }
+        return covidCases;
     }
-
 }
