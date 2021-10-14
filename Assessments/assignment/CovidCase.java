@@ -241,7 +241,6 @@ public class CovidCase
         {
             country = pCountry;
         }
-        System.out.println("Country class field successfully updated.");
     }
 
     /*********************************************************************
@@ -260,7 +259,6 @@ public class CovidCase
         {
             province = pProvince;
         }
-        System.out.println("Province class field successfully updated.");
     }    
 
     /*********************************************************************
@@ -279,7 +277,6 @@ public class CovidCase
         {
             region = pRegion;
         }
-        System.out.println("Region class field successfully updated.");
     }
 
     /*********************************************************************
@@ -299,7 +296,6 @@ public class CovidCase
             if (checkAgeGroup(pAgeGroup))
             { 
                 ageGroup = pAgeGroup;
-                System.out.println("Age Group class field successfully updated.");
             } 
             else
             {
@@ -324,15 +320,18 @@ public class CovidCase
         {
             if (checkSex(pSex))
             { 
-                if (pSex == "M" || pSex == "m")
+                if (pSex.equals("M") || pSex.equals("m"))
                 { 
                     sex = "M";
                 }
-                else
+                else if (pSex.equals("F") || pSex.equals("f"))
                 {
                     sex = "F";
                 }
-                System.out.println("Sex class field successfully updated.");
+                else
+                {
+                    sex = "NA";
+                }
             } 
             else
             {
@@ -352,7 +351,6 @@ public class CovidCase
             if (pCases > -1)
             { 
                 cases = pCases;
-                System.out.println("Cases class field successfully updated.");
             } 
             else
             {
@@ -410,9 +408,9 @@ public class CovidCase
     {
         boolean validAgeGroup = false;
         String ag = pAgeGroup;
-        if (ag == "0-9" || ag == "10-19" || ag == "20-29" || ag == "30-39" 
-            || ag == "40-49" || ag == "50-59" || ag == "60-69" || ag == "70-79"
-                                             || ag == "80-89" || ag == "90+")
+        if (ag.equals("NA") || ag.equals("0-9") || ag.equals("10-19") || ag.equals("20-29") || ag.equals("30-39") 
+            || ag.equals("40-49") || ag.equals("50-59") || ag.equals("60-69") || ag.equals("70-79")
+                                             || ag.equals("80-89") || ag.equals("90+"))
         {
             validAgeGroup = true;
         }
@@ -428,7 +426,7 @@ public class CovidCase
     private boolean checkSex (String pSex)
     {
         boolean validSex = false;
-        if (pSex == "M" || pSex == "m" || pSex == "F" || pSex == "f")
+        if (pSex.equals("NA") || pSex.equals("M") || pSex.equals("m") || pSex.equals("F") || pSex.equals("f"))
         {
             validSex = true;
         }

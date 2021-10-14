@@ -167,7 +167,6 @@ BEGIN CLASS CovidCase
             ELSE
                 country <- pCountry
             ENDIF
-            PROMPT "Country class field successfully updated."
         END MUTATOR setCountry
     
         MUTATOR: setProvince
@@ -180,7 +179,6 @@ BEGIN CLASS CovidCase
             ELSE
                 province <- pProvince
             ENDIF
-            PROMPT "Province class field successfully updated."           
         END MUTATOR setProvince
         
         MUTATOR: setRegion
@@ -193,7 +191,6 @@ BEGIN CLASS CovidCase
             ELSE
                 region <- pRegion
             ENDIF
-            PROMPT "Region class field successfully updated."                      
         END MUTATOR setRegion
 
         MUTATOR: setAgeGroup
@@ -206,7 +203,6 @@ BEGIN CLASS CovidCase
             ELSE
                 IF (checkAgeGroup(pAgeGroup) EQUALS true)
                     ageGroup <- pAgeGroup
-                    PROMPT "Age Group class field successfully updated."
                 ELSE
                     THROW EXCEPTION ("Data in Age Group category was invalid")
                 ENDIF
@@ -224,10 +220,11 @@ BEGIN CLASS CovidCase
                 IF (checkSex(pSex) EQUALS true)
                     IF (pSex EQUALS "M" OR pSex EQUALS "m")
                         sex <- "M"
-                    ELSE
+                    ELSE IF (pSex EQUALS "F" OR pSex Equals "f")
                         sex <- "F"
+                    ELSE
+                        sex <- "NA"
                     ENDIF
-                    PROMPT "Sex class field successfully updated."
                 ELSE
                     THROW EXCEPTION ("Data in Sex category was invalid")
                 ENDIF
@@ -241,7 +238,6 @@ BEGIN CLASS CovidCase
         ALGORITHM:
             IF pCases IS GREATER THAN -1
                 cases <- pCases
-                PROMPT "Cases class field successfully updated"
             ELSE
                 THROW EXCEPTION ("Data in cases category was invalid")
             ENDIF
@@ -279,7 +275,7 @@ BEGIN CLASS CovidCase
         ALGORITHM:
             validAgeGroup <- false
             ag <- pAgeGroup
-            IF (ag EQUALS "0-9" OR "10-19" OR "20-29" OR "30-39" OR "40-49" OR 
+            IF (ag EQUALS "NA" OR "0-9" OR "10-19" OR "20-29" OR "30-39" OR "40-49" OR 
                             "50-59" OR "60-69" OR "70-79" OR "80-89" OR "90+")
                 validAgeGroup <- true
             ENDIF
@@ -292,7 +288,7 @@ BEGIN CLASS CovidCase
         ASSERTION: Returns boolean representing if pSex is valid
         ALGORITHM:
             validSex <- false
-            IF (pSex EQUALS "M" OR "m" OR "F" OR "f")
+            IF (pSex EQUALS "NA" OR "M" OR "m" OR "F" OR "f")
                 validSex <- true
             ENDIF
             RETURN validSex

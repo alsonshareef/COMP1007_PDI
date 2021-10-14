@@ -30,7 +30,7 @@ public class CovidCaseTest
         System.out.println();
         try
         {
-            CovidCase paramCC = new CovidCase(null, null, null, "30-39", "F", 6, 29, 2, 2000);
+            CovidCase paramCC = new CovidCase(null, null, null, "90+", "F", 6, 29, 2, 2000);
             System.out.println();
             System.out.println("Successfully created CovidCase object with param constructor");
             System.out.println();
