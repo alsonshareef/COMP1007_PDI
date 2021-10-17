@@ -2,7 +2,8 @@
 * FILE: DataAnalysisProgram
 * AUTHOR: Alson Shareef
 * UNIT: COMP1007
-* PURPOSE: Track the goals scored by 3 players for 5 of their matches
+* PURPOSE: Run calculations and display statistics based on Covid-19 cases 
+           in Belgium
 * REFERENCES: None
 * DATE CREATED: 11/09/2021
 */
