@@ -50,7 +50,7 @@ public class DataAnalysisProgram
         }
         else
         {
-            log("Error creating array of Covid Cases in main: No row of " + 
+            log("Cannot create array of Covid Cases: No rows of " + 
                                                 "CSV strings array", 0, "both");
             log("-------------------------", 0, "both");
         }
@@ -67,12 +67,12 @@ public class DataAnalysisProgram
             {
                 if(e.getMessage() == null)
                 {
-                    log("Menus error: Invalid user input in Main Menu" + "\n" +
+                    log("Menu error: Invalid user input in Main Menu" + "\n" +
                                                                  e, 1, "both");
                 }
                 else 
                 {
-                    log("Menus error: " + e.getMessage(), 1, "both");
+                    log("Menu error: " + e.getMessage(), 1, "both");
                 }
             }
         }
@@ -89,7 +89,7 @@ public class DataAnalysisProgram
 
 /*****************************************************************************
 * METHOD: log
-* IMPORTS: pString (String)
+* IMPORTS: pString (String), pNewLine (Integer), pType (String)
 * EXPORTS: None
 * ASSERTION: Takes a string and both outputs it to console, and writes to log file
 ******************************************************************************/
@@ -102,6 +102,8 @@ public class DataAnalysisProgram
             fs = new FileOutputStream("logFile.txt", true);
             pw = new PrintWriter(fs);
 
+            /* Depending on pType, can log to log file and console seperately
+               or together */
             if (pType == "both")
             {
                 System.out.println(pString);
@@ -116,12 +118,15 @@ public class DataAnalysisProgram
                 System.out.println(pString);
             }
             
+            /* After intended message(s) are logged, param pNewline decides
+               amount of new lines to appear after the message */
             for (int i = 0; i < pNewLine; i++ )
             {
                 System.out.println();
                 pw.append("\n");
             }
 
+            // Safely close writer after writing is finished
             pw.close();
         }
         catch (IOException e)
@@ -134,10 +139,10 @@ public class DataAnalysisProgram
                 }
                 catch (IOException e2)
                 {
-                    System.out.println("Error closing file stream for print writer.");
+                    log("Error closing file stream for print writer.", 0, "both");
                 }
             }
-            System.out.println("Error writing to log file: " + e.getMessage());
+            log("Error writing to log file: " + e.getMessage(), 0, "both");
         }
     }
 
@@ -253,8 +258,10 @@ public class DataAnalysisProgram
         String[] csvRowSplit;
         CovidCase [] covidCases = {};
 
-        String day, month, year, country, province, region, ageGroup, sex, cases, errorMessage;
-        day = month = year = country = province = region = ageGroup = sex = cases = errorMessage = "";
+        String day, month, year, country, province, region, ageGroup, sex,
+                                                         cases, errorMessage;
+        day = month = year = country = province = region = ageGroup = 
+                                             sex = cases = errorMessage = "";
 
         int dayInt, monthInt, yearInt, casesInt, csvRowNum;
         dayInt = monthInt = yearInt = casesInt = csvRowNum = -1;
@@ -403,7 +410,7 @@ public class DataAnalysisProgram
 
 /*****************************************************************************
 * METHOD: generateRegionStats
-* IMPORTS: covidCases (CovidCase [])
+* IMPORTS: covidCases (CovidCase []), pRegion (String)
 * EXPORTS: None
 * ASSERTION: Generates statistics on Covid-19 cases based on specific filters
 ******************************************************************************/
@@ -488,7 +495,7 @@ public class DataAnalysisProgram
 * METHOD: greeting
 * IMPORTS: None
 * EXPORTS: None
-* ASSERTION: Great the user with purpose of program
+* ASSERTION: Greet the user with purpose of the program
 ******************************************************************************/
     public static void greeting()
     {
@@ -496,7 +503,6 @@ public class DataAnalysisProgram
         log("Welcome to the COVID-19 Data Analysis Program. Make a selection" + 
         " from the menu below regarding the information you would like to see.", 1, "both");
     }
-
 
 /*****************************************************************************
 * METHOD: mainMenuScreen
@@ -557,7 +563,7 @@ public class DataAnalysisProgram
 /*****************************************************************************
 * METHOD: newSelection
 * IMPORTS: None
-* EXPORTS: None
+* EXPORTS: selection (Boolean)
 * ASSERTION: Returns boolean representing if user would like to make 
              another selection from the menu they are currently using
 ******************************************************************************/
@@ -590,9 +596,15 @@ public class DataAnalysisProgram
                     log("Did not give a Yes or No. Please try again.", 1, "both");
                 }
             }
-            catch(Exception e)
+            catch(InputMismatchException e)
             {
-                log("Invalid input for deciding new selection", 1, "both");
+                log("Invalid user input for newSelection: " + "\n" +
+                                                     e.getMessage(), 1, "both");
+            }
+            catch (Exception e)
+            {
+                log("Invalid user input for newSelection: " +
+                                             "\n" + e.getMessage(), 1, "both");
             }
         }
         while (validInput != true);
@@ -644,7 +656,6 @@ public class DataAnalysisProgram
             }
             catch(Exception e)
             {
-                System.out.println();
                 throw new Exception("Invalid user input in main menu.");
             }
         }
@@ -659,7 +670,7 @@ public class DataAnalysisProgram
 ******************************************************************************/
     public static void menuOne (CovidCase [] covidCases) throws Exception
     {
-        boolean menuOneExit = false;
+        boolean exit = false;
         do
         {
             menuOneScreen();
@@ -749,7 +760,7 @@ public class DataAnalysisProgram
                 {
                     if(newSelection() != true)
                     {
-                        menuOneExit = true;
+                        exit = true;
                     }
                 }
             }
@@ -762,7 +773,7 @@ public class DataAnalysisProgram
                 throw new Exception("General error in Menu 1" + "\n" + e);
             }
         }
-        while (menuOneExit != true);
+        while (exit != true);
     }
 
 /*****************************************************************************
@@ -773,7 +784,7 @@ public class DataAnalysisProgram
 ******************************************************************************/
     public static void menuTwo (CovidCase [] covidCases) throws Exception
     {
-        boolean menuTwoExit = false;
+        boolean exit = false;
         do
         {
             menuTwoScreen();
@@ -814,7 +825,7 @@ public class DataAnalysisProgram
                 {
                     if(newSelection() != true)
                     {
-                        menuTwoExit = true;
+                        exit = true;
                     }
                 }
             }
@@ -827,6 +838,6 @@ public class DataAnalysisProgram
                 throw new Exception("General error in Menu 2" + "\n" + e);
             }
         }
-        while (menuTwoExit != true);
+        while (exit != true);
     }
 }

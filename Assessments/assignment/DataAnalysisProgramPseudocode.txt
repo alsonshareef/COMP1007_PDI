@@ -1,10 +1,589 @@
 BEGIN CLASS DataAnalysisProgram
     MAIN:
+        testCsvFileName <- "COVID19BE_CASES_TESTDATA.csv"
+        csvFileName <- "COVID19BE_CASES.csv"
         
+        csvRowStrings <- EMPTY ARRAY
+        covidCases <- EMPTY ARRAY
+
+        TRY
+            csvRowStrings <- getCsvRowStrings(csvFileName)
+        CATCH Exception e
+            log("I/O Error reading file in main: " + e.getMessage() , 0, "both")
+        END TRY CATCH
+
+        IF csvRowString.length IS GREATER THAN 0 
+            TRY
+                covidCases <- processRowsToObjects(csvRowStrings)
+            CATCH Exception e
+                log("Error creating array of Covid Cases in main: " + 
+                                                    e.getMessage(), 0, "both")
+            END TRY CATCH
+        ELSE
+            log("Cannot create array of Covid Cases: No rows of CSV Strings array", 0, "both")
+        END IF
+
+        IF covidCases.length IS GREATER THAN 0
+            TRY
+                greeting()
+                mainMenu(covidCases)
+            CATCH Exception e
+                IF e.getMessage() EQUALS null
+                    log("Menu error: Invalid user input in Main Menu", 1, "both")
+                ELSE
+                    log("Menu error: " + e.getMessage(), 1, "both")
+                END IF
+            END TRY CATCH
+        ELSE
+            log("Error in main: Could not begin program since valid data is 
+                 not provided.", 0, "both")
+        END IF
+
+        EXIT SYSTEM SAFELY        
     END MAIN
 
     METHODS:
-        
+        METHOD: log
+        IMPORTS: pString(String), pNewLine (Integer), pType (String)
+        EXPORTS: None
+        ASSERTION: Takes a string and both outputs it to console, and writes to log file
+        ALGORITHM:
+            TRY
+                IF pType EQUALS "both"
+                    PROMPT pString TO USER
+                    WRITE TO LOG FILE pString
+                ELSE IF pType EQUALS "file"
+                    WRITE TO LOG FILE pString
+                ELSE
+                    PROMPT pString TO USER
+                END IF        
 
+                FOR i = 0 UNTIL i IS LESS THAN pNewLine INCREMENT BY 1
+                    PROMPT "" TO USER
+                    WRITE TO LOG FILE ""
+
+            CATCH IOException e
+                IF FileStream DOES NOT EQUAL null
+                    TRY
+                        CLOSE FileStream
+                    CATCH IOException e2
+                        log("Error closing file stream", 0, "both")
+                END IF
+                log("Error writing to log file: " + e.getMessage(), 0, "both")
+        END METHOD log
+
+        METHOD: getCsvRowStrings
+        IMPORTS: pFileName (String)
+        EXPORTS: csvRowArray (Array)
+        ASSERTION: Reads CSV file and returns array of each CSV row as a string
+        ALGORITHM:
+            rowNum <- 0
+            line <- String OF FIRST ROW IN CSV FILE
+            csvRowArray <- EMPTY String ARRAY        
+    
+            TRY
+                WHILE line DOES NOT EQUAL null
+                    rowNum <- rowNum + 1
+                    line = String OF NEXT ROW IN CSV FILE
+            
+            CATCH IOException errorDetails
+                IF FileStream DOES NOT EQUAL null
+                    TRY
+                        CLOSE FileStream
+                    CATCH IOException ex2
+                        THROW IOException("Error closing file stream for first 
+                                                            file read: " + ex2)
+                    END TRY CATCH
+                END IF
+                THROW IOException("Error in fileProcessing for first read: " +
+                                                         "\n" + errorDetails)
+            END TRY CATCH
+
+            csvRowArray.length EQUALS rowNum
+        
+            TRY
+                rowNum <- 0
+                line <- String OF FIRST ROW OF CSV FILE
+
+                WHILE line DOES NOT EQUAL null
+                    csvRowArray AT INDEX rowNum <- line
+                    rowNum <- rowNum + 1
+                    line <- String OF NEXT ROW IN CSV FILE
+                
+            CATCH IOException errorDetails
+                IF FileStream DOES NOT EQUAL null)
+                    TRY 
+                        CLOSE FileStream
+                    CATCH IOException ex2
+                        throw new IOException("Error with closing input stream for" + 
+                                        " second file read: " + ex2)
+                    END TRY CATCH
+                
+                THROW IOException("Error in fileProcessing for second read: " + errorDetails)
+            END TRY CATCH
+            RETURN csvRowArray
+
+        END METHOD getCsvRowStrings
+
+        METHOD: processRowsToObjects
+        IMPORTS: csvRow (String)
+        EXPORTS: covidCases (Array)
+        ASSERTION: Returns array of Covid Cases objects based on data from CSV row strings
+        ALGORITHM:
+            csvRowSplit <- EMPTY String ARRAY
+            covidCases <- EMPTY CovidCases ARRAY
+            
+            day, month, year, country, province, region, ageGroup, sex,
+                                         cases, errorMessage <- EMPTY String
+
+            dayInt, monthInt, yearInt, casesInt, csvRowNum <- -1
+
+            covidCases.length <- csvRows.length - 1
+
+            FOR rowNum EQUALS 0 UNTIL rowNum IS EQUAL TO csvRows.length 
+                                                                INCREMENT BY 1
+                IF rowNum EQUALS 0
+                    SKIP CURRENT ITERATION OF LOOP
+                END IF
+
+                csvRowSplit <- csvRows AT INDEX rowNum SPLIT AT EVERY ','
+                
+                FOR j EQUALS 0 UNTIL j IS EQUAL TO csvRowSplit.length 
+                                                                INCREMENT BY 1
+                    day <- csvRowSplit INDEX 0
+                    month <- csvRowSplit INDEX 1
+                    year <- csvRowSplit INDEX 2
+                    country <- csvRowSplit INDEX 3
+                    province <- csvRowSplit INDEX 4
+                    region <- csvRowSplit INDEX 5
+                    ageGroup <- csvRowSplit INDEX 6
+                    sex <- csvRowSplit INDEX 7
+                    cases <- csvRowSplit INDEX 8
+
+                    TRY
+                        dayInt <- INTEGER OF day
+                        monthInt <- INTEGER OF month
+                        yearInt <- INTEGER OF year
+                        casesInt <- INTEGER OF cases
+
+                    CATCH NumberFormatException numError
+                        errorMessage <- "Issue with converting data from CSV row
+                                            number " + rowNum + " to integers"
+
+                        IF dayInt EQUALS -1
+                            errorMessage <- errorMessage + "Day string could 
+                                        not be converted to dayInt " + numError
+                        ELSE IF monthInt EQUALS -1
+                            errorMessage <- errorMessage + "Month string could 
+                                    not be converted to monthInt " + numError
+                        ELSE IF yearInt EQUALS -1
+                            errorMessage <- errorMessage + "Year string could 
+                                    not be converted to yearInt " + numError
+                        ELSE 
+                            errorMessage <- errorMessage + "Cases string could 
+                                    not be converted to casesInt " + numError
+                        END IF 
+
+                        THROW NumberFormatException(errorMessage)
+                    CATCH Exception error
+                        THROW Exception("General error with converting strings 
+                                                        to ints: " + error)
+                    END TRY CATCH
+
+                    TRY
+                        covidCases AT INDEX rowNum - 1 <- NEW CovidCase (country,
+                                 province, region, ageGroup, sex, casesInt,
+                                 dayInt, monthInt, yearInt)
+                    CATCH
+                        csvRowNum <- rowNum + 1
+                        THROW Exception("processStringToObjects Method: 
+                            Unable to turn data from CSV file row" + 
+                            csvRowNum + "to Covid Case object " + e)
+                    END TRY CATCH
+                END FOR
+            END FOR
+            RETURN covidCases
+        END METHOD processRowsToObjects
+
+        METHOD: totalCases
+        IMPORTS: covidCases (CovidCase Array)
+        EXPORTS: total (Integer)
+        ASSERTION: Generates total number of Covid Cases
+        ALGORITHM:
+            total <- 0
+            FOR i EQUALS 0 UNTIL EQUAL TO covidCases.length INCREMENT BY 1
+                total <- total + covidCases[i].getCases()
+            END FOR
+            RETURN total
+        END METHOD totalCases
+
+        METHOD: totalGender
+        IMPORTS: gender (String), covidCases (CovidCase Array)
+        EXPORTS: total (Integer)
+        ASSERTION: Generates total number of Covid Cases for a specific gender
+        ALGORITHM:
+            total <- 0
+            FOR i EQUALS 0 UNTIL EQUAL TO covidCases.length INCREMENT BY 1
+                IF covidCases[i].getSex() EQUALS gender
+                    total <- total + covidCases[i].getCases()
+                END IF
+            END FOR
+            RETURN total       
+        END METHOD totalGender
+
+        METHOD: totalAgeGroup
+        IMPORTS: ageGroup (String), covidCases (CovidCase Array)
+        EXPORTS: total (Integer)
+        ASSERTION: Generates total number of Covid Cases for a specific age group
+        ALGORITHM:
+            total <- 0
+            FOR i EQUALS 0 UNTIL EQUAL TO covidCases.length INCREMENT BY 1
+                IF covidCases[i].getAgeGroup() EQUALS ageGroup
+                    total <- total + covidCases[i].getCases()
+                END IF
+            END FOR
+            RETURN total
+        END METHOD totalAgeGroup
+
+        METHOD: generateRegionStats
+        IMPORTS: covidCases (CovidCase []), pRegion (String)
+        EXPORTS: None
+        ASSERTION: Generates statistics on Covid-19 cases based on specific filters
+        ALGORITHM:
+            regionBasedCovidCases <- EMPTY CovidCase ARRAY 
+            regionArrLegnth <- 0
+            regionArryIndex <- 0
+            
+            FOR i EQUALS 0 UNTIL i EQUALS covidCases.length INCREMENT BY 1
+                IF covidCases[i].getRegion() EQUALS pRegion
+                    regionArrLength <- regionArrLength + 1
+                END IF
+            END FOR
+
+            regionBasedCovidCases.length <- regionArrLength
+
+            FOR i EQUALS 0 UNTIL i EQUALS covidCases.length INCREMENT BY 1
+                IF covidCases[i].getRegion() EQUALS pRegion
+                    regionBasedCovidCases AT INDEX regionArrIndex <- covidCases[i]
+                    regionArrIndex <- regionArrIndex + 1
+                END IF
+            END FOR
+
+            IF pRegion EQUALS "NA"
+                pRegion <- "Unknown Regions"
+            END IF
+        
+            log("------ REGIONAL COVID STATS FOR " + pRegion + "------", 0, "both")
+            log("Total number of COVID-19 cases for " + pRegion + ": " + 
+                                totalCases(regionBasedCovidCases), 0, "both")
+            
+            log("Total number of COVID-19 male cases for" + pRegion + ": " + 
+                            totalGender("M", regionBasedCovidCases), 0, "both")
+
+            log("Total number of COVID-19 female cases for" + pRegion + ": " + 
+                            totalGender("F", regionBasedCovidCases), 0, "both")
+
+            log("Total number of COVID-19 cases in 0-9 age group for " + 
+                            pRegion + ": " + totalAgeGroup("0-9", 
+                            regionBasedCovidCases) , 0, "both")
+
+            log("Total number of COVID-19 cases in 10-19 age group for " + 
+                            pRegion + ": " + totalAgeGroup("10-19", 
+                            regionBasedCovidCases) , 0, "both")
+
+            log("Total number of COVID-19 cases in 20-29 age group for " + 
+                            pRegion + ": " + totalAgeGroup("20-29", 
+                            regionBasedCovidCases) , 0, "both")
+
+            log("Total number of COVID-19 cases in 30-39 age group for " + 
+                            pRegion + ": " + totalAgeGroup("30-39", 
+                            regionBasedCovidCases) , 0, "both")
+
+            log("Total number of COVID-19 cases in 40-49 age group for " + 
+                            pRegion + ": " + totalAgeGroup("40-49", 
+                            regionBasedCovidCases) , 0, "both")
+
+            log("Total number of COVID-19 cases in 50-59 age group for " + 
+                            pRegion + ": " + totalAgeGroup("50-59", 
+                            regionBasedCovidCases) , 0, "both")
+
+            log("Total number of COVID-19 cases in 60-69 age group for " + 
+                            pRegion + ": " + totalAgeGroup("60-69", 
+                            regionBasedCovidCases) , 0, "both")
+
+            log("Total number of COVID-19 cases in 70-79 age group for " + 
+                            pRegion + ": " + totalAgeGroup("70-79", 
+                            regionBasedCovidCases) , 0, "both")
+
+            log("Total number of COVID-19 cases in 80-89 age group for " + 
+                            pRegion + ": " + totalAgeGroup("80-89", 
+                            regionBasedCovidCases) , 0, "both")
+
+            log("Total number of COVID-19 cases in 90+ age group for " + 
+                            pRegion + ": " + totalAgeGroup("90+", 
+                            regionBasedCovidCases) , 0, "both")
+            log("", 0, "both")
+
+        END METHOD generateRegionStats
+
+        METHOD: greeting
+        IMPORTS: None
+        EXPORTS: None
+        ASSERTION: Greet the user with purpose of the program
+        ALGORITHM:
+            log("", 0, "both")
+            log("Welcome to the COVID-19 Data Analysis Program. Make a 
+                 selection from the menu below regarding the information 
+                 you would like to see.", 1, "both")
+        END METHOD greeting
+
+        METHOD: mainMenuScreen
+        IMPORTS: None
+        EXPORTS: None
+        ASSERTION: Prompt user with Main Menu options
+        ALGORITHM:
+            log("- MAIN MENU: SELECT FROM THE FOLLOWING -", 0, "both")
+            log("> [1] Statistics of entire nation.", 0, "both")
+            log("> [2] Statistics of regions.", 0, "both")
+            log("> [3] Exit the program.", 0, "both")
+            log("> Your choice: ", 0, "both")
+        END METHOD mainMenuScreen
+
+        METHOD: menuOneScreen
+        IMPORTS: None
+        EXPORTS: None
+        ASSERTION: Prompt user with Menu 1 options
+        ALGORITHM:
+            log("- STATISTICS FOR ENTIRE NATION: SELECT FROM THE FOLLOWING -", 0, "both")
+            log("> [1] Display total number of COVID-19 cases", 0, "both")
+            log("> [2] Display total number of COVID-19 cases for Males.", 0, "both")
+            log("> [3] Display total number of COVID-19 cases for Females.", 0, "both")
+            log("> [4] Display total number of COVID-19 cases for age group 0-9.", 0, "both")
+            log("> [5] Display total number of COVID-19 cases for age group 10-19.", 0, "both")
+            log("> [6] Display total number of COVID-19 cases for age group 20-29.", 0, "both")
+            log("> [7] Display total number of COVID-19 cases for age group 30-39.", 0, "both")
+            log("> [8] Display total number of COVID-19 cases for age group 40-49.", 0, "both")
+            log("> [9] Display total number of COVID-19 cases for age group 50-59.", 0, "both")
+            log("> [10] Display total number of COVID-19 cases for age group 60-69.", 0, "both")
+            log("> [11] Display total number of COVID-19 cases for age group 70-79.", 0, "both")
+            log("> [12] Display total number of COVID-19 cases for age group 80-89.", 0, "both")
+            log("> [13] Display total number of COVID-19 cases for age group 90+", 0, "both")
+            log("> Your choice: ", 0, "both")
+        END METHOD menuOneScreen
+
+        METHOD: menuTwoScreen
+        IMPORTS: None
+        EXPORTS: None
+        ASSERTION: Prompt user with Menu 2 options
+        ALGORITHM:
+            log("- STATISTICS BY REGION: SELECT FROM THE FOLLOWING -", 0, "both")
+            log("> [1] Flanders", 0, "both")
+            log("> [2] Brussels", 0, "both")
+            log("> [3] Wallonia", 0, "both")
+            log("> [4] Unknown Regions", 0, "both")
+            log("> Your choice: ", 0, "both")
+        END METHOD menuTwoScreen
+
+        METHOD: newSelection
+        IMPORTS: None
+        EXPORTS: selection (Boolean)
+        ASSERTION: Returns boolean representing if user would like to make 
+                   another selection from the menu they are currently using
+        ALGORITHM:
+            selection <- false
+            validInput <- false
+            DO
+                TRY
+                    log("Would you like to make another selection (Y OR N) ?", 0, "both")
+                    userInput <- CHARACTER FROM USER
+                    log(userInput, 1, "file")
+
+                    IF userInput EQUALS "Y" OR userInput EQUALS "y"
+                        selection <- true
+                        validInput <- true
+                    ELSE IF userInput EQUALS "N" OR userInput EQUALS "n"
+                        selection <- false
+                        validInput <- true
+                    ELSE
+                        log("Did not give a Yes or No. Please try again.", 1, "both")
+                    END IF
+
+                CATCH InputMismatchException e
+                    log("Invalid input for new Selection: " + e.getMessage(), 1, "both")
+                CATCH Exception e
+                    log("Invalid input for new Selection: " + e.getMessage(), 1, "both")
+                END TRY CATCH
+            WHILE validInput DOES NOT EQUAL true
+            RETURN selection
+        END METHOD newSelection
+
+        METHOD: mainMenu
+        IMPORTS: covidCases (CovidCase [])
+        EXPORTS: None
+        ASSERTION: Main menu method which directs user to Menu 1 and Menu 3 
+                   or exits program
+        ALGORITHM:
+            exit <- false
+            DO
+                mainMenuScreen()
+                TRY
+                    menuOption <- INTEGER FROM USER
+                    log(menuOption, 1, "file")
+
+                    SWITCH (menuOption)
+                        CASE menuOption EQUALS 1:
+                            menuOne(covidCases)
+
+                        CASE menuOption EQUALS 2:
+                            menuTwo(covidCases)
+                        
+                        CASE menuOption EQUALS 3:
+                            log("Bye!", 1, "both")
+                            exit <- true
+
+                        DEFAULT:
+                            log("Did not select a correct option in main menu.
+                                                 Please try again", 1, "both")
+
+                    END SWITCH
+                CATCH InputMismatchException e
+                    THROW InputMismatchException(e.getMessage())
+                CATCH Exception e
+                    THROW Exception("Invalid user input in main menu")
+                END TRY CATCH
+            WHILE exit DOES NOT EQUAL TRUE
+        END METHOD mainMenu
+
+        METHOD: menuOne
+        IMPORTS: covidCases (CovidCase [])
+        EXPORTS: None
+        ASSERTION: Generates Menu 1 for user to generate statistics on entire nation
+        ALGORITHM:
+            exit <- false
+            DO
+                menuOneScreen()
+                TRY
+                    menuOption <- INTEGER FROM USER
+                    validInput <- true
+                    log(menuOption, 1, "file")
+
+                    SWITCH (menuOption)
+                        CASE menuOption EQUALS 1:
+                            log("Total number of COVID-19 Cases: " + 
+                                totalCases(covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 2:
+                            log("Total number of COVID-19 Male Cases: " + 
+                                totalGender("M", covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 3:
+                            log("Total number of COVID-19 Female Cases: " + 
+                                totalGender("F", covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 4:
+                            log("Total COVID-19 Cases in Age Group 0-9: " + 
+                                totalAgeGroup("0-9", covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 5:
+                            log("Total COVID-19 Cases in Age Group 10-19: " + 
+                                totalAgeGroup("10-19", covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 6:
+                            log("Total COVID-19 Cases in Age Group 20-29: " + 
+                                totalAgeGroup("20-29", covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 7:
+                            log("Total COVID-19 Cases in Age Group 30-39: " + 
+                                totalAgeGroup("30-39", covidCases), 0, "both")
+ 
+                        CASE menuOption EQUALS 8:
+                            log("Total COVID-19 Cases in Age Group 40-49: " + 
+                                totalAgeGroup("40-49", covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 9:
+                            log("Total COVID-19 Cases in Age Group 50-59: " + 
+                                totalAgeGroup("50-59", covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 10:
+                            log("Total COVID-19 Cases in Age Group 60-69: " + 
+                                totalAgeGroup("60-69", covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 11:
+                            log("Total COVID-19 Cases in Age Group 70-79: " + 
+                                totalAgeGroup("70-79", covidCases), 0, "both")
+
+                        CASE menuOption EQUALS 12:
+                            log("Total COVID-19 Cases in Age Group 80-89: " + 
+                                totalAgeGroup("80-89", covidCases), 0, "both")
+ 
+                        CASE menuOption EQUALS 13:
+                            log("Total COVID-19 Cases in Age Group 90+: " + 
+                                totalAgeGroup("90+", covidCases), 0, "both")
+ 
+                        DEFAULT:
+                            validInput <- false
+                            log("Did not select an existing menu option in Menu 1.
+                                 Please try again", 1, "both")
+                    END SWITCH
+
+                    IF validInput EQUALS true
+                        IF newSelection() DOES NOT EQUAL true
+                            exit <- true
+                        END IF
+                    END IF
+                            
+                CATCH InputMismatchException e
+                    THROW InputMismatchException("Invalid user input in Menu 1" + e)
+                CATCH Exception e
+                    THROW Exception("General error in menu 1" + e)
+                END TRY CATCH
+            WHILE exit DOES NOT EQUAL TRUE
+        END METHOD menuOne
+
+        METHOD: menuTwo
+        IMPORTS: covidCases (CovidCase [])
+        EXPORTS: None
+        ASSERTION: Generates Menu 2 for user to generate statistics on different regions
+        ALGORITHM:
+            exit <- false
+            DO
+                menuTwoScreen()
+                TRY
+                    menuOption <- INTEGER FROM USER
+                    validInput <- true
+                    log(menuOption, 1, "file")
+
+                    SWITCH (menuOption)
+                        CASE menuOption EQUALS 1:
+                            generateRegionStats(covidCases, "Flanders")
+
+                        CASE menuOption EQUALS 2:
+                            generateRegionStats(covidCases, "Brussels")   
+
+                        CASE menuOption EQUALS 3:
+                            generateRegionStats(covidCases, "Wallonia")
+
+                        CASE menuOption EQUALS 4:
+                            generateRegionStats(covidCases, "NA")
+
+                        DEFAULT:
+                            validInput <- false
+                            log("Did not select an existing menu option in Menu 2.
+                                 Please try again", 1, "both")
+                    END SWITCH
+
+                    IF validInput EQUALS true
+                        IF newSelection() DOES NOT EQUAL true
+                            exit <- true
+                        END IF
+                    END IF
+                            
+                CATCH InputMismatchException e
+                    THROW InputMismatchException("Invalid user input in Menu 2" + e)
+                CATCH Exception e
+                    THROW Exception("General error in menu 2" + e)
+                END TRY CATCH
+            WHILE exit DOES NOT EQUAL TRUE
+        END METHOD menuOne
     END METHODS
 END CLASS DataAnalysisProgram
