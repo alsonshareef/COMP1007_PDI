@@ -85,7 +85,7 @@ public class DataAnalysisProgram
 * EXPORTS: None
 * ASSERTION: Takes a string and both outputs it to console, and writes to log file
 ******************************************************************************/
-    public static void log (String pString)
+    public static void log (String pString, int pNewLine)
     {
         FileOutputStream fs = null;
         PrintWriter pw;
@@ -96,6 +96,11 @@ public class DataAnalysisProgram
 
             System.out.println(pString);
             pw.append(pString + "\n");
+            
+            for (int i = 0; i < pNewLine; i++ )
+            {
+                pw.append("\n");
+            }
 
             pw.close();
         }
@@ -468,9 +473,8 @@ public class DataAnalysisProgram
     public static void greeting()
     {
         System.out.println();
-        log("Welcome to the COVID-19 Data Analysis Program." + 
-            " Make a selection from the menu below regarding the information" + 
-                                                    " you would like to see.");
+        log("Welcome to the COVID-19 Data Analysis Program. Make a selection" + 
+        " from the menu below regarding the information you would like to see.", 1);
     }
 
 
