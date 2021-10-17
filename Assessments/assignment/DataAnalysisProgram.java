@@ -30,7 +30,8 @@ public class DataAnalysisProgram
         }
         catch (Exception e)
         {
-            System.out.println("I/O Error reading file in main: " + e.getMessage());
+            log("I/O Error reading file in main: " + e.getMessage(), 0, "both");
+            log("-------------------------", 0, "both");
         }
 
         /* [3] - Create array of Covid Cases with row strings*/
@@ -42,12 +43,16 @@ public class DataAnalysisProgram
             }
             catch(Exception e)
             {
-                System.out.println("Error creating array of Covid Cases in main: " + e.getMessage());
+                log("Error creating array of Covid Cases in main: " + 
+                                                    e.getMessage(), 0, "both");
+                log("-------------------------", 0, "both");
             }
         }
         else
         {
-            System.out.println("Error creating array of Covid Cases in main: No row of CSV strings array");
+            log("Error creating array of Covid Cases in main: No row of " + 
+                                                "CSV strings array", 0, "both");
+            log("-------------------------", 0, "both");
         }
         
         /* [4] - Feed Covid Cases array to menus for user to generate statistics */
@@ -62,17 +67,20 @@ public class DataAnalysisProgram
             {
                 if(e.getMessage() == null)
                 {
-                    System.out.println("Menus error: Invalid user input in Main Menu" + "\n" + e);
+                    log("Menus error: Invalid user input in Main Menu" + "\n" +
+                                                                 e, 1, "both");
                 }
                 else 
                 {
-                    System.out.println("Menus error: " + e.getMessage());
+                    log("Menus error: " + e.getMessage(), 1, "both");
                 }
             }
         }
         else
         {
-            System.out.println("Error in main: Could not begin program since valid data is not provided.");
+            log("Error in main: Could not begin program since valid data" + 
+                                               " is not provided.", 0, "both");
+            log("-------------------------", 0, "both");
         }
                
         /* [5] - When done generating stats, safely close program */
@@ -85,7 +93,7 @@ public class DataAnalysisProgram
 * EXPORTS: None
 * ASSERTION: Takes a string and both outputs it to console, and writes to log file
 ******************************************************************************/
-    public static void log (String pString, int pNewLine)
+    public static void log (String pString, int pNewLine, String pType)
     {
         FileOutputStream fs = null;
         PrintWriter pw;
@@ -94,11 +102,23 @@ public class DataAnalysisProgram
             fs = new FileOutputStream("logFile.txt", true);
             pw = new PrintWriter(fs);
 
-            System.out.println(pString);
-            pw.append(pString + "\n");
+            if (pType == "both")
+            {
+                System.out.println(pString);
+                pw.append(pString + "\n");
+            }
+            else if (pType == "file")
+            {
+                pw.append(pString + "\n");
+            }
+            else
+            {
+                System.out.println(pString);
+            }
             
             for (int i = 0; i < pNewLine; i++ )
             {
+                System.out.println();
                 pw.append("\n");
             }
 
@@ -422,46 +442,46 @@ public class DataAnalysisProgram
         }
 
         // 3. Display stats to user
-        System.out.println();
-        System.out.println("------ REGIONAL COVID STATS FOR " + pRegion + " ------");
-        System.out.println("Total number of COVID-19 cases for " + pRegion + 
-                                        ": " + totalCases(regionBasedCovidCases));            
+        log("------ REGIONAL COVID STATS FOR " + pRegion + " ------", 0, "both");
+        log("Total number of COVID-19 cases for " + pRegion + ": " + 
+                                totalCases(regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 male cases for " + pRegion +
-                                ": " + totalGender("M", regionBasedCovidCases));            
+        log("Total number of COVID-19 male cases for " + pRegion + ": " +
+                          totalGender("M", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 female cases for " + pRegion + 
-                                ": " + totalGender("F", regionBasedCovidCases));            
+        log("Total number of COVID-19 female cases for " + pRegion + ": " + 
+                          totalGender("F", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 0-9 age group for " +
-                    pRegion + ": " + totalAgeGroup("0-9", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 0-9 age group for " + pRegion +
+                 ": " + totalAgeGroup("0-9", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 10-19 age group for " +
-                    pRegion + ": " + totalAgeGroup("10-19", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 10-19 age group for " + pRegion +
+               ": " + totalAgeGroup("10-19", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 20-29 age group for " +
-                    pRegion + ": " + totalAgeGroup("20-29", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 20-29 age group for " + pRegion +
+               ": " + totalAgeGroup("20-29", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 30-39 age group for " +
-                    pRegion + ": " + totalAgeGroup("30-39", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 30-39 age group for " + pRegion +
+               ": " + totalAgeGroup("30-39", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 40-49 age group for " + 
-                    pRegion + ": " + totalAgeGroup("40-49", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 40-49 age group for " + pRegion +
+               ": " + totalAgeGroup("40-49", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 50-59 age group for " + 
-                    pRegion + ": " + totalAgeGroup("50-59", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 50-59 age group for " + pRegion +
+               ": " + totalAgeGroup("50-59", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 60-69 age group for " +
-                    pRegion + ": " + totalAgeGroup("60-69", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 60-69 age group for " + pRegion +
+               ": " + totalAgeGroup("60-69", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 70-79 age group for " + 
-                    pRegion + ": " + totalAgeGroup("70-79", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 70-79 age group for " + pRegion +
+               ": " + totalAgeGroup("70-79", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 80-89 age group for " + 
-                    pRegion + ": " + totalAgeGroup("80-89", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 80-89 age group for " + pRegion +
+               ": " + totalAgeGroup("80-89", regionBasedCovidCases), 0, "both");            
 
-        System.out.println("Total number of COVID-19 cases in 90+ age group for " + 
-                    pRegion + ": " + totalAgeGroup("90+", regionBasedCovidCases));            
+        log("Total number of COVID-19 cases in 90+ age group for " + pRegion + 
+                ": " + totalAgeGroup("90+", regionBasedCovidCases), 0, "both");            
+        log("", 0, "both");
     }
 
 /*****************************************************************************
@@ -472,9 +492,9 @@ public class DataAnalysisProgram
 ******************************************************************************/
     public static void greeting()
     {
-        System.out.println();
+        log("", 0, "both");
         log("Welcome to the COVID-19 Data Analysis Program. Make a selection" + 
-        " from the menu below regarding the information you would like to see.", 1);
+        " from the menu below regarding the information you would like to see.", 1, "both");
     }
 
 
@@ -486,12 +506,11 @@ public class DataAnalysisProgram
 ******************************************************************************/
     public static void mainMenuScreen ()
     {
-        System.out.println();
-        System.out.println(" - MAIN MENU: SELECT FROM THE FOLLOWING - ");            
-        System.out.println("> [1] Statistics of entire nation.");            
-        System.out.println("> [2] Statistics of regions.");            
-        System.out.println("> [3] Exit the program.");
-        System.out.print("Your choice: ");
+        log(" - MAIN MENU: SELECT FROM THE FOLLOWING - ", 0, "both");            
+        log("> [1] Statistics of entire nation.", 0, "both");            
+        log("> [2] Statistics of regions.", 0, "both");            
+        log("> [3] Exit the program.", 0, "both");
+        log("Your choice: ", 0, "both");
     }
 
 /*****************************************************************************
@@ -502,22 +521,21 @@ public class DataAnalysisProgram
 ******************************************************************************/
     public static void menuOneScreen ()
     {
-        System.out.println();
-        System.out.println(" - STATISTICS FOR ENTIRE NATION: SELECT FROM THE FOLLOWING - ");            
-        System.out.println("> [1] Display total number of COVID-19 cases");            
-        System.out.println("> [2] Display total number of COVID-19 cases: Males");            
-        System.out.println("> [3] Display total number of COVID-19 cases: Females.");            
-        System.out.println("> [4] Display total number of COVID-19 cases: 0-9 group.");            
-        System.out.println("> [5] Display total number of COVID-19 cases: 10-19 group.");            
-        System.out.println("> [6] Display total number of COVID-19 cases: 20-29 group.");            
-        System.out.println("> [7] Display total number of COVID-19 cases: 30-39 group.");            
-        System.out.println("> [8] Display total number of COVID-19 cases: 40-49 group.");            
-        System.out.println("> [9] Display total number of COVID-19 cases: 50-59 group.");            
-        System.out.println("> [10] Display total number of COVID-19 cases: 60-69 group.");            
-        System.out.println("> [11] Display total number of COVID-19 cases: 70-79 group.");            
-        System.out.println("> [12] Display total number of COVID-19 cases: 80-89 group.");            
-        System.out.println("> [13] Display total number of COVID-19 cases: 90+ group.");            
-        System.out.print("Your choice: ");
+        log(" - STATISTICS FOR ENTIRE NATION: SELECT FROM THE FOLLOWING - ", 0, "both");            
+        log("> [1] Display total number of COVID-19 cases", 0, "both");            
+        log("> [2] Display total number of COVID-19 cases for Males.", 0, "both");            
+        log("> [3] Display total number of COVID-19 cases for Females.", 0, "both");            
+        log("> [4] Display total number of COVID-19 cases for age group 0-9.", 0, "both");            
+        log("> [5] Display total number of COVID-19 cases for age group 10-19. ", 0, "both");
+        log("> [6] Display total number of COVID-19 cases for age group 20-29. ", 0, "both");
+        log("> [7] Display total number of COVID-19 cases for age group 30-39. ", 0, "both");
+        log("> [8] Display total number of COVID-19 cases for age group 40-49. ", 0, "both");
+        log("> [9] Display total number of COVID-19 cases for age group 50-59. ", 0, "both");
+        log("> [10] Display total number of COVID-19 cases for age group 60-69. ", 0, "both");
+        log("> [11] Display total number of COVID-19 cases for age group 70-79. ", 0, "both");
+        log("> [12] Display total number of COVID-19 cases for age group 80-89. ", 0, "both");
+        log("> [13] Display total number of COVID-19 cases for age group 90+ ", 0, "both");
+        log("Your choice: ", 0, "both");
     }
 
 /*****************************************************************************
@@ -528,13 +546,12 @@ public class DataAnalysisProgram
 ******************************************************************************/
     public static void menuTwoScreen ()
     {
-        System.out.println();
-        System.out.println(" - STATISTICS BY REGION: SELECT FROM THE FOLLOWING - ");            
-        System.out.println("> [1] Flanders");            
-        System.out.println("> [2] Brussels");            
-        System.out.println("> [3] Wallonia");
-        System.out.println("> [4] Unknown Regions");
-        System.out.print("Your choice: ");
+        log(" - STATISTICS BY REGION: SELECT FROM THE FOLLOWING - ", 0, "both");            
+        log("> [1] Flanders", 0, "both");            
+        log("> [2] Brussels", 0, "both");            
+        log("> [3] Wallonia", 0, "both");
+        log("> [4] Unknown Regions", 0, "both");
+        log("Your choice: ", 0, "both");
     }
 
 /*****************************************************************************
@@ -552,9 +569,11 @@ public class DataAnalysisProgram
         {
             try
             {
-                System.out.println("Would you like to make another selection (Y OR N) ?");
+                log("Would you like to make another selection (Y OR N) ?", 0, "both");
                 Scanner input = new Scanner(System.in);
                 char userInput = input.next().charAt(0);
+
+                log(String.valueOf(userInput), 1, "file");
 
                 if(userInput == 'Y' || userInput == 'y')
                 {
@@ -568,14 +587,12 @@ public class DataAnalysisProgram
                 }
                 else
                 {
-                    System.out.println("Did not give a Yes or No. Please try again.");
-                    System.out.println();
+                    log("Did not give a Yes or No. Please try again.", 1, "both");
                 }
             }
             catch(Exception e)
             {
-                System.out.println("Invalid input for deciding new selection");
-                System.out.println();
+                log("Invalid input for deciding new selection", 1, "both");
             }
         }
         while (validInput != true);
@@ -598,6 +615,7 @@ public class DataAnalysisProgram
             {
                 Scanner input = new Scanner(System.in);
                 int menuOption = input.nextInt();
+                log(String.valueOf(menuOption), 1, "file");
 
                 switch(menuOption)
                 {
@@ -610,13 +628,13 @@ public class DataAnalysisProgram
                     break;
 
                     case 3:
-                        System.out.println("Bye!");
+                        log("Bye!", 1, "both");
+                        log("-------------------------", 0, "both");
                         exit = true;
                     break;
                     
                     default:
-                        System.out.println();
-                        System.out.println("Did not select a correct option in main menu. Please try again");
+                        log("Did not select a correct option in main menu. Please try again", 1, "both");
                     break;
                 }
             }
@@ -650,78 +668,80 @@ public class DataAnalysisProgram
                 Scanner input = new Scanner(System.in);
                 int menuOption = input.nextInt();
                 boolean validInput = true;
+                
+                log(String.valueOf(menuOption), 1, "file");
 
                 switch(menuOption)
                 {
                     case 1:
-                        System.out.println("Total number of COVID-19 Cases: " +
-                                                         totalCases(covidCases));
+                        log("Total number of COVID-19 Cases: " + 
+                                            totalCases(covidCases), 0, "both");
                     break;
 
                     case 2:
-                        System.out.println("Total number of COVID-19 Male Cases: " + 
-                                                    totalGender("M", covidCases));
+                        log("Total number of COVID-19 Male Cases: " + 
+                                        totalGender("M", covidCases), 0, "both");
                     break;
 
                     case 3:
-                        System.out.println("Total number of COVID-19 Female Cases: " + 
-                                                    totalGender("F", covidCases));
+                        log("Total number of COVID-19 Female Cases: " + 
+                                        totalGender("F", covidCases), 0, "both");
                     break;
 
                     case 4:
-                        System.out.println("Total COVID-19 Cases in '0-9' Age Group: " +
-                                             totalAgeGroup("0-9", covidCases));
+                        log("Total COVID-19 Cases in '0-9' Age Group: " + 
+                                    totalAgeGroup("0-9", covidCases), 0, "both");
                     break;
    
                     case 5:
-                        System.out.println("Total COVID-19 Cases in '10-19' Age Group: " +
-                                             totalAgeGroup("10-19", covidCases));
+                        log("Total COVID-19 Cases in '10-19' Age Group: " +
+                                  totalAgeGroup("10-19", covidCases), 0, "both");
                     break;
 
                     case 6:
-                        System.out.println("Total COVID-19 Cases in '20-29' Age Group: " +
-                                             totalAgeGroup("20-29", covidCases));
+                        log("Total COVID-19 Cases in '20-29' Age Group: " +
+                                  totalAgeGroup("20-29", covidCases), 0, "both");
                     break;
 
                     case 7:
-                        System.out.println("Total COVID-19 Cases in '30-39' Age Group: " +
-                                             totalAgeGroup("30-39", covidCases));
+                        log("Total COVID-19 Cases in '30-39' Age Group: " +
+                                  totalAgeGroup("30-39", covidCases), 0, "both");
                     break;
 
                     case 8:
-                        System.out.println("Total COVID-19 Cases in '40-49' Age Group: " + 
-                                            totalAgeGroup("40-49", covidCases));
+                        log("Total COVID-19 Cases in '40-49' Age Group: " + 
+                                  totalAgeGroup("40-49", covidCases), 0, "both");
                     break;
 
                     case 9:
-                        System.out.println("Total COVID-19 Cases in '50-59' Age Group: " +
-                                             totalAgeGroup("50-59", covidCases));
+                        log("Total COVID-19 Cases in '50-59' Age Group: " +
+                                  totalAgeGroup("50-59", covidCases), 0, "both");
                     break;
 
                     case 10:
-                        System.out.println("Total COVID-19 Cases in '60-69' Age Group: " +
-                                             totalAgeGroup("60-69", covidCases));
+                        log("Total COVID-19 Cases in '60-69' Age Group: " +
+                                  totalAgeGroup("60-69", covidCases), 0, "both");
                     break;
 
                     case 11:
-                        System.out.println("Total COVID-19 Cases in '70-79' Age Group: " +
-                                             totalAgeGroup("70-79", covidCases));
+                        log("Total COVID-19 Cases in '70-79' Age Group: " +
+                                  totalAgeGroup("70-79", covidCases), 0, "both");
                     break;
 
                     case 12:
-                        System.out.println("Total COVID-19 Cases in '80-89' Age Group: " + 
-                                            totalAgeGroup("80-89", covidCases));
+                        log("Total COVID-19 Cases in '80-89' Age Group: " + 
+                                 totalAgeGroup("80-89", covidCases), 0 , "both");
                     break;
 
                     case 13:
-                        System.out.println("Total COVID-19 Cases in '90+' Age Group: " +
-                                             totalAgeGroup("90+", covidCases));
+                        log("Total COVID-19 Cases in '90+' Age Group: " +
+                                    totalAgeGroup("90+", covidCases), 0, "both");
                     break;
 
                     default:
                         validInput = false;
-                        System.out.println("Did not select an existing menu" + 
-                                        " option in Menu 1. Please try again");
+                        log("Did not select an existing menu" + 
+                              " option in Menu 1. Please try again", 1, "both");
                     break;
                 }
 
@@ -763,6 +783,8 @@ public class DataAnalysisProgram
                 int menuOption = input.nextInt();
                 boolean validInput = true;
 
+                log(String.valueOf(menuOption), 1, "file");
+
                 switch(menuOption)
                 {
                     case 1:
@@ -782,8 +804,8 @@ public class DataAnalysisProgram
                     break;
    
                     default:
-                        System.out.println("Did not select an existing" + 
-                                " menu option in Menu 2. Please try again");
+                        log("Did not select an existing menu option in Menu 2." + 
+                                                " Please try again", 1, "both");
                         validInput = false;
                     break;
                 }
