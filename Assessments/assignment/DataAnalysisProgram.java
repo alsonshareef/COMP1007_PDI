@@ -195,7 +195,8 @@ public class DataAnalysisProgram
                                     " first file read: " + "\n" + ex2);
                 }
             }
-            throw new IOException("Error in fileProcessing for first read: " + "\n" + errorDetails);
+            throw new IOException("Error in fileProcessing for first read: " 
+                                                        + "\n" + errorDetails);
         }
 
         // Assign csvRowArray length to number of rows in CSV File
@@ -531,16 +532,26 @@ public class DataAnalysisProgram
         log("> [1] Display total number of COVID-19 cases", 0, "both");            
         log("> [2] Display total number of COVID-19 cases for Males.", 0, "both");            
         log("> [3] Display total number of COVID-19 cases for Females.", 0, "both");            
-        log("> [4] Display total number of COVID-19 cases for age group 0-9.", 0, "both");            
-        log("> [5] Display total number of COVID-19 cases for age group 10-19. ", 0, "both");
-        log("> [6] Display total number of COVID-19 cases for age group 20-29. ", 0, "both");
-        log("> [7] Display total number of COVID-19 cases for age group 30-39. ", 0, "both");
-        log("> [8] Display total number of COVID-19 cases for age group 40-49. ", 0, "both");
-        log("> [9] Display total number of COVID-19 cases for age group 50-59. ", 0, "both");
-        log("> [10] Display total number of COVID-19 cases for age group 60-69. ", 0, "both");
-        log("> [11] Display total number of COVID-19 cases for age group 70-79. ", 0, "both");
-        log("> [12] Display total number of COVID-19 cases for age group 80-89. ", 0, "both");
-        log("> [13] Display total number of COVID-19 cases for age group 90+ ", 0, "both");
+        log("> [4] Display total number of COVID-19 cases for age group 0-9.",
+                                                                     0, "both");            
+        log("> [5] Display total number of COVID-19 cases for age group" + 
+                                                        " 10-19. ", 0, "both");
+        log("> [6] Display total number of COVID-19 cases for age group" + 
+                                                        " 20-29. ", 0, "both");
+        log("> [7] Display total number of COVID-19 cases for age group" + 
+                                                        " 30-39. ", 0, "both");
+        log("> [8] Display total number of COVID-19 cases for age group" + 
+                                                        " 40-49. ", 0, "both");
+        log("> [9] Display total number of COVID-19 cases for age group" + 
+                                                        " 50-59. ", 0, "both");
+        log("> [10] Display total number of COVID-19 cases for age group" + 
+                                                        " 60-69. ", 0, "both");
+        log("> [11] Display total number of COVID-19 cases for age group" + 
+                                                        " 70-79. ", 0, "both");
+        log("> [12] Display total number of COVID-19 cases for age group" + 
+                                                        " 80-89. ", 0, "both");
+        log("> [13] Display total number of COVID-19 cases for age group" + 
+                                                            " 90+ ", 0, "both");
         log("Your choice: ", 0, "both");
     }
 
@@ -646,7 +657,8 @@ public class DataAnalysisProgram
                     break;
                     
                     default:
-                        log("Did not select a correct option in main menu. Please try again", 1, "both");
+                        log("Did not select a correct option in main menu." + 
+                                                " Please try again", 1, "both");
                     break;
                 }
             }
@@ -766,7 +778,8 @@ public class DataAnalysisProgram
             }
             catch(InputMismatchException e)
             {
-                throw new InputMismatchException("Invalid user input in Menu 1" + "\n" + e);
+                throw new InputMismatchException("Invalid user input in Menu 1" +
+                                                                     "\n" + e);
             }
             catch(Exception e)
             {
@@ -831,7 +844,8 @@ public class DataAnalysisProgram
             }
             catch(InputMismatchException e)
             {
-                throw new InputMismatchException("Invalid user input in Menu 2" + "\n" + e);
+                throw new InputMismatchException("Invalid user input in Menu 2" 
+                                                                    + "\n" + e);
             }
             catch(Exception e)
             {
