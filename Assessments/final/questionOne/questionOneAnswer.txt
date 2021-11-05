@@ -1,3 +1,9 @@
+double oddAverage, evenAverage;
+int num;
+int [] numberList = new int [10];
+String studentName;
+boolean itIsArlen, oddPositive, itIsZero;
+
 ******************************************************************************
 QUESTION 1 - PART 1
 ******************************************************************************
