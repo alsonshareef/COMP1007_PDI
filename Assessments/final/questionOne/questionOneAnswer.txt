@@ -19,34 +19,28 @@ else
 ******************************************************************************
 QUESTION 1 - PART 2
 ******************************************************************************
-int numOfOdds = 0;
-int sumOfOdds = 0;
-
 for(int i = 0; i < numberList.length; i++)
 {
     if (numberList[i] % 2 != 0)
     {
-        numOfOdds++;
-        sumOfOdds += numberList[i];
+        num++;
+        oddAverage += (double) numberList[i];
     }
 }
 
-oddAverage = (double) sumOfOdds / numOfOdds;
+oddAverage = oddAverage / num;
 
 ******************************************************************************
 QUESTION 1 - PART 3
 ******************************************************************************
-int numOfEvens = 0;
-int sumOfEvens = 0;
-
 for (int i = 0; i < numberList.length; i++)
 {
     if (numberList[i] % 2 == 0)
     {
-        numOfEvens++;
-        sumOfEvens += numberList[i];
+        num++;
+        evenAverage += (double) numberList[i];
     }
 }
 
-evenAverage = (double) sumOfEvens / numOfEvens;
+evenAverage = evenAverage / num;
 
