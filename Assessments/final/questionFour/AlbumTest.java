@@ -14,11 +14,10 @@ public class AlbumTest
     {
         // [TEST 1]: CREATE ALBUM OBJECT USING DEFAULT CONSTRUCTOR
         System.out.println("TEST [1] - CREATE SONG OBJECT USING DEFAULT CONSTRUCTOR");
-        Song defaultSong = new Song();
-        System.out.println("Default Song details should display below: " + "\n");
-        System.out.println(defaultSong.toString());
-        System.out.println();
-
+        Album defaultAlbum = new Album();        
+        System.out.println(defaultAlbum.getSongList().length);
+        
+/*
         // [TEST 2]: CREATE ALBUM OBJECT USING COPY CONSTRUCTOR
         System.out.println("TEST [2] - CREATE SONG OBJECT USING COPY CONSTRUCTOR");
         Song copiedSong = new Song(defaultSong);
@@ -84,5 +83,6 @@ public class AlbumTest
         }
 
         System.out.println();
+*/
     }
 }
