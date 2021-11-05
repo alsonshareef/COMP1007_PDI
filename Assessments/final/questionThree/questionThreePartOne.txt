@@ -1,0 +1,41 @@
+******************************************************************************
+QUESTION 3 - PART 1 - PSEUDOCODE
+******************************************************************************
+
+BEGIN CLASS questionThreePartTwo
+    BEGIN MAIN
+        c <- EMPTY CHARACTER
+        letterAmount <- EMPTY INTEGER
+        count <- 0
+        asciiVal <- 0
+        capitalLetterArray <- EMPTY CHARACTER ARRAY
+
+        PROMPT "Welcome to the Capital Letter Storage Program. How many capital 
+                                            letters would you like to store?"    
+        letterAmount <- INTEGER FROM USER INPUT
+        capitalLetterArray <- ASSIGN ARRAY LENGTH TO letterAmount
+
+        PROMPT "Great! Please start entering your capital letters"
+        WHILE count IS LESS THAN letterAmount
+            c <- CHARACTER FROM USER INPUT
+            asciiVal <- ASCII VALUE FOR c
+
+            IF asciiVal IS GREATER THAN 64 AND asciiVal IS LESS THAN 91
+                capitalLetterArray AT POINT count <- c
+                count INCREMENT BY 1
+            ELSE IF asciiVal EQUALS 63
+                PROMPT "Bye!"
+                EXIT PROGRAM
+            ELSE
+                PROMPT "You did not enter a capital letter, please try again"
+            END IF
+        END WHILE
+        
+        IF asciiVal DOES NOT EQUAL 63
+            PROMPt "These were the capital latters your stored."
+            FOR i EQUALS 0 UNTIL capitalLetterArray LENGTH AND INCREMENT i BY 1
+                PROMPT VALUE IN capitalLetterArray AT POINT i
+            END FOR
+        END IF
+    END MAIN
+END CLASS questionThreePartTwo
