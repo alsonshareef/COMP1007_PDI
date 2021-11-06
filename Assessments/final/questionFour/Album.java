@@ -39,10 +39,14 @@ public class Album
 
         for(int i = 0; i < songList.length; i++)
         {
+            /* If songs from pSongList still need to be set to songList, place 
+                                                them in songList class field*/
             if(i <= numOfSongs)
             {
                 setSongList(pSongList[i], i);
             }
+            /* After all song objects from pSongList have been set to 
+                        songList, set remaining album songList slots to null*/
             else
             {
                 setSongList(null, i);
@@ -145,10 +149,17 @@ public class Album
                     if(releaseYear == inAlbum.getReleaseYear())
                         for(int i = 0; i < inAlbum.getSongList().length; i++)
                         {
+                            /* If no song exists in slot 'i' for both local songList 
+                                and imported songList, Album objects are    
+                                                                equal so far*/
                             if(songList[i] == null && inAlbum.getSongList()[i] == null)
                             {
                                 isEqual = true;
                             }
+                            /* If song exists in slot 'i' for both local 
+                                songList and imported songList, and both
+                                Song objects states are equal, Album objects
+                                                             are equal so far*/
                             else if(songList[i] != null && inAlbum.getSongList()[i] != null)
                             {
                                 if(songList[i].equals(inAlbum.getSongList()[i]))
@@ -156,6 +167,9 @@ public class Album
                                     isEqual = true;
                                 }
                             }
+                            /* In any other case, both songList and imported 
+                                songList would not be equal, thus set isEqual
+                                to false and break out of loop */
                             else
                             {
                                 isEqual = false;
@@ -177,6 +191,8 @@ public class Album
         String songListString = "";
         int songNum = 0;
 
+        /* Build up a concatenated string of all the string representations of
+                                             the Song objects in the Album */
         for(int i = 0; i < songList.length; i++)
         {
             songNum = i+1;
@@ -187,6 +203,9 @@ public class Album
             }
         }
 
+        /* Create albumString displaying state of Album class fields, and 
+            add the songListString at the end to give full state of Album 
+                                            and it's Song objects in songList */
         String albumString = "ALBUM DETAILS" + "\n"
                             + "Album Artist: " + artist + "\n"
                             + "Album Title: " + title + "\n"
