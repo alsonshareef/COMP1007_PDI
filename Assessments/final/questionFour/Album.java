@@ -23,9 +23,50 @@ public class Album
     // CONSTRUCTOR WITH PARAMETERS
     // ************************************************************************
 
+    /**************************************************************************
+    * CONSTRUCTOR: With Parameters
+    * IMPORTS: pArtist (String), pTitle (String), pReleaseYear (Integer), pSongList (Song)
+    * EXPORTS: None
+    * ASSERTION: Creates Album object with values received from user
+    **************************************************************************/
+    public Album (String pArtist, String pTitle, int pReleaseYear, Song [] pSongList)
+    {
+        int numOfSongs = pSongList.length - 1;
+
+        setArtist(pArtist);
+        setTitle(pTitle);
+        setReleaseYear(pReleaseYear);
+
+        for(int i = 0; i < songList.length; i++)
+        {
+            if(i <= numOfSongs)
+            {
+                setSongList(pSongList[i], i);
+            }
+            else
+            {
+                setSongList(null, i);
+            }
+        }
+    }
+
     // ************************************************************************
     // COPY CONSTRUCTOR
     // ************************************************************************
+
+    /**************************************************************************
+    * CONSTRUCTOR: Copy
+    * IMPORTS: pAlbum (Album)
+    * EXPORTS: None
+    * ASSERTION: Creates copy of imported Album object
+    **************************************************************************/
+    public Album (Album pAlbum)
+    {
+        artist = pAlbum.getArtist();
+        title = pAlbum.getTitle();
+        releaseYear = pAlbum.getReleaseYear();
+        songList = pAlbum.getSongList();
+    }
 
     // ************************************************************************
     // DEFAULT CONSTRUCTOR
@@ -48,6 +89,7 @@ public class Album
     // ************************************************************************
     // ACCESSOR METHODS (GETTERS)
     // ************************************************************************
+
     /**************************************************************************
     * ACCESSOR: getArtist
     * IMPORTS: None
@@ -98,13 +140,69 @@ public class Album
     * EXPORTS: isEqual (Boolean)
     * ASSERTION: Returns boolean representing if the two objects are equals
     **************************************************************************/
+    public boolean equals(Object inObject)
+    {
+        boolean isEqual = false;
+        Album inAlbum = null;
+
+        if(inObject instanceof Album)
+        {
+            inAlbum = (Album)inObject;
+            if(artist == inAlbum.getArtist())
+                if(title == inAlbum.getTitle())
+                    if(releaseYear == inAlbum.getReleaseYear())
+                        for(int i = 0; i < inAlbum.getSongList().length; i++)
+                        {
+                            if(songList[i] == null && inAlbum.getSongList()[i] == null)
+                            {
+                                isEqual = true;
+                            }
+                            else if(songList[i] != null && inAlbum.getSongList()[i] != null)
+                            {
+                                if(songList[i].equals(inAlbum.getSongList()[i]))
+                                {
+                                    isEqual = true;
+                                }
+                            }
+                            else
+                            {
+                                isEqual = false;
+                                break;
+                            }
+                        }
+        }
+        return isEqual;
+    }
 
     /**************************************************************************
     * ACCESSOR: toString
     * IMPORTS: None
     * EXPORTS: albumString (String)
     * ASSERTION: Returns string representation of the state of the Album object
-    **************************************************************************/
+    ***********************************************i***************************/
+    public String toString()
+    {
+        String songListString = "";
+        int songNum = 0;
+
+        for(int i = 0; i < songList.length; i++)
+        {
+            songNum = i+1;
+            if(songList[i] != null)
+            {
+                songListString += "SONG " + songNum + " DETAILS:\n" + 
+                                                songList[i].toString();
+            }
+        }
+
+        String albumString = "ALBUM DETAILS" + "\n"
+                            + "Album Artist: " + artist + "\n"
+                            + "Album Title: " + title + "\n"
+                            + "Album Release Year: " + releaseYear + "\n\n"
+                            + "ALBUM SONG LIST: " + "\n\n" + songListString;
+
+        return albumString;
+    }
 
     // ************************************************************************
     // MUTATOR METHODS (SETTERS)
@@ -171,15 +269,16 @@ public class Album
 
     /**************************************************************************
     * MUTATOR: setSongList
-    * IMPORTS: pSong (Song), listNumber (Integer)
+    * IMPORTS: pSong (Song), pListNumber (Integer)
     * EXPORTS: None
-    * ASSERTION: Value of songList class field will be updated to pSongList
+    * ASSERTION: Individually update songs in the song list at position pListNumber
+                 in the song list, with a new pSong
     **************************************************************************/
-    public void setSongList(Song pSong, int listNumber)
+    public void setSongList(Song pSong, int pListNumber)
     {
-        if(listNumber > -1 && listNumber < 11)
+        if(pListNumber > -1 && pListNumber < 11)
         {
-            songList[listNumber] = pSong;
+            songList[pListNumber] = pSong;
         }
         else
         {

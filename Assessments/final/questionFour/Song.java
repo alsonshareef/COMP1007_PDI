@@ -117,6 +117,7 @@ public class Song
     {
         boolean isEqual = false;
         Song inSong = null;
+
         if(inObject instanceof Song)
         {
             inSong = (Song)inObject;
@@ -136,10 +137,9 @@ public class Song
     **************************************************************************/   
     public String toString()
     {
-        String songString = "SONG DETAILS" + "\n"
-                            + "Song Name: " + name + "\n"
+        String songString = "Song Name: " + name + "\n"
                             + "Song Length: " + time + "\n"
-                            + "Song Genre: " + genre;
+                            + "Song Genre: " + genre + "\n\n";
         return songString;
     }
 
