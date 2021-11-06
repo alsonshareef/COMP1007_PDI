@@ -20,7 +20,7 @@ public class Album
     private Song [] songList = new Song [10];
 
     // ************************************************************************
-    // CONSTRUCTOR WITH PARAMETERS
+    // CONSTRUCTORS
     // ************************************************************************
 
     /**************************************************************************
@@ -50,10 +50,6 @@ public class Album
         }
     }
 
-    // ************************************************************************
-    // COPY CONSTRUCTOR
-    // ************************************************************************
-
     /**************************************************************************
     * CONSTRUCTOR: Copy
     * IMPORTS: pAlbum (Album)
@@ -67,10 +63,6 @@ public class Album
         releaseYear = pAlbum.getReleaseYear();
         songList = pAlbum.getSongList();
     }
-
-    // ************************************************************************
-    // DEFAULT CONSTRUCTOR
-    // ************************************************************************
 
     /**************************************************************************
     * CONSTRUCTOR: Default
@@ -190,8 +182,8 @@ public class Album
             songNum = i+1;
             if(songList[i] != null)
             {
-                songListString += "SONG " + songNum + " DETAILS:\n" + 
-                                                songList[i].toString();
+                songListString += "SONG " + songNum + " DETAILS:\n\n" + 
+                                                songList[i].toString() + "\n";
             }
         }
 
@@ -294,8 +286,23 @@ public class Album
     /**************************************************************************
     * METHOD: lengthOfAlbum
     * IMPORTS: None
-    * EXPORTS: length (Integer)
-    * ASSERTION: Returns an integer representing total play time of album in seconds
+    * EXPORTS: length (String)
+    * ASSERTION: Returns a string representing total play time of album in seconds
     **************************************************************************/
+    public String lengthOfAlbum()
+    {
+        double sum = 0;
+        String length;
 
+        for(int i = 0; i < songList.length; i++)
+        {   
+            if(songList[i] != null)
+            {
+                sum += songList[i].getTime();
+            }
+        }
+
+        length = sum + " seconds";
+        return length;
+    }
 }

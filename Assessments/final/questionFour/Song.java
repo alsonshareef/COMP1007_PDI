@@ -139,7 +139,7 @@ public class Song
     {
         String songString = "Song Name: " + name + "\n"
                             + "Song Length: " + time + "\n"
-                            + "Song Genre: " + genre + "\n\n";
+                            + "Song Genre: " + genre + "\n";
         return songString;
     }
 

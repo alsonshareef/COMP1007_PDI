@@ -13,7 +13,11 @@ public class AlbumTest
     public static void main(String [] args)
     {
         // [TEST 1]: CREATE ALBUM OBJECT USING DEFAULT CONSTRUCTOR
+        System.out.println("************************************************" + 
+                                                        "********************");
         System.out.println("TEST [1] - CREATE ALBUM OBJECT USING DEFAULT CONSTRUCTOR");
+        System.out.println("************************************************" + 
+                                                        "********************");
 
         Album defaultAlbum = new Album();
         System.out.println("Default Album details should display below: " + "\n"); 
@@ -21,7 +25,12 @@ public class AlbumTest
         System.out.println();
 
         // [TEST 2]: CREATE ALBUM OBJECT USING COPY CONSTRUCTOR
+        System.out.println("************************************************" + 
+                                                        "********************");
         System.out.println("TEST [2] - CREATE ALBUM OBJECT USING COPY CONSTRUCTOR");
+        System.out.println("************************************************" + 
+                                                        "********************");
+
         Album copiedAlbum = new Album(defaultAlbum);
         System.out.println("Copied Album details should display below and" + 
                             " be equal to Default Album details above: " + "\n");
@@ -30,8 +39,13 @@ public class AlbumTest
 
 
         // [TEST 3]: CHECK IF DEFAULT AND COPIED ALBUM OBJECT ARE EQUAL
+        System.out.println("************************************************" + 
+                                                        "********************");
         System.out.println("TEST [3] - CHECK IF DEFAULT AND ALBUM SONG OBJECT" + 
                                                                 " ARE EQUAL");
+        System.out.println("************************************************" + 
+                                                        "********************");
+
         if (defaultAlbum.equals(copiedAlbum))
         {
             System.out.println("Both Default and Copied album objects are" + 
@@ -47,8 +61,13 @@ public class AlbumTest
         System.out.println();
 
         // [TEST 4]: CREATE ALBUM OBJECT WITH PARAM CONSTRUCTOR TO NON-DEFAULT VALUES
+        System.out.println("************************************************" + 
+                                                        "********************");
         System.out.println("TEST [4] - CREATE ALBUM OBJECT WITH PARAM" + 
                                         " CONSTRUCTOR TO NON-DEFAULT VALUES");
+        System.out.println("************************************************" + 
+                                                        "********************");
+
         Song songOne = new Song("Param Song One", 30, "Param Genre 1");
         Song songTwo = new Song("Param Song Two", 40, "Param Genre 2");
         Song songThree = new Song("Param Song Three", 50, "Param Genre 3");
@@ -62,8 +81,13 @@ public class AlbumTest
         System.out.println(paramAlbum.toString());
 
         // [TEST 5]: MUTATE PARAM CONSTRUCTOR ALBUM OBJECT TO DEFAULT VALUES
+        System.out.println("************************************************" + 
+                                                        "********************");
         System.out.println("TEST [5] - MUTATE PARAM CONSTRUCTOR ALBUM OBJECT" + 
                                                         " TO DEFAULT VALUES");
+        System.out.println("************************************************" + 
+                                                        "********************");
+
         System.out.println("Details of mutated Album object built with params" + 
             " should appear below, and be equal to the default values of " + 
                                             "the Default Album object:" + "\n");
@@ -71,7 +95,7 @@ public class AlbumTest
         paramAlbum.setTitle("Default Album Title");
         paramAlbum.setReleaseYear(1965);
 
-        paramAlbum.setSongList(new Song (), 0); 
+        paramAlbum.setSongList(new Song(), 0); 
         paramAlbum.setSongList(null, 1);
         paramAlbum.setSongList(null, 2);
         paramAlbum.setSongList(null, 3);
@@ -85,8 +109,13 @@ public class AlbumTest
         System.out.println(paramAlbum.toString());
 
         // [TEST 6]: CHECK IF DEFAULT AND PARAM SONG OBJECT ARE EQUAL
+        System.out.println("************************************************" + 
+                                                        "********************");
         System.out.println("TEST [6] - CHECK IF DEFAULT AND PARAM ALBUM OBJECT" + 
                                                                 " ARE EQUAL");
+        System.out.println("************************************************" + 
+                                                        "********************");
+
         if (defaultAlbum.equals(paramAlbum))
         {
             System.out.println("Both Default and Param Album objects are" + 
@@ -99,6 +128,15 @@ public class AlbumTest
             " in default and copy constructor, as well as all accessor, " + 
                                 "mutator and equals methods for Album objects.");
         }
+        System.out.println();
+
+        // [TEST 7]: CHECK PARAM ALBUM PLAY TIME
+        System.out.println("************************************************" + 
+                                                        "********************");
+        System.out.println("TEST [7] - CHECK PARAM ALBUM PLAY TIME");
+        System.out.println("************************************************" + 
+                                                        "********************");
+        System.out.println("Param Album total play time is: " + paramAlbum.lengthOfAlbum());
         System.out.println();
     }
 }
