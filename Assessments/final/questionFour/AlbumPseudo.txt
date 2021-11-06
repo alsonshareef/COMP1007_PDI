@@ -2,4 +2,219 @@
 ALBUM CLASS - PSEUDOCODE
 *******************************************************************************
 
+BEGIN CLASS Album
+    CLASS FIELDS
+        artist (String)
+        title (String)
+        releaseYear (Integer)
+        songList (Song [])
+    END CLASS FIELDS
 
+    METHODS
+        CONSTRUCTOR: With Params
+        IMPORT: pArtist (String), pTitle (String), pReleaseYear (Integer), pSongList (Song)
+        EXPORTS: None
+        ASSERTION: Creates Album object with values received from user
+        ALGORITHM:
+            numOfSongs <- LENGTH OF pSongList - 1
+
+            setArtist(pArtist)
+            setTitle(pTitle)
+            setReleaseYear(pReleaseYear)
+
+            FOR INTEGER i EQUALS 0 UNTIL LENGTH OF SongList INCREMENT BY 1
+                IF i IS LESS THAN OR EQUAL TO numOfSongs
+                    setSongList(pSongList[i], i)
+                ELSE
+                    setSongList(null, i)
+                END IF
+            END FOR
+        END CONSTRUCTOR With Params
+
+        CONSTRUCTOR: Copy
+        IMPORT: pAlbum (Album)
+        EXPORTS: None
+        ASSERTION: Creates copy of imported Album object
+        ALGORITHM:
+            artist <- pAlbum.getArtist()
+            title <- pAlbum.getTitle()
+            releaseYear <- pAlbum.getReleaseYear()
+            songList <- pAlbum.getSongList();
+        END CONSTRUCTOR Copy
+
+        CONSTRUCTOR: Default
+        IMPORT: None
+        EXPORTS: None
+        ASSERTION: Creates Album object with default values
+        ALGORITHM:
+            artist <- "Default Artist" 
+            title <- "Default Album Title"
+            releaseYear <- 1965
+            songList AT INDEX 0 <- NEW Song()
+        END CONSTRUCTOR Default
+
+        ACCESSOR: getArtist
+        IMPORT: None
+        EXPORT: artist (String)
+        ASSERTION: Returns string representing the artist who created the album
+        ALGORITHM:
+            RETURN artist
+        END ACCESSOR getArtist
+
+        ACCESSOR: getTitle
+        IMPORT: None
+        EXPORT: time (String)
+        ASSERTION: Returns string representing the title of the Album
+        ALGORITHM:
+            RETURN title
+        END ACCESSOR getTitle
+
+        ACCESSOR: getReleaseYear
+        IMPORT: None
+        EXPORT: releaseYear (Integer)
+        ASSERTION: Returns string representing the year the album released
+        ALGORITHM:
+            RETURN releaseYear
+        END ACCESSOR getReleaseYear
+
+        ACCESSOR: getSongList
+        IMPORT: None
+        EXPORT: songList (Song [])
+        ASSERTION: Returns an array of Song objects associated with the album
+        ALGORITHM:
+            RETURN songList
+        END ACCESSOR getSongList
+
+        ACCESSOR: equals
+        IMPORT: inObject (Object)
+        EXPORT: isEqual (Boolean)
+        ASSERTION: Returns boolean representing if the two objects are equal
+        ALGORITHM:
+            isEqual <- false
+            inAlbum <- null
+
+            IF inObject IS Album
+                TRANSFORM inObject TO Album NAMED inAlbum
+                IF artist EQUALS inAlbum.getArtist()
+                    IF title EQUALS inAlbum.getTitle()
+                        IF releaseYear EQUALS inAlbum.getReleaseYear()
+                            FOR INTEGER i EQUALS 0 UNTIL EQUALS LENGTH OF 
+                                            inAlbum.getSongList() INCREMENT BY 1
+                                IF songList[i] EQUALS null AND 
+                                            inAlbum.getSongList()[i] EQUALS null
+                                    isEqual <- true
+                                ELSE IF songList[i] DOES NOT EQUAL null AND 
+                                    inAlbum.getSongList()[i] DOES NOT EQUAL null
+                                    IF songList[i] EQUALS inAlbum.getSongList()[i]
+                                        isEqual <- true
+                                    END IF
+                                ELSE
+                                    isEqual <- false
+                                    BREAK
+                                END IF
+                            END FOR
+                        END IF 
+                    END IF
+                END IF
+            END IF
+            RETURN isEqual
+        END ACCESSOR equals
+
+        ACCESSOR: toString
+        IMPORT: None
+        EXPORT: albumString (String)
+        ASSERTION: Returns string representation of state of Album objects
+        ALGORITHM:
+            songListString <- ""
+            songNum <- 0
+
+            FOR INTEGER i EQUALS 0 UNTIL EQUALS LENGTH OF songlist INCREMENT BY 1
+                songNum <- i + 1
+                IF songList[i] != null
+                    songListString <- "SONG" + songNum + "DETAILS:" + 
+                                                        songList[i].toString()
+                END IF
+            END FOR
+
+            albumString <- "ALBUM DETAILS" + 
+                            "Album Artist: " + artist + 
+                            "Album Title: " + title + 
+                            "Album Release Year: " + releaseYear + 
+                            "ALBUM SONG LIST: " + songListString
+            RETURN albumString
+        END ACCESSOR toString
+
+        MUTATOR: setArtist
+        IMPORT: pArtist (String)
+        EXPORTS: None
+        ASSERTION: Value of artist class field will be updated to pArtist
+        ALGORITHM:
+            IF pArtist EQUALS null
+                artist <- "Unknown Artist"
+            ELSE
+                artist <- pArtist
+            END IF
+        END MUTATOR setArtist
+
+        MUTATOR: setTitle
+        IMPORT: pTitle (String)
+        EXPORTS: None
+        ASSERTION: Value of title class field will be updated to pTitle
+        ALGORITHM:
+            IF pTitle EQUALS null
+                title <- "Unknown Album Name"
+            ELSE
+                title <- pTitle
+            END IF
+        END MUTATOR setTitle
+
+        MUTATOR: setReleaseYear
+        IMPORT: pReleaseYear (Integer)
+        EXPORTS: None
+        ASSERTION: Value of release year class field will be updated to pReleaseYear
+        ALGORITHM:
+            IF pReleaseYear IS GREATER THAN 1964
+                releaseYear <- pReleaseYear
+            ELSE
+                releaseYear <- 1965
+                PROMPT "A year prior to 1965 has been requested to be set as 
+                    the release year which is invalid. Currently, the 
+                    placeholder release year has been set to 1965, but please 
+                    re-set the release date to a year that is not before 1965."
+            END IF
+        END MUTATOR setReleaseYear
+
+        MUTATOR: setSongList
+        IMPORT: pSong (Song), pListNumber (Integer)
+        EXPORTS: None
+        ASSERTION: Individually update songs in the song list at position 
+                   pListNumber in the song list, with a new pSong
+        ALGORITHM:
+            IF pListNumber IS GREATER THAN -1 AND pListNumber IS LESS THAN 11
+                songList[pListNumber] = pSong
+            ELSE
+                PROMPT "Please provide a valid song list number you would like 
+                                                        to update the song for."
+            END IF
+        END MUTATOR setSongList
+
+        METHOD: lengthOfAlbum
+        IMPORT: None
+        EXPORTS: length (String)
+        ASSERTION: Returns a string representing total play time of album in seconds
+        ALGORITHM:
+            sum <- 0
+            length <- ""
+
+            FOR INTEGER i EQUALS 0 UNTIL EQUALS LENGTH OF songList INCREMENT BY 1
+                IF songList[i] DOES NOT EQUAL null
+                    sum <- songList[i].getTime()
+                END IF
+            END FOR
+
+            length <- sum + " seconds"
+            RETURN length
+        END METHOD lengthOfAlbum
+
+    END METHODS
+END CLASS Album
