@@ -2,4 +2,135 @@
 SONG CLASS - PSEUDOCODE
 *******************************************************************************
 
+BEGIN CLASS Song
+    CLASS FIELDS
+        name (String)
+        time (Double)
+        genre (String)
+    END CLASS FIELDS
 
+    METHODS
+        CONSTRUCTOR: With Params
+        IMPORT: pName (String), pTime (Double), pGenre (String)
+        EXPORTS: None
+        ASSERTION: Creates Song object with values received from user
+        ALGORITHM:
+            setName(pName)
+            setTime(pTime)
+            setGenre(pGenre)
+        END CONSTRUCTOR With Params
+
+        CONSTRUCTOR: Copy
+        IMPORT: pSong (Song)
+        EXPORTS: None
+        ASSERTION: Creates copy of imported Song object
+        ALGORITHM:
+            name <- pSong.getName()
+            time <- pSong.getTime()
+            genre <- pSong.getGenre()
+        END CONSTRUCTOR Copy
+
+        CONSTRUCTOR: Default
+        IMPORT: None
+        EXPORTS: None
+        ASSERTION: Creates Song object with default values
+        ALGORITHM:
+            name <- "Default Song Name"
+            time <- 10.0
+            genre <- "Pop"
+        END CONSTRUCTOR Default
+
+        ACCESSOR: getName
+        IMPORT: None
+        EXPORT: name (String)
+        ASSERTION: Returns string representing name of song
+        ALGORITHM:
+            RETURN name
+        END ACCESSOR getName
+
+        ACCESSOR: getTime
+        IMPORT: None
+        EXPORT: time (Double)
+        ASSERTION: Returns double representing length of song
+        ALGORITHM:
+            RETURN time
+        END ACCESSOR getTime
+
+        ACCESSOR: getGenre
+        IMPORT: None
+        EXPORT: genre (String)
+        ASSERTION: Returns string representing genre of song
+        ALGORITHM:
+            RETURN genre
+        END ACCESSOR getGenre
+
+        ACCESSOR: equals
+        IMPORT: inObject (Object)
+        EXPORT: isEqual (Boolean)
+        ASSERTION: Returns boolean representing if the two objects are equal
+        ALGORITHM:
+            isEqual <- false
+            inSong <- null
+
+            IF inObject IS Song
+                TRANSFORM inObject TO Song NAMED inSong
+                IF name EQUALS inSong.getName()
+                    IF time EQUALS inSong.getTime()
+                        IF genre EQUALS inSong.getGenre()
+                            isEqual <- true
+                        END IF 
+                    END IF
+                END IF
+            END IF
+            RETURN isEqual
+        END ACCESSOR equals
+
+        ACCESSOR: toString
+        IMPORT: None
+        EXPORT: songString (String)
+        ASSERTION: Returns string representation of state of Song objects
+        ALGORITHM:
+            songString <- "Song Name: " + name +
+                            "Song Length: " + time +
+                            "Song Genre: " + genre
+            RETURN songString
+        END ACCESSOR toString
+
+        MUTATOR: setName
+        IMPORT: pName (String)
+        EXPORTS: None
+        ASSERTION: Value of name class field will be updated to pName
+        ALGORITHM:
+            IF pName EQUALS null
+                name <- "No song name."
+            ELSE
+                name <- pName
+            END IF
+        END MUTATOR setName
+
+        MUTATOR: setTime
+        IMPORT: pTime (Double)
+        EXPORTS: None
+        ASSERTION: Value of time class field will be updated to pTime
+        ALGORITHM:
+            IF pTime IS GREATER THAN 0
+                time <- pTime
+            ELSE
+                time <- 0
+            END IF
+        END MUTATOR setTime
+
+        MUTATOR: setGenre
+        IMPORT: pGenre (String)
+        EXPORTS: None
+        ASSERTION: Value of genre class field will be updated to pGenre
+        ALGORITHM:
+            IF pGenre EQUALS null
+                genre <- "No Genre."
+            ELSE
+                genre <- pGenre
+            END IF
+        END MUTATOR setGenre
+
+    END METHODS
+END CLASS Song
